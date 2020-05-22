@@ -4,17 +4,44 @@
 <head>
     <title>Jour d'École</title>
     
+    <!-- META -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un jeu éducatif pour s'entraîner au calcul mental !">
+    <meta name="keywords" content="éducatif, jeu, mathématiques, math, maths, primaire">
+    <meta name="author" content="Arnaud LYSENSOONE--BIJOU">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    
+    <!-- JS -->
+    <script src="js/game.js"></script>
 </head>
 
 <body>
     <header>
         <h1>Jour d'École</h1>
-        <div>Choix mode de jeu</div>
+        <div id="choix">Choix du jeu
+            <select id="mode"></select>
+            <select id="exercice"></select>
+            <select id="difficulte"></select>
+            <select id="timer"></select>
+        </div>
     </header>
 
     <canvas id="myCanvas" width="400" height="200" style="border:1px solid #000000;"></canvas>
 
-    <div>Boutons cliquables</div>
+    <div id="controles">
+        boutons cliquables + touchscreen
+        <div id="fleches">
+            <div class="fleche" id="haut">haut</div>
+            <div class="fleche" id="gauche">gauche</div>
+            <div class="fleche" id="bas">bas</div>
+            <div class="fleche" id="droite">droite</div>
+        </div>
+        
+        <div id="espace">espace</div>
+    </div>
 </body>
 </html>

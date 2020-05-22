@@ -1,7 +1,18 @@
 div {
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     border-style: solid;
     border-width: medium;
     border-color: black;
+}
+
+.fleche {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+
+#espace {
+    height: 50px;
+    width: 150px;
 }
