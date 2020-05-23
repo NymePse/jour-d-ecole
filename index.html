@@ -3,7 +3,7 @@
 
 <head>
     <title>Jour d'École</title>
-    
+
     <!-- META -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +11,10 @@
     <meta name="keywords" content="éducatif, jeu, mathématiques, math, maths, primaire">
     <meta name="author" content="Arnaud LYSENSOONE--BIJOU">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-    
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+
     <!-- JS -->
     <script src="js/game.js"></script>
 </head>
@@ -23,10 +23,33 @@
     <header>
         <h1>Jour d'École</h1>
         <div id="choix">Choix du jeu
-            <select id="mode"></select>
-            <select id="exercice"></select>
-            <select id="difficulte"></select>
-            <select id="timer"></select>
+            <select id="mode">
+                <option value="journee">Journée complête</option>
+                <option value="chemin">Chemin pour l'école</option>
+                <option value="foot">Foot entre amis</option>
+                <option value="soleil">1, 2, 3, Soleil !</option>
+            </select>
+            
+            <select id="exercice">
+                <option value="+">Additions</option>
+                <option value="-">Soustractions</option>
+                <option value="*">Multiplications</option>
+                <option value="/">Division</option>
+                <option value=".">Groupe de points</option>
+            </select>
+            
+            <select id="difficulte">
+                <option value="simple">Simple</option>
+                <option value="moyen">Moyen</option>
+                <option value="difficile">Difficile</option>
+            </select>
+            
+            <select id="chrono">
+                <option value="sans">Sans chrono</option>
+                <option value="lent">Lent</option>
+                <option value="moyen">Moyen</option>
+                <option value="rapide">Rapide</option>
+            </select>
         </div>
     </header>
 
@@ -40,8 +63,9 @@
             <div class="fleche" id="bas">bas</div>
             <div class="fleche" id="droite">droite</div>
         </div>
-        
+
         <div id="espace">espace</div>
     </div>
 </body>
+
 </html>
