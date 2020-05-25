@@ -16,7 +16,6 @@ var gameArea = {
     canvas : $(jeu),
     start : function() {
         this.context = this.canvas.getContext("2d");
-        this.interval = setInterval()
     }
 }
 
@@ -27,15 +26,37 @@ function setGame() {
      */
 }
 
-function getAnswerClicked(this) {}
+function getAnswerClicked(clickedDiv) {}
 
 function getAnswerKeys(event) {}
 
 //Fonctions de gestion des modes de jeu
-function journee(exercice, difficulte, chrono) {}
+function journee(exercice, difficulte, chrono) {
+    /*
+     * Joue tout les modes de jeu
+     * dans l'ordre, avec des transitions
+     */
+}
 
-function chemin(exercice, difficulte, chrono) {}
+function chemin(exercice, difficulte, chrono) {
+    /*
+     * Pas de fin prématurée
+     * Chaque obstacle donne la réponse
+     * => type d'obstacle force la réponse sur une touche précise
+     */
+}
 
-function foot(exercice, difficulte, chrono) {}
+function foot(exercice, difficulte, chrono) {
+    /*
+     * Pas de fin prématurée
+     * Se joue en 3 ou 4 parties
+     * 1 partie = 3 à 4 obstacles
+     * 1 partie peut se terminer prématurément
+     */
+}
 
-function soleil(exercice, difficulte, chrono) {}
+function soleil(exercice, difficulte, chrono) {
+    /*
+     * 
+     */
+}
