@@ -25,3 +25,12 @@ function setGame() {
      * et lance une partie en fonction
      */
 }
+
+//Fonctions de gestion des modes de jeu
+function journee(exercice, difficulte, chrono) {}
+
+function chemin(exercice, difficulte, chrono) {}
+
+function foot(exercice, difficulte, chrono) {}
+
+function soleil(exercice, difficulte, chrono) {}
