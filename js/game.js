@@ -11,6 +11,7 @@ const bas = "#bas";
 const droite = "#droite";
 const espace = "#espace";
 
+//Fonctions globales
 var gameArea = {
     canvas : $(jeu),
     start : function() {
@@ -25,6 +26,10 @@ function setGame() {
      * et lance une partie en fonction
      */
 }
+
+function getAnswerClicked(this) {}
+
+function getAnswerKeys(event) {}
 
 //Fonctions de gestion des modes de jeu
 function journee(exercice, difficulte, chrono) {}
