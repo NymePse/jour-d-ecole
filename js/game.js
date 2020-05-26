@@ -45,6 +45,44 @@ function chemin(exercice, difficulte, chrono) {
      * Chaque obstacle donne la réponse
      * => type d'obstacle force la réponse sur une touche précise
      */
+    
+    /*
+     * Variables :
+     * 
+     */
+    
+    /*
+     * Déroulement :
+     * bloquer bouton Jouer
+     * clear canvas
+     * binder évenement clavier & click div
+     * Afficher texte d'introduction
+     * Attendre appuis barre espace
+     * 
+     * boucle phase de jeu (tant que pas fini) :
+     *      Quelques secondes, boucle gif personnage & décors
+     *      Créer une question
+     *      Créer les réponses
+     *      Sélectionner type d'obstacle
+     *      mapper les réponses selon l'obstacle dans les touches
+     *      Afficher obstacle & question
+     * 
+     *      attendre réponse ou fin de chrono :
+     *        si chrono et chrono pas fini
+     *          avancer chrono
+     * 
+     *      si chrono fini OU mauvaise réponse
+     *        afficher défaite obstacle
+     *      sinon
+     *        afficher réussite obstacle
+     *        points++
+     *  
+     * clear canvas
+     * afficher fond de fin
+     * afficher texte fin selon résultat
+     * afficher score
+     * débloquer bouton Jouer
+     */
 }
 
 function foot(exercice, difficulte, chrono) {
