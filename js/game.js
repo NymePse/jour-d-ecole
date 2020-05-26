@@ -116,3 +116,30 @@ function tests() {
         });
     });
 }
+
+function testChemin() {
+    /*
+     * Pas de fin prématurée
+     * Chaque obstacle donne la réponse
+     * => type d'obstacle force la réponse sur une touche précise
+     */
+    
+    /*
+     * Variables :
+     * 
+     */
+    
+    /*
+     * TODO : v1
+     * bloquer bouton jouer
+     * clear canvas
+     * binder event clavier + click
+     * 
+     * tant que pas appuyé sur espace :
+     *   afficher carré +1 vers droite
+     * 
+     * clear canvas
+     * afficher texte
+     * débloquer bouton jouer
+     */
+}
