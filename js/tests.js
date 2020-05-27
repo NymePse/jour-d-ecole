@@ -66,30 +66,33 @@ function tests() {
 
 
 /*
- * V1
+ * V2
  * 
  * Set up :
  *   nettoyer canvas
+ *   unbind bouton
  *   bind barre espace => DéroulementDebut
  *   affiche texte "appuyer espace"
+ *   créer variable localeStorage nbQuestions et la remplir avec un random
+ *   créer variable localStorage qstActuelle à 0
  * 
  * DéroulementDébut :
  *   nettoyer canvas
- *   afficher carré
  *   bind flèches + espace => ReponseBonne
- *   Afficher texte "appuyer touche"
+ *   Afficher texte "question [qst] sur [nb]"
  * 
  * RéponseBonne :
  *   Nettoyer Canvas
  *   Afficher keycode
- *   Attendre 3 sec
+ *   Attendre 1 sec
  *   DéroulementFin
  * 
  * DéroulementFin :
- *   nettoyer canvas
- *   afficher cercle
- *   unbind tout
- *   bind espace => Conclusion
+ *   si qst == nb
+ *     Conclusion
+ *   si qst < nb
+ *     qst++
+ *     DeroulementDebut
  * 
  * Conclusion :
  *   nettoyer Canvas
@@ -98,6 +101,18 @@ function tests() {
  */
 
 function testSetUpChemin() {
+    //création variables LocalStorage de la partie
+    localStorage.setItem('nbQuestionsChemin', (Math.ceil(Math.random() * (6 - 3) + 3)));
+    localStorage.setItem('qstActuelleChemin', 0);
+    
+    //Gestion events
+    $(bouton).off("click");
+    $(document).keypress(function(event) {
+        if(event.keyCode == 32)
+            testDeroulementDebutChemin();
+    });
+    
+    //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: 100, y: 100,
@@ -105,56 +120,59 @@ function testSetUpChemin() {
         text: "Appuyer sur espace"
     });
     
-    //events
-    $(document).keypress(function(event) {
-        if(event.keyCode == 32)
-            testDeroulementDebutChemin();
-    })
+    //LOGS
+    console.log(localStorage.getItem('nbQuestionsChemin'));
+    console.log(localStorage.getItem('qstActuelleChemin'));
 }
 
 function testDeroulementDebutChemin() {
-    $(jeu).clearCanvas().drawRect({
-        fillStyle: 'black',
-        x: 100, y: 50,
-        height: 50, width: 50
-    });
-    
-    $(document).off("keypress");
-    
+    //Gestion Events
     $(document).keypress(function(event) {
        if(event.keyCode == 32 || event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40)
        {
-           testDeroulementFinChemin(event.keyCode);
+           $(document).off("keypress");
+           testReponseBonneChemin(event.keyCode);
        }
     });
+    
+    //Maj Canvas
+    $(jeu).clearCanvas().drawText({
+        fillStyle: 'black',
+        x: 100, y: 100,
+        fontSize: 20,
+        text: 'Question ' + localStorage.getItem('qstActuelleChemin') + ' sur ' + localStorage.getItem('nbQuestionsChemin')
+    });
+    
+    //LOG
+    console.log("DeroulementDebut");
 }
 
 function testReponseBonneChemin(key) {
-    $(document).off("keypress");
+    //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
         text: key.toString()
     });
+    
     setTimeout(function() { testDeroulementFinChemin(); },3000);
 }
 
 function testDeroulementFinChemin() {
-    $(jeu).clearCanvas().drawArc({
-        strokeStyle: 'black',
-        x: 100, y: 100,
-        radius: 50
-    });
-    
-    $(document).keypress(function(event) {
-        if(event.keyCode == 32)
-            testConclusionChemin();
-    });
+    if(parseInt(localStorage.getItem('qstActuelleChemin')) < parseInt(localStorage.getItem('nbQuestionsChemin')))
+    {
+        localStorage.setItem('qstActuelleChemin', parseInt(localStorage.getItem('qstActuelleChemin'))+1)
+        testDeroulementDebutChemin();
+    }
+    else
+    {
+        testConclusionChemin();
+    }
 }
 
 function testConclusionChemin() {
-    $(document).off("keypress");
+    //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: 100, y: 100,
