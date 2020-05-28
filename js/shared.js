@@ -13,7 +13,7 @@ const droite = "#droite";
 const espace = "#espace";
 
 function setUpSite() {
-    $(bouton).click(setUpGame());
+    $(bouton).bind("click", setUpGame);
 }
 
 function setUpGame() {
@@ -21,6 +21,12 @@ function setUpGame() {
      * Récupère les options
      * et lance une partie en fonction
      */
+    
+    let mode = $(choixMode + ' :selected').val();
+    let exo = $(choixExo + ' :selected').val();
+    let diff = $(choixDiff + ' :selected').val();
+    let chrono = $(choixChrono + ' :selected').val();
+    console.log(mode + exo + diff + chrono);
 }
 
 //Fonctions de gestion des modes de jeu
@@ -57,3 +63,4 @@ function reponseBonne(key) {
     else
         return false;
 }
+
