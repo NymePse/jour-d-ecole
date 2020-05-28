@@ -16,3 +16,10 @@ div {
     height: 50px;
     width: 150px;
 }
+
+h2 {
+    border-style: solid;
+    border-color: black;
+    min-height: 30px;
+    min-width: 50px;
+}

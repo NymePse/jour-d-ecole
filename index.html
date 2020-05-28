@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -27,7 +27,7 @@
     -->
 </head>
 
-<body>
+<body onload="tests()">
     <header>
         <h1>Jour d'École</h1>
         <div id="choix">Choix du jeu
@@ -59,7 +59,7 @@
                 <option value="rapide">Rapide</option>
             </select>
             
-            <button id="jouer" type="button" onclick="testSetUpChemin()">Jouer</button>
+            <button id="jouer" type="button">Jouer</button>
         </div>
     </header>
 
@@ -73,7 +73,9 @@
             <div class="fleche" id="bas">bas</div>
             <div class="fleche" id="droite">droite</div>
         </div>
-
+        
+        <h2></h2>
+        
         <div id="espace">espace</div>
     </div>
 </body>

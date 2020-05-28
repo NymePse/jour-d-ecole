@@ -1,15 +1,6 @@
 //TESTS
 function tests() {
-    $(fleche).bind("click", function() {
-        $(jeu).clearCanvas();
-        $(jeu).drawText({
-            fillStyle: 'black',
-            x: 150, y: 100,
-            fontSize: 48,
-            fontFamily: 'Comic Sans MS, sans-serif',
-            text: $(this).text()
-        });
-    });
+    $(bouton).click(testSetUpChemin);
 }
 
 //SECTION : CHEMIN
@@ -19,6 +10,7 @@ function tests() {
 * => type d'obstacle force la réponse sur une touche précise
 *
 * Variables :
+* 
 * 
 *
 * Déroulement :
@@ -64,46 +56,60 @@ function tests() {
  * 
  */
 
-
 /*
- * V2
+ * V3
  * 
  * Set up :
  *   nettoyer canvas
  *   unbind bouton
  *   bind barre espace => DéroulementDebut
  *   affiche texte "appuyer espace"
- *   créer variable localeStorage nbQuestions et la remplir avec un random
+ *   créer variable localStorage txtQuestion remplie avec addition au hasard
+ *   créer variable localStorage reponseQuestion remplie avec réponse addition
+ *   créer variables reponse 1 2 et 3 avec mauvaises réponses
+ *   créer variable localStorage nbQuestions et la remplir avec un random
  *   créer variable localStorage qstActuelle à 0
+ *   créer variable localStorage score à 0
  * 
  * DéroulementDébut :
  *   nettoyer canvas
- *   bind flèches + espace => ReponseBonne
- *   Afficher texte "question [qst] sur [nb]"
+ *   créer question
+ *   créer bonne réponse & autres réponses
+ *   Entrer les réponses dans les divs flèches au hasard
+ *   bind flèches + divs => ReponseBonne
+ *   Afficher question
  * 
  * RéponseBonne :
- *   Nettoyer Canvas
- *   Afficher keycode
- *   Attendre 1 sec
- *   DéroulementFin
+ *   récupérer réponse selon touche
+ *   si réponse donnée = bonne réponse
+ *     DeroulementFin(true)
+ *   sinon
+ *     DeroulementFin(false)
  * 
  * DéroulementFin :
+ *   si true
+ *     score++
+ *     afficher "bravo !"
+ *   sinon
+ *     afficher "dommage !"
  *   si qst == nb
  *     Conclusion
- *   si qst < nb
+ *   sinon
  *     qst++
  *     DeroulementDebut
  * 
  * Conclusion :
  *   nettoyer Canvas
  *   unbind tout
- *   afficher "gg arnaud"
+ *   afficher score
  */
 
 function testSetUpChemin() {
     //création variables LocalStorage de la partie
     localStorage.setItem('nbQuestionsChemin', (Math.ceil(Math.random() * (6 - 3) + 3)));
     localStorage.setItem('qstActuelleChemin', 0);
+    localStorage.setItem('score', 0);
+    
     
     //Gestion events
     $(bouton).off("click");
@@ -127,48 +133,141 @@ function testSetUpChemin() {
 
 function testDeroulementDebutChemin() {
     //Gestion Events
-    $(document).keypress(function(event) {
+    $(document).keydown(function(event) {
        if(event.keyCode == 32 || event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40)
        {
-           $(document).off("keypress");
+           $(document).off("keydown");
            testReponseBonneChemin(event.keyCode);
        }
     });
     
+    //Création de la question
+    let qstPart1 = Math.ceil(Math.random() * (10 - 1) + 1);
+    let qstPart2 = Math.ceil(Math.random() * (10 - 1) + 1);
+    let qst = qstPart1 + '+' + qstPart2;
+    let qstTotal = eval(qst);
+    let reponses = Array(4);
+    localStorage.setItem('reponse', qstTotal);
+    
+    //Array de réponses + création des réponses fausses
+    reponses[0] = qstTotal;
+    var part;
+    for(let i = 1; i < 4; i++) {
+        if(Math.random() < 0.5)
+        {
+            part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
+            while(reponses.includes(part))
+                part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
+        }
+        else
+        {
+            part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
+            while(reponses.includes(part))
+                part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
+        }
+        reponses[i] = part;
+    }
+    
+    //Sélection d'un bouton et réponse correspondante
+    let fleches = [haut, gauche, bas, droite];
+    let indexSelect;
+    
+    $(haut).text(reponses[0]);
+    
+    //Affectation des touches
+    fleches.forEach(function(fleche) {
+        indexSelect = Math.floor(Math.random() * reponses.length);
+        $(fleche).text(reponses[indexSelect]);
+        reponses.splice(indexSelect, 1);
+    });
+    
+    $(document).keypress(function(event) {
+        let codes = [37,38,39,40];
+        if(codes.includes(event.keyCode))
+        {
+            $(document).off("keypress");
+            testReponseBonneChemin(event.keyCode);
+        }
+        
+    });
+    
     //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
+        x: 50, y: 50,
         fontSize: 20,
         text: 'Question ' + localStorage.getItem('qstActuelleChemin') + ' sur ' + localStorage.getItem('nbQuestionsChemin')
+    }).drawText({
+        fillStyle: 'black',
+        x: 50, y: 100,
+        fontSize: 20,
+        text: qst
     });
-    
-    //LOG
-    console.log("DeroulementDebut");
 }
 
 function testReponseBonneChemin(key) {
-    //Maj Canvas
-    $(jeu).clearCanvas().drawText({
-        fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
-        text: key.toString()
-    });
+    //Réponse choisie
+    let reponseChoisie;
+    switch(key) {
+        case 37:
+            reponseChoisie = $(gauche).text();
+            break;
+        
+        case 38:
+            reponseChoisie = $(haut).text();
+            break;
+            
+        case 39:
+            reponseChoisie = $(droite).text();
+            break;
+            
+        case 40:
+            reponseChoisie = $(bas).text();
+            break;
+    }
     
-    setTimeout(function() { testDeroulementFinChemin(); },3000);
+    if(reponseChoisie.localeCompare(localStorage.getItem('reponse')) == 0)
+        testDeroulementFinChemin(true);
+    else
+        testDeroulementFinChemin(false);
 }
 
-function testDeroulementFinChemin() {
-    if(parseInt(localStorage.getItem('qstActuelleChemin')) < parseInt(localStorage.getItem('nbQuestionsChemin')))
+function testDeroulementFinChemin(reponseBonne) {
+    $(jeu).clearCanvas();
+    
+    if(reponseBonne)
     {
-        localStorage.setItem('qstActuelleChemin', parseInt(localStorage.getItem('qstActuelleChemin'))+1)
-        testDeroulementDebutChemin();
+        localStorage.setItem('score', parseInt(localStorage.getItem('score')) + 1);
+        $(jeu).drawText({
+            fillStyle: 'black',
+            x: 50, y: 50,
+            fontSize: 40,
+            text: "Bravo !"
+        })
     }
     else
     {
-        testConclusionChemin();
+        $(jeu).drawText({
+            fillStyle: 'black',
+            x: 50, y: 50,
+            fontSize: 40,
+            text: "Dommage !"
+        })
     }
+    
+    setTimeout(function() {
+        if(parseInt(localStorage.getItem('qstActuelleChemin')) < parseInt(localStorage.getItem('nbQuestionsChemin')))
+        {
+            localStorage.setItem('qstActuelleChemin', parseInt(localStorage.getItem('qstActuelleChemin'))+1)
+            testDeroulementDebutChemin();
+        }
+        else
+        {
+            testConclusionChemin();
+        }
+    }, 1000)
+    
+    
 }
 
 function testConclusionChemin() {
@@ -177,6 +276,6 @@ function testConclusionChemin() {
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
-        text: 'GG Arnaud'
+        text: 'score : ' + localStorage.getItem('score')
     });
 }
