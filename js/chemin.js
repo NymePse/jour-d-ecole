@@ -101,8 +101,8 @@
 
 function setUpChemin() {
     //création variables LocalStorage de la partie
-    localStorage.setItem('nbQuestionsChemin', (Math.ceil(Math.random() * (6 - 3) + 3)));
-    localStorage.setItem('qstActuelleChemin', 0);
+    localStorage.setItem('nbQuestions', (Math.ceil(Math.random() * (6 - 3) + 3)));
+    localStorage.setItem('qstActuelle', 0);
     localStorage.setItem('score', 0);
     
     
@@ -177,9 +177,9 @@ function deroulementFinChemin(key) {
     $(document).off('keydown');
     
     setTimeout(function() {
-        if(parseInt(localStorage.getItem('qstActuelleChemin')) < parseInt(localStorage.getItem('nbQuestionsChemin')))
+        if(parseInt(localStorage.getItem('qstActuelle')) < parseInt(localStorage.getItem('nbQuestions')))
         {
-            localStorage.setItem('qstActuelleChemin', parseInt(localStorage.getItem('qstActuelleChemin'))+1)
+            localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
             deroulementDebutChemin();
         }
         else

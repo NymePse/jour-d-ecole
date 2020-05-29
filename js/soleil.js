@@ -52,9 +52,6 @@
  *   unbind bouton
  *   bind barre espace => DéroulementDebut
  *   affiche texte "appuyer espace"
- *   créer variable localStorage txtQuestion remplie avec addition au hasard
- *   créer variable localStorage reponseQuestion remplie avec réponse addition
- *   créer variables reponse 1 2 et 3 avec mauvaises réponses
  *   créer variable localStorage nbQuestions et la remplir avec un random
  *   créer variable localStorage qstActuelle à 0
  *   créer variable localStorage score à 0
@@ -64,22 +61,17 @@
  *   créer question
  *   créer bonne réponse & autres réponses
  *   Entrer les réponses dans les divs flèches au hasard
- *   bind flèches + divs => ReponseBonne
+ *   bind flèches + divs => DéroulementFIn(keyCode)
  *   Afficher question
- * 
- * RéponseBonne :
- *   récupérer réponse selon touche
- *   si réponse donnée = bonne réponse
- *     DeroulementFin(true)
- *   sinon
- *     DeroulementFin(false)
  * 
  * DéroulementFin :
  *   si true
  *     score++
  *     afficher "bravo !"
  *   sinon
- *     afficher "dommage !"
+ *     afficher "Fin du jeu."
+ *     wait 1 sec
+ *     Conclusion
  *   si qst == nb
  *     Conclusion
  *   sinon
@@ -93,7 +85,26 @@
  */
 
 function setUpSoleil() {
+    //création variables LocalStorage de la partie
+    localStorage.setItem('nbQuestions', (Math.ceil(Math.random() * (6 - 3) + 3)));
+    localStorage.setItem('qstActuelle', 0);
+    localStorage.setItem('score', 0);
     
+    
+    //Gestion events
+    $(bouton).off("click");
+    $(document).keypress(function(event) {
+        if(event.keyCode == 32)
+            deroulementDebutSoleil();
+    });
+    
+    //Maj Canvas
+    $(jeu).clearCanvas().drawText({
+        fillStyle: 'black',
+        x: 100, y: 100,
+        fontSize: 20,
+        text: "Appuyer sur espace"
+    });
 }
 
 function deroulementDebutSoleil()  {
