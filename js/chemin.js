@@ -177,7 +177,7 @@ function deroulementFinChemin(key) {
     $(document).off('keydown');
     
     setTimeout(function() {
-        if(parseInt(localStorage.getItem('qstActuelle')) < parseInt(localStorage.getItem('nbQuestions')))
+        if(quizzComplet)
         {
             localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
             deroulementDebutChemin();

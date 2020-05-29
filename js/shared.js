@@ -16,7 +16,7 @@ const espace = "#espace";
 //Variables localStorage
 const question = 'question';
 const reponse = 'reponse'; //doit être suivi d'un nombre entre 0 et 3
-const nbQuestion = 'nbQuestions';
+const nbQuestions = 'nbQuestions';
 const qstActuelle = 'qstActuelle';
 const score = 'score';
 const nbParties = 'nbParties';
@@ -39,6 +39,7 @@ function setUpGame() {
     console.log(mode + exo + diff + chrono);
 }
 
+//Retur true si bonne réponse donnée
 function reponseBonne(key) {
     //Réponse choisie
     let reponseChoisie;
@@ -65,7 +66,6 @@ function reponseBonne(key) {
     else
         return false;
 }
-
 
 //Création question & assignation réponses aux touches
 function creerQuestion() {
@@ -105,4 +105,15 @@ function creerQuestion() {
         $(fleche).text(reponses[indexSelect]);
         reponses.splice(indexSelect, 1);
     });
+}
+
+//Compare qstActuelle à nbQuestion, return true si égal (toutes questions faites)
+function quizzComplet() {
+    let index = parseInt(localStorage.getItem(qstActuelle));
+    let max = parseInt(localStorage.getItem(nbQuestions));
+    
+    if(index >= max)
+        return true;
+    else
+        return false;
 }
