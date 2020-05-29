@@ -13,6 +13,14 @@ const bas = "#bas";
 const droite = "#droite";
 const espace = "#espace";
 
+//Variables localStorage
+const question = 'question';
+const reponse = 'reponse'; //doit être suivi d'un nombre entre 0 et 3
+const nbQuestion = 'nbQuestions';
+const qstActuelle = 'qstActuelle';
+const score = 'score';
+const nbParties = 'nbParties';
+
 function setUpSite() {
     $(bouton).bind("click", creerQuestion());
     localStorage.clear();
