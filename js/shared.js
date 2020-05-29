@@ -5,7 +5,8 @@ const choixDiff = "#difficulte";
 const choixChrono = "#chrono";
 const bouton = "#jouer";
 const jeu =  "#jeu";
-const fleche = ".fleche";
+const fleches = [haut, gauche, bas, droite];
+const classfleche = ".fleche";
 const haut = "#haut";
 const gauche = "#gauche";
 const bas = "#bas";
@@ -13,7 +14,7 @@ const droite = "#droite";
 const espace = "#espace";
 
 function setUpSite() {
-    $(bouton).bind("click", setUpGame);
+    $(bouton).bind("click", creerQuestion());
 }
 
 function setUpGame() {
@@ -27,14 +28,6 @@ function setUpGame() {
     let diff = $(choixDiff + ' :selected').val();
     let chrono = $(choixChrono + ' :selected').val();
     console.log(mode + exo + diff + chrono);
-}
-
-//Fonctions de gestion des modes de jeu
-function journee(exercice, difficulte, chrono) {
-    /*
-     * Joue tout les modes de jeu
-     * dans l'ordre, avec des transitions
-     */
 }
 
 function reponseBonne(key) {
@@ -58,9 +51,49 @@ function reponseBonne(key) {
             break;
     }
     
-    if(reponseChoisie.localeCompare(localStorage.getItem('reponse')) == 0)
+    if(reponseChoisie.localeCompare(localStorage.getItem('reponse0')) == 0)
         return true;
     else
         return false;
 }
 
+
+//Création question & assignation réponses aux touches
+function creerQuestion() {
+    //Création de la question
+    let qstPart1 = Math.ceil(Math.random() * (10 - 1) + 1);
+    let qstPart2 = Math.ceil(Math.random() * (10 - 1) + 1);
+    let qst = qstPart1 + '+' + qstPart2;
+    let qstTotal = eval(qst);
+    localStorage.setItem('question', qst);
+    localStorage.setItem('reponse0', qstTotal);
+    
+    //Array de réponses + création des réponses fausses
+    let reponses = Array(4);
+    reponses[0] = qstTotal;
+    let part;
+    for(let i = 1; i < 4; i++) {
+        if(Math.random() < 0.5)
+        {
+            part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
+            while(reponses.includes(part))
+                part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
+        }
+        else
+        {
+            part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
+            while(reponses.includes(part))
+                part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
+        }
+        localStorage.setItem('reponse' + i, part);
+        reponses[i] = part;
+    }
+    
+    //Affectation des réponses aux touches
+    let indexSelect;
+    fleches.forEach(function(fleche) {
+        indexSelect = Math.floor(Math.random() * reponses.length);
+        $(fleche).text(reponses[indexSelect]);
+        reponses.splice(indexSelect, 1);
+    });
+}

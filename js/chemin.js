@@ -123,45 +123,9 @@ function setUpChemin() {
 }
 
 function deroulementDebutChemin() {
-    //Création de la question
-    let qstPart1 = Math.ceil(Math.random() * (10 - 1) + 1);
-    let qstPart2 = Math.ceil(Math.random() * (10 - 1) + 1);
-    let qst = qstPart1 + '+' + qstPart2;
-    let qstTotal = eval(qst);
-    let reponses = Array(4);
-    localStorage.setItem('reponse', qstTotal);
+    creerQuestion();
     
-    //Array de réponses + création des réponses fausses
-    reponses[0] = qstTotal;
-    var part;
-    for(let i = 1; i < 4; i++) {
-        if(Math.random() < 0.5)
-        {
-            part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
-            while(reponses.includes(part))
-                part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
-        }
-        else
-        {
-            part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
-            while(reponses.includes(part))
-                part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
-        }
-        reponses[i] = part;
-    }
     
-    //Sélection d'un bouton et réponse correspondante
-    let fleches = [haut, gauche, bas, droite];
-    let indexSelect;
-    
-    $(haut).text(reponses[0]);
-    
-    //Affectation des touches
-    fleches.forEach(function(fleche) {
-        indexSelect = Math.floor(Math.random() * reponses.length);
-        $(fleche).text(reponses[indexSelect]);
-        reponses.splice(indexSelect, 1);
-    });
     
     $(document).keydown(function(event) {
         let codes = [37,38,39,40];
@@ -183,7 +147,7 @@ function deroulementDebutChemin() {
         fillStyle: 'black',
         x: 50, y: 100,
         fontSize: 20,
-        text: qst
+        text: localStorage.getItem('question');
     });
 }
 
