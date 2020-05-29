@@ -125,8 +125,6 @@ function setUpChemin() {
 function deroulementDebutChemin() {
     creerQuestion();
     
-    
-    
     $(document).keydown(function(event) {
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
@@ -179,14 +177,14 @@ function deroulementFinChemin(key) {
     setTimeout(function() {
         if(quizzComplet)
         {
-            localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
-            deroulementDebutChemin();
+            conclusionChemin();
         }
         else
         {
-            conclusionChemin();
+            localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
+            deroulementDebutChemin();
         }
-    }, 1000)
+    }, 1000);
     
     
 }
