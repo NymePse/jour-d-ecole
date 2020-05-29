@@ -15,6 +15,7 @@ const espace = "#espace";
 
 function setUpSite() {
     $(bouton).bind("click", creerQuestion());
+    localStorage.clear();
 }
 
 function setUpGame() {
