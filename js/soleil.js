@@ -61,7 +61,7 @@
  *   créer question
  *   créer bonne réponse & autres réponses
  *   Entrer les réponses dans les divs flèches au hasard
- *   bind flèches + divs => DéroulementFIn(keyCode)
+ *   bind flèches + divs => DéroulementFin(keyCode)
  *   Afficher question
  * 
  * DéroulementFin :
@@ -103,18 +103,79 @@ function setUpSoleil() {
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
-        text: "Appuyer sur espace"
+        text: "1, 2, 3, Soleil !"
     });
 }
 
 function deroulementDebutSoleil()  {
+    creerQuestion();
+    
+    //Maj Canvas
+    $(jeu).clearCanvas().drawText({
+        fillStyle: 'black',
+        x: 100, y: 100,
+        fontSize: 20,
+        text: localStorage.getItem(question)
+    });
+    
+     $(document).keydown(function(event) {
+        let codes = [37,38,39,40];
+        if(codes.includes(event.keyCode))
+        {
+            $(document).off("keypress");
+            deroulementFinSoleil(event.keyCode);
+        }
+    });
     
 }
 
-function deroulementFinSoleil() {
+function deroulementFinSoleil(key) {
+    $(jeu).clearCanvas();
     
+    if(reponseBonne(key))
+    {
+        localStorage.setItem('score', parseInt(localStorage.getItem('score')) + 1);
+        $(jeu).drawText({
+            fillStyle: 'black',
+            x: 50, y: 50,
+            fontSize: 40,
+            text: "Bravo !"
+        });
+        
+        $(document).off('keydown');
+    
+        setTimeout(function() {
+        if(quizzComplet())
+        {
+            conclusionSoleil();
+        }
+        else
+        {
+            localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
+            deroulementDebutSoleil();
+        }
+    }, 1000);
+    }
+    else
+    {
+        $(jeu).drawText({
+            fillStyle: 'black',
+            x: 50, y: 50,
+            fontSize: 40,
+            text: "Fin du jeu."
+        })
+        setTimeout(function() { console.log("FIN");  conclusionSoleil(); }, 1000);
+    }
 }
 
 function conclusionSoleil() {
+    //Maj Canvas
+    $(jeu).clearCanvas().drawText({
+        fillStyle: 'black',
+        x: 100, y: 100,
+        fontSize: 20,
+        text: 'score : ' + localStorage.getItem('score')
+    });
     
+    $(bouton).click(setUpGame);
 }

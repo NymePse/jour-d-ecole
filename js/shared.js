@@ -5,24 +5,23 @@ const choixDiff = "#difficulte";
 const choixChrono = "#chrono";
 const bouton = "#jouer";
 const jeu =  "#jeu";
-const fleches = [haut, gauche, bas, droite];
 const classfleche = ".fleche";
 const haut = "#haut";
 const gauche = "#gauche";
 const bas = "#bas";
 const droite = "#droite";
+const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 
 //Variables localStorage
-const question = 'question';
-const reponse = 'reponse'; //doit être suivi d'un nombre entre 0 et 3
-const nbQuestions = 'nbQuestions';
-const qstActuelle = 'qstActuelle';
-const score = 'score';
-const nbParties = 'nbParties';
+const question = "question";
+const reponse = "reponse"; //doit être suivi d'un nombre entre 0 et 3
+const nbQuestions = "nbQuestions";
+const qstActuelle = "qstActuelle";
+const score = "score";
+const nbParties = "nbParties";
 
 function setUpSite() {
-    $(bouton).bind("click", creerQuestion());
     localStorage.clear();
 }
 
@@ -37,6 +36,17 @@ function setUpGame() {
     let diff = $(choixDiff + ' :selected').val();
     let chrono = $(choixChrono + ' :selected').val();
     console.log(mode + exo + diff + chrono);
+    
+    switch(mode) {
+        case "chemin" :
+            setUpChemin();
+            $(bouton).blur();
+            break;
+        case "soleil" :
+            setUpSoleil();
+            $(bouton).blur();
+            break;
+    }
 }
 
 //Retur true si bonne réponse donnée
@@ -109,7 +119,7 @@ function creerQuestion() {
 
 //Compare qstActuelle à nbQuestion, return true si égal (toutes questions faites)
 function quizzComplet() {
-    let index = parseInt(localStorage.getItem(qstActuelle));
+    let index = parseInt(localStorage.getItem('qstActuelle'));
     let max = parseInt(localStorage.getItem(nbQuestions));
     
     if(index >= max)

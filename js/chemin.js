@@ -101,10 +101,9 @@
 
 function setUpChemin() {
     //création variables LocalStorage de la partie
-    localStorage.setItem('nbQuestions', (Math.ceil(Math.random() * (6 - 3) + 3)));
-    localStorage.setItem('qstActuelle', 0);
-    localStorage.setItem('score', 0);
-    
+    localStorage.setItem(nbQuestions, (Math.ceil(Math.random() * (6 - 3) + 3)));
+    localStorage.setItem(qstActuelle, 0);
+    localStorage.setItem(score, 0);
     
     //Gestion events
     $(bouton).off("click");
@@ -140,12 +139,12 @@ function deroulementDebutChemin() {
         fillStyle: 'black',
         x: 50, y: 50,
         fontSize: 20,
-        text: 'Question ' + localStorage.getItem('qstActuelleChemin') + ' sur ' + localStorage.getItem('nbQuestionsChemin')
+        text: 'Question ' + localStorage.getItem(qstActuelle) + ' sur ' + localStorage.getItem(nbQuestions)
     }).drawText({
         fillStyle: 'black',
         x: 50, y: 100,
         fontSize: 20,
-        text: localStorage.getItem('question');
+        text: localStorage.getItem(question)
     });
 }
 
@@ -154,7 +153,7 @@ function deroulementFinChemin(key) {
     
     if(reponseBonne(key))
     {
-        localStorage.setItem('score', parseInt(localStorage.getItem('score')) + 1);
+        localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -175,13 +174,13 @@ function deroulementFinChemin(key) {
     $(document).off('keydown');
     
     setTimeout(function() {
-        if(quizzComplet)
+        if(quizzComplet())
         {
             conclusionChemin();
         }
         else
         {
-            localStorage.setItem('qstActuelle', parseInt(localStorage.getItem('qstActuelle'))+1)
+            localStorage.setItem(qstActuelle, parseInt(localStorage.getItem(qstActuelle))+1)
             deroulementDebutChemin();
         }
     }, 1000);
