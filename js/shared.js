@@ -14,12 +14,13 @@ const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 
 //Variables localStorage
-const question = "question";
-const reponse = "reponse"; //doit être suivi d'un nombre entre 0 et 3
-const nbQuestions = "nbQuestions";
-const qstActuelle = "qstActuelle";
+const question = "question"; //Contient le texte de la question
+const reponse = "reponse"; //Réponses entre 0 et 3 (à rajouter à la création), la 0 est la bonne
+const nbQuestions = "nbQuestions"; //Nombre de questions de la partie
+const qstActuelle = "qstActuelle"; //Index question actuelle
 const score = "score";
-const nbParties = "nbParties";
+const nbParties = "nbParties"; //Nombre de parties
+const prtActuelle = "prtActuelle"; //Index partie actuelle
 
 function setUpSite() {
     localStorage.clear();
