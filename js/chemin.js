@@ -182,7 +182,7 @@ function deroulementFinChemin(key) {
     
     if(reponseBonne(key))
     {
-        localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
+        incrementerVariableLocale(score);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -209,7 +209,7 @@ function deroulementFinChemin(key) {
         }
         else
         {
-            localStorage.setItem(qstActuelle, parseInt(localStorage.getItem(qstActuelle))+1)
+            incrementerVariableLocale(qstActuelle);
             deroulementDebutChemin();
         }
     }, 1000);

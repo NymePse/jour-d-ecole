@@ -189,7 +189,7 @@ function deroulementFinFoot(key) {
     
     if(reponseBonne(key))
     {
-        localStorage.setItem(qstActuelle, parseInt(localStorage.getItem(qstActuelle)) + 1);
+        incrementerVariableLocale(qstActuelle);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -200,7 +200,7 @@ function deroulementFinFoot(key) {
     else
     {
         localStorage.setItem(qstActuelle, 0);
-        localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
+        incrementerVariableLocale(prtActuelle);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -214,8 +214,8 @@ function deroulementFinFoot(key) {
         if(quizzComplet())
         {
             localStorage.setItem(qstActuelle, 0);
-            localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
-            localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
+            incrementerVariableLocale(prtActuelle);
+            incrementerVariableLocale(score);
         }
         
         if(partiesCompletes())
