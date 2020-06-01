@@ -90,7 +90,7 @@
  *     conclusion
  *   si prt < nbPart && qst > nbQst
  *     prt++
- *     qst++
+ *     qst = 0
  *     score++
  * 
  * Conclusion :
@@ -101,7 +101,9 @@
 
 function setUpFoot() {
     //création variables LocalStorage de la partie
+    localStorage.setItem(nbParties, (Math.ceil(Math.random() * (4 - 2) + 2)))
     localStorage.setItem(nbQuestions, (Math.ceil(Math.random() * (6 - 3) + 3)));
+    localStorage.setItem(prtActuelle, 0);
     localStorage.setItem(qstActuelle, 0);
     localStorage.setItem(score, 0);
     
@@ -109,7 +111,7 @@ function setUpFoot() {
     $(bouton).off("click");
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
-            deroulementDebutChemin();
+            deroulementDebutFoot();
     });
     
     //Maj Canvas
@@ -129,7 +131,7 @@ function deroulementDebutFoot() {
         if(codes.includes(event.keyCode))
         {
             $(document).off("keypress");
-            deroulementFinChemin(event.keyCode);
+            deroulementFinFoot(event.keyCode);
         }
         
     });
@@ -137,12 +139,17 @@ function deroulementDebutFoot() {
     //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
-        x: 50, y: 50,
+        x: 50, y: 20,
         fontSize: 20,
-        text: 'Question ' + localStorage.getItem(qstActuelle) + ' sur ' + localStorage.getItem(nbQuestions)
+        text: 'Partie ' + localStorage.getItem(prtActuelle) + " sur " + localStorage.getItem(nbParties)
     }).drawText({
         fillStyle: 'black',
-        x: 50, y: 100,
+        x: 50, y: 50,
+        fontSize: 20,
+        text: 'Question ' + localStorage.getItem(qstActuelle) + " sur " + localStorage.getItem(nbQuestions)
+    }).drawText({
+        fillStyle: 'black',
+        x: 50, y: 80,
         fontSize: 20,
         text: localStorage.getItem(question)
     });
@@ -153,35 +160,48 @@ function deroulementFinFoot(key) {
     
     if(reponseBonne(key))
     {
-        localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
+        localStorage.setItem(nbQuestions, parseInt(localStorage.getItem(nbQuestions)) + 1);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
-            fontSize: 40,
+            fontSize: 20,
             text: "Bravo !"
         })
     }
     else
     {
+        localStorage.setItem(qstActuelle, 0);
+        localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
-            fontSize: 40,
+            fontSize: 20,
             text: "Dommage !"
         })
     }
     
-    $(document).off('keydown');
-    
     setTimeout(function() {
-        if(quizzComplet())
+        //si toutes parties jouées
+        if(parseInt(localStorage.getItem(prtActuelle)) > parseInt(localStorage.getItem(nbParties)))
         {
-            conclusionChemin();
+            conclusionFoot();
+        }
+        //si dernière question de dernière partie jouée
+        else if(parseInt(localStorage.getItem(prtActuelle)) == parseInt(localStorage.getItem(nbParties)) && parseInt(localStorage.getItem(qstActuelle)) > parseInt(localStorage.getItem(nbQuestions)))
+        {
+            conclusionFoot();
+        }
+        //si toutes questions partie faites mais pas dernière partie
+        else if(parseInt(localStorage.getItem(prtActuelle)) < parseInt(localStorage.getItem(nbParties)) && parseInt(localStorage.getItem(qstActuelle)) > parseInt(localStorage.getItem(nbQuestions)))
+        {
+            localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
+            localStorage.setItem(qstActuelle, 0);
+            localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
+            deroulementDebutFoot();
         }
         else
         {
-            localStorage.setItem(qstActuelle, parseInt(localStorage.getItem(qstActuelle))+1)
-            deroulementDebutChemin();
+            deroulementDebutFoot();
         }
     }, 1000);
     

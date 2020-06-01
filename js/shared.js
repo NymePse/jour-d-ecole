@@ -47,6 +47,10 @@ function setUpGame() {
             setUpSoleil();
             $(bouton).blur();
             break;
+        case "foot" :
+            setUpFoot();
+            $(bouton).blur();
+            break;
     }
 }
 
