@@ -226,31 +226,6 @@ function deroulementFinFoot(key) {
         {
             deroulementDebutFoot();
         }
-        
-        
-        /*
-        //si toutes parties jouées
-        if(parseInt(localStorage.getItem(prtActuelle)) > parseInt(localStorage.getItem(nbParties)))
-        {
-            conclusionFoot();
-        }
-        //si dernière question de dernière partie jouée
-        else if(parseInt(localStorage.getItem(prtActuelle)) == parseInt(localStorage.getItem(nbParties)) && quizzComplet())
-        {
-            conclusionFoot();
-        }
-        //si toutes questions partie faites mais pas dernière partie
-        else if(parseInt(localStorage.getItem(prtActuelle)) < parseInt(localStorage.getItem(nbParties)) && quizzComplet())
-        {
-            localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
-            localStorage.setItem(qstActuelle, 0);
-            localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
-            deroulementDebutFoot();
-        }
-        else
-        {
-            deroulementDebutFoot();
-        }*/
     }, 1000);
     
     

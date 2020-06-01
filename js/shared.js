@@ -133,3 +133,47 @@ function quizzComplet() {
         return false;
 }
 
+function creerAddition() {
+    /*
+     * si difficulté "facile"
+     *   addition sous la dizaine
+     * si difficulté "moyen"
+     *   addition complément à la dizaine ou jusqu'à 19 max
+     * si difficulté "difficile"
+     *   addition jusqu'à 40 max
+     */
+}
+
+function creerSoustraction() {
+    /*
+     * /!\ JAMAIS DE RESULTAT NEGATIF (nb 1 >= nb 2)
+     * si difficulté "facile"
+     *   soustraction sous la dizaine
+     * si difficulté "moyen"
+     *   soustraction au dessus de la dizaine, nb1 < 20
+     * si difficulté "difficile"
+     *   soustraction avec les dizaines, nb1 < 40
+     */
+}
+
+function creerMultiplication() {
+    /*
+     * si difficulté "facile"
+     *   
+     * si difficulté "moyen"
+     *    
+     * si difficulté "difficile"
+     *   
+     */
+}
+
+function creerDivision() {
+    /*
+     * si difficulté "facile"
+     *   
+     * si difficulté "moyen"
+     *   
+     * si difficulté "difficile"
+     *   
+     */
+}
