@@ -133,7 +133,26 @@ function deroulementDebutFoot() {
             $(document).off("keypress");
             deroulementFinFoot(event.keyCode);
         }
-        
+    });
+    
+    $(classfleche).click(function(event) {
+       let fleche = event.target.id;
+       $(document).off("keypress");
+       $(classfleche).off("click");
+       switch(fleche) {
+           case "haut":
+               deroulementFinFoot(38);
+               break;
+           case "gauche":
+               deroulementFinFoot(37);
+               break;
+           case "bas":
+               deroulementFinFoot(40);
+               break;
+           case "droite":
+               deroulementFinFoot(39);
+               break;
+       }
     });
     
     //Maj Canvas

@@ -127,6 +127,26 @@ function deroulementDebutSoleil()  {
         }
     });
     
+    $(classfleche).click(function(event) {
+       let fleche = event.target.id;
+       $(document).off("keypress");
+       $(classfleche).off("click");
+       switch(fleche) {
+           case "haut":
+               deroulementFinSoleil(38);
+               break;
+           case "gauche":
+               deroulementFinSoleil(37);
+               break;
+           case "bas":
+               deroulementFinSoleil(40);
+               break;
+           case "droite":
+               deroulementFinSoleil(39);
+               break;
+       }
+    });
+    
 }
 
 function deroulementFinSoleil(key) {

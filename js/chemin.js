@@ -131,7 +131,26 @@ function deroulementDebutChemin() {
             $(document).off("keypress");
             deroulementFinChemin(event.keyCode);
         }
-        
+    });
+    
+    $(classfleche).click(function(event) {
+       let fleche = event.target.id;
+       $(document).off("keypress");
+       $(classfleche).off("click");
+       switch(fleche) {
+           case "haut":
+               deroulementFinChemin(38);
+               break;
+           case "gauche":
+               deroulementFinChemin(37);
+               break;
+           case "bas":
+               deroulementFinChemin(40);
+               break;
+           case "droite":
+               deroulementFinChemin(39);
+               break;
+       }
     });
     
     //Maj Canvas
