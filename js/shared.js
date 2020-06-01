@@ -177,3 +177,8 @@ function creerDivision() {
      *   
      */
 }
+
+function incrementerVariableLocale(nomVariable) {
+    let valeur = parseInt(localStorage.getItem(nomVariable));
+    localStorage.setItem(nomVariable, valeur + 1);
+}
