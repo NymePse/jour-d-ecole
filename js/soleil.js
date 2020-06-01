@@ -95,7 +95,17 @@ function setUpSoleil() {
     $(bouton).off("click");
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
+        {
+            $(document).off("keypress");
+            $(espace).off("click");
             deroulementDebutSoleil();
+        }
+    });
+    
+    $(espace).click(function() {
+        $(document).off("keypress");
+        $(espace).off("click");
+        deroulementDebutSoleil();
     });
     
     //Maj Canvas

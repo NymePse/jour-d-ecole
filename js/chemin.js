@@ -109,7 +109,17 @@ function setUpChemin() {
     $(bouton).off("click");
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
+        {
+            $(document).off("keypress");
+            $(espace).off("click");
             deroulementDebutChemin();
+        }
+    });
+    
+    $(espace).click(function() {
+        $(document).off("keypress");
+        $(espace).off("click");
+        deroulementDebutChemin();
     });
     
     //Maj Canvas
