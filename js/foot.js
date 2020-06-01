@@ -189,7 +189,7 @@ function deroulementFinFoot(key) {
     
     if(reponseBonne(key))
     {
-        localStorage.setItem(nbQuestions, parseInt(localStorage.getItem(nbQuestions)) + 1);
+        localStorage.setItem(qstActuelle, parseInt(localStorage.getItem(qstActuelle)) + 1);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -210,18 +210,37 @@ function deroulementFinFoot(key) {
     }
     
     setTimeout(function() {
+        
+        if(quizzComplet())
+        {
+            localStorage.setItem(qstActuelle, 0);
+            localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
+            localStorage.setItem(score, parseInt(localStorage.getItem(score)) + 1);
+        }
+        
+        if(partiesCompletes())
+        {
+           conclusionFoot();
+        }
+        else
+        {
+            deroulementDebutFoot();
+        }
+        
+        
+        /*
         //si toutes parties jouées
         if(parseInt(localStorage.getItem(prtActuelle)) > parseInt(localStorage.getItem(nbParties)))
         {
             conclusionFoot();
         }
         //si dernière question de dernière partie jouée
-        else if(parseInt(localStorage.getItem(prtActuelle)) == parseInt(localStorage.getItem(nbParties)) && parseInt(localStorage.getItem(qstActuelle)) > parseInt(localStorage.getItem(nbQuestions)))
+        else if(parseInt(localStorage.getItem(prtActuelle)) == parseInt(localStorage.getItem(nbParties)) && quizzComplet())
         {
             conclusionFoot();
         }
         //si toutes questions partie faites mais pas dernière partie
-        else if(parseInt(localStorage.getItem(prtActuelle)) < parseInt(localStorage.getItem(nbParties)) && parseInt(localStorage.getItem(qstActuelle)) > parseInt(localStorage.getItem(nbQuestions)))
+        else if(parseInt(localStorage.getItem(prtActuelle)) < parseInt(localStorage.getItem(nbParties)) && quizzComplet())
         {
             localStorage.setItem(prtActuelle, parseInt(localStorage.getItem(prtActuelle)) + 1);
             localStorage.setItem(qstActuelle, 0);
@@ -231,7 +250,7 @@ function deroulementFinFoot(key) {
         else
         {
             deroulementDebutFoot();
-        }
+        }*/
     }, 1000);
     
     
@@ -247,4 +266,14 @@ function conclusionFoot() {
     });
     
     $(bouton).click(setUpGame);
+}
+    
+function partiesCompletes() {
+    let index = parseInt(localStorage.getItem(prtActuelle));
+    let max = parseInt(localStorage.getItem(nbParties));
+    
+    if(index >= max)
+        return true;
+    else
+        return false;
 }

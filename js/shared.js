@@ -132,3 +132,4 @@ function quizzComplet() {
     else
         return false;
 }
+
