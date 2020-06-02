@@ -22,6 +22,7 @@ const score = "score";
 const nbParties = "nbParties"; //Nombre de parties
 const prtActuelle = "prtActuelle"; //Index partie actuelle
 const modeDeJeu = "modeDeJeu"; //choix mode de jeu
+const typeExercice = "typeExercice"; //choix type exercice
 const difficulte = "difficulte"; //choix difficulte
 const chrono = "chrono"; //choix chrono
 const journee = "journee"; //contient true si mode de jeu journée
@@ -38,11 +39,12 @@ var chronoActuel;
 
 function setUpSite() {
     localStorage.clear();
-    localStorage.setItem(chrono, "lent");
-    setChrono();
 }
 
 function setUpGame() {
+    //Stop chrono si existant
+    clearInterval(idInterval);
+    
     /*
      * Récupère les options
      * et lance une partie en fonction
@@ -51,8 +53,12 @@ function setUpGame() {
     let mode = $(choixMode + ' :selected').val();
     let exo = $(choixExo + ' :selected').val();
     let diff = $(choixDiff + ' :selected').val();
-    let chrono = $(choixChrono + ' :selected').val();
-    console.log(mode + exo + diff + chrono);
+    let timer = $(choixChrono + ' :selected').val();
+    
+    localStorage.setItem(modeDeJeu, mode);
+    localStorage.setItem(typeExercice, exo);
+    localStorage.setItem(difficulte, diff);
+    localStorage.setItem(chrono, timer);
     
     switch(mode) {
         case "chemin" :
@@ -72,28 +78,33 @@ function setUpGame() {
 
 //Retur true si bonne réponse donnée
 function reponseBonne(key) {
-    //Réponse choisie
-    let reponseChoisie;
-    switch(key) {
-        case 37:
-            reponseChoisie = $(gauche).text();
-            break;
-        
-        case 38:
-            reponseChoisie = $(haut).text();
-            break;
-            
-        case 39:
-            reponseChoisie = $(droite).text();
-            break;
-            
-        case 40:
-            reponseChoisie = $(bas).text();
-            break;
+    if(key != 0)
+    {
+        //Réponse choisie
+        let reponseChoisie;
+        switch(key) {
+            case 37:
+                reponseChoisie = $(gauche).text();
+                break;
+
+            case 38:
+                reponseChoisie = $(haut).text();
+                break;
+
+            case 39:
+                reponseChoisie = $(droite).text();
+                break;
+
+            case 40:
+                reponseChoisie = $(bas).text();
+                break;
+        }
+
+        if(reponseChoisie.localeCompare(localStorage.getItem('reponse0')) == 0)
+            return true;
+        else
+            return false;
     }
-    
-    if(reponseChoisie.localeCompare(localStorage.getItem('reponse0')) == 0)
-        return true;
     else
         return false;
 }
@@ -209,7 +220,7 @@ function setChrono() {
             chronoFin = chronoMoyen;
             break;
         case "rapide":
-            chronoFin = chronoFin;
+            chronoFin = chronoRapide;
             break;
     }
     
@@ -238,5 +249,21 @@ function chronometre() {
     if(chronoActuel == chronoFin)
     {
         clearInterval(idInterval);
+        let mdj = localStorage.getItem(modeDeJeu);
+        /*<option value="chemin">Chemin pour l'école</option>
+                <option value="foot">Foot entre amis</option>
+                <option value="soleil">1, 2, 3, Soleil !</option>
+                */
+        switch(mdj) {
+            case "chemin":
+                deroulementFinChemin(0);
+                break;
+            case "foot":
+                deroulementFinFoot(0);
+                break;
+            case "soleil":
+                deroulementFinSoleil(0);
+                break;
+        }
     }
 }

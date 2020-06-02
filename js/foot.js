@@ -182,9 +182,17 @@ function deroulementDebutFoot() {
         fontSize: 20,
         text: localStorage.getItem(question)
     });
+    
+    //Set chrono
+    let typeChrono = localStorage.getItem(chrono);
+    if(typeChrono != "sans")
+        setChrono();
 }
 
 function deroulementFinFoot(key) {
+    //stop chrono
+    clearInterval(idInterval);
+    
     $(jeu).clearCanvas();
     
     if(reponseBonne(key))

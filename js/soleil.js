@@ -157,9 +157,16 @@ function deroulementDebutSoleil()  {
        }
     });
     
+    //Set chrono
+    let typeChrono = localStorage.getItem(chrono);
+    if(typeChrono != "sans")
+        setChrono();
 }
 
 function deroulementFinSoleil(key) {
+    //stop chrono
+    clearInterval(idInterval);
+    
     $(jeu).clearCanvas();
     
     if(reponseBonne(key))

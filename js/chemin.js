@@ -175,11 +175,18 @@ function deroulementDebutChemin() {
         fontSize: 20,
         text: localStorage.getItem(question)
     });
+    
+    //Set chrono
+    let typeChrono = localStorage.getItem(chrono);
+    if(typeChrono != "sans")
+        setChrono();
 }
 
 function deroulementFinChemin(key) {
-    $(jeu).clearCanvas();
+    //stop chrono
+    clearInterval(idInterval);
     
+    $(jeu).clearCanvas();    
     if(reponseBonne(key))
     {
         incrementerVariableLocale(score);
@@ -188,7 +195,7 @@ function deroulementFinChemin(key) {
             x: 50, y: 50,
             fontSize: 40,
             text: "Bravo !"
-        })
+        });
     }
     else
     {
