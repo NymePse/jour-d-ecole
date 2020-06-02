@@ -45,16 +45,11 @@ function setUpGame() {
     //Stop chrono si existant
     clearInterval(idInterval);
     
-    /*
-     * Récupère les options
-     * et lance une partie en fonction
-     */
-    
+    //Récupère les options et lance une partie en fonction
     let mode = $(choixMode + ' :selected').val();
     let exo = $(choixExo + ' :selected').val();
     let diff = $(choixDiff + ' :selected').val();
     let timer = $(choixChrono + ' :selected').val();
-    
     localStorage.setItem(modeDeJeu, mode);
     localStorage.setItem(typeExercice, exo);
     localStorage.setItem(difficulte, diff);

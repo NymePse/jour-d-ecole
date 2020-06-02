@@ -168,17 +168,17 @@ function deroulementDebutFoot() {
     //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
-        x: 50, y: 20,
+        x: $(jeu).width() / 2, y: 20,
         fontSize: 20,
         text: 'Partie ' + localStorage.getItem(prtActuelle) + " sur " + localStorage.getItem(nbParties)
     }).drawText({
         fillStyle: 'black',
-        x: 50, y: 50,
+        x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
         text: 'Question ' + localStorage.getItem(qstActuelle) + " sur " + localStorage.getItem(nbQuestions)
     }).drawText({
         fillStyle: 'black',
-        x: 50, y: 80,
+        x: $(jeu).width() / 2, y: 80,
         fontSize: 20,
         text: localStorage.getItem(question)
     });
@@ -200,7 +200,7 @@ function deroulementFinFoot(key) {
         incrementerVariableLocale(qstActuelle);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
+            x: $(jeu).width() / 2, y: 50,
             fontSize: 20,
             text: "Bravo !"
         })
@@ -211,7 +211,7 @@ function deroulementFinFoot(key) {
         incrementerVariableLocale(prtActuelle);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
+            x: $(jeu).width() / 2, y: 50,
             fontSize: 20,
             text: "Dommage !"
         })

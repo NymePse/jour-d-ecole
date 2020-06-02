@@ -166,12 +166,12 @@ function deroulementDebutChemin() {
     //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
-        x: 50, y: 50,
+        x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
         text: 'Question ' + localStorage.getItem(qstActuelle) + ' sur ' + localStorage.getItem(nbQuestions)
     }).drawText({
         fillStyle: 'black',
-        x: 50, y: 100,
+        x: $(jeu).width() / 2, y: 100,
         fontSize: 20,
         text: localStorage.getItem(question)
     });

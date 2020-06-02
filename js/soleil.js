@@ -123,7 +123,12 @@ function deroulementDebutSoleil()  {
     //Maj Canvas
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
+        x: $(jeu).width() / 2, y: 20,
+        fontSize: 20,
+        text: "Question " + localStorage.getItem(qstActuelle) + " sur " +  localStorage.getItem(nbQuestions)
+    }).drawText({
+        fillStyle: 'black',
+        x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
         text: localStorage.getItem(question)
     });
@@ -174,7 +179,7 @@ function deroulementFinSoleil(key) {
         incrementerVariableLocale(score);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
+            x: $(jeu).width() / 2, y: 50,
             fontSize: 40,
             text: "Bravo !"
         });
@@ -197,7 +202,7 @@ function deroulementFinSoleil(key) {
     {
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
+            x: $(jeu).width() / 2, y: 50,
             fontSize: 40,
             text: "Fin du jeu."
         })
