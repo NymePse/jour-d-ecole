@@ -21,9 +21,25 @@ const qstActuelle = "qstActuelle"; //Index question actuelle
 const score = "score";
 const nbParties = "nbParties"; //Nombre de parties
 const prtActuelle = "prtActuelle"; //Index partie actuelle
+const modeDeJeu = "modeDeJeu"; //choix mode de jeu
+const difficulte = "difficulte"; //choix difficulte
+const chrono = "chrono"; //choix chrono
+const journee = "journee"; //contient true si mode de jeu journée
+
+//Valeurs chrono en millisecondes
+const chronoLent = 10000;
+const chronoMoyen = 7000;
+const chronoRapide = 4000;
+
+//Variables chrono
+var idInterval;
+var chronoFin;
+var chronoActuel;
 
 function setUpSite() {
     localStorage.clear();
+    localStorage.setItem(chrono, "lent");
+    setChrono();
 }
 
 function setUpGame() {
@@ -181,4 +197,46 @@ function creerDivision() {
 function incrementerVariableLocale(nomVariable) {
     let valeur = parseInt(localStorage.getItem(nomVariable));
     localStorage.setItem(nomVariable, valeur + 1);
+}
+
+function setChrono() {
+    let diffChrono = localStorage.getItem(chrono);
+    switch(diffChrono) {
+        case "lent":
+            chronoFin = chronoLent;
+            break;
+        case "moyen":
+            chronoFin = chronoMoyen;
+            break;
+        case "rapide":
+            chronoFin = chronoFin;
+            break;
+    }
+    
+    chronoActuel = 0;
+    
+    idInterval = setInterval(chronometre,10);
+}
+
+function chronometre() {
+    $(jeu).clearCanvas({
+        x: $(jeu).width() - 20, width: 20,
+        y: 0, height: 20
+    });
+    
+    chronoActuel += 10;
+    let rad = (chronoActuel / chronoFin) * 360;
+    
+    $(jeu).drawArc({
+        strokeStyle: 'black',
+        strokeWidth: 5,
+        x: 100, y: 100,
+        radius: 10,
+        start: 0, end: rad
+    });
+    
+    if(chronoActuel == chronoFin)
+    {
+        clearInterval(idInterval);
+    }
 }
