@@ -137,7 +137,7 @@ function deroulementDebutSoleil()  {
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
-            $(document).off("keypress");
+            $(document).off("keydown");
             deroulementFinSoleil(event.keyCode);
         }
     });

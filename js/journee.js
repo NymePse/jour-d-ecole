@@ -49,6 +49,8 @@ function journeePreFoot() {
         text: "Ceci est avant le foot."
     });
     
+    $(classfleche).off("click");
+    
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
@@ -67,6 +69,8 @@ function journeePreSoleil() {
         text: "Ceci est avant le 1, 2, 3, Soleil."
     });
     
+    $(classfleche).off("click");
+    
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
@@ -79,6 +83,8 @@ function journeePreSoleil() {
 
 function conclusionJournee() {
     localStorage.setItem(journee, false);
+    
+    $(classfleche).off("click");
     
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
