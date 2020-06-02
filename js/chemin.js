@@ -233,5 +233,8 @@ function conclusionChemin() {
         text: 'score : ' + localStorage.getItem('score')
     });
     
-    $(bouton).click(setUpGame);
+    setTimeout(function() {
+        if(localStorage.getItem(journee) == "true")
+            journeePreFoot();
+    },2000);
 }

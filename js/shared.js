@@ -68,6 +68,9 @@ function setUpGame() {
             setUpFoot();
             $(bouton).blur();
             break;
+        case "journee" :
+            setUpJournee();
+            break;
     }
 }
 
@@ -245,10 +248,6 @@ function chronometre() {
     {
         clearInterval(idInterval);
         let mdj = localStorage.getItem(modeDeJeu);
-        /*<option value="chemin">Chemin pour l'école</option>
-                <option value="foot">Foot entre amis</option>
-                <option value="soleil">1, 2, 3, Soleil !</option>
-                */
         switch(mdj) {
             case "chemin":
                 deroulementFinChemin(0);

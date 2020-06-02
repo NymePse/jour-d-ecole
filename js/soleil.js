@@ -206,7 +206,7 @@ function deroulementFinSoleil(key) {
             fontSize: 40,
             text: "Fin du jeu."
         })
-        setTimeout(function() { console.log("FIN");  conclusionSoleil(); }, 1000);
+        setTimeout(conclusionSoleil, 1000);
     }
 }
 
@@ -219,5 +219,8 @@ function conclusionSoleil() {
         text: 'score : ' + localStorage.getItem('score')
     });
     
-    $(bouton).click(setUpGame);
+    setTimeout(function() {
+        if(localStorage.getItem(journee) == "true")
+            conclusionJournee();
+    },2000);
 }
