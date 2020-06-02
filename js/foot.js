@@ -134,20 +134,23 @@ function setUpFoot() {
 }
 
 function deroulementDebutFoot() {
+    //stop chrono
+    clearInterval(idInterval);
+    
     creerQuestion();
     
     $(document).keydown(function(event) {
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
-            $(document).off("keypress");
+            $(document).off("keydown");
             deroulementFinFoot(event.keyCode);
         }
     });
     
     $(classfleche).click(function(event) {
        let fleche = event.target.id;
-       $(document).off("keypress");
+       $(document).off("keydown");
        $(classfleche).off("click");
        switch(fleche) {
            case "haut":
@@ -203,7 +206,7 @@ function deroulementFinFoot(key) {
             x: $(jeu).width() / 2, y: 50,
             fontSize: 20,
             text: "Bravo !"
-        })
+        });
     }
     else
     {
@@ -214,7 +217,7 @@ function deroulementFinFoot(key) {
             x: $(jeu).width() / 2, y: 50,
             fontSize: 20,
             text: "Dommage !"
-        })
+        });
     }
     
     setTimeout(function() {
@@ -248,14 +251,17 @@ function conclusionFoot() {
         text: 'score : ' + localStorage.getItem('score')
     });
     
-    $(bouton).click(setUpGame);
+    setTimeout(function() {
+        if(localStorage.getItem(journee) == "true")
+            journeePreSoleil();
+    },2000);
 }
     
 function partiesCompletes() {
     let index = parseInt(localStorage.getItem(prtActuelle));
     let max = parseInt(localStorage.getItem(nbParties));
     
-    if(index >= max)
+    if(index > max)
         return true;
     else
         return false;
