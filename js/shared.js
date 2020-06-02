@@ -230,7 +230,7 @@ function chronometre() {
     $(jeu).drawArc({
         strokeStyle: 'black',
         strokeWidth: 5,
-        x: 100, y: 100,
+        x: $(jeu).innerWidth()-15, y: 15,
         radius: 10,
         start: 0, end: rad
     });
