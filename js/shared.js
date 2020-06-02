@@ -45,6 +45,12 @@ function setUpGame() {
     //Stop chrono si existant
     clearInterval(idInterval);
     
+    //Reset journee
+    localStorage.setItem(journee, false);
+    
+    //Enlever focus bouton
+    $(bouton).blur();
+    
     //Récupère les options et lance une partie en fonction
     let mode = $(choixMode + ' :selected').val();
     let exo = $(choixExo + ' :selected').val();
