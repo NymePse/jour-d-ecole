@@ -135,7 +135,7 @@ function setUpFoot() {
 
 function deroulementDebutFoot() {
     //stop chrono
-    clearInterval(idInterval);
+    stopChrono();
     
     creerQuestion();
     
@@ -194,7 +194,7 @@ function deroulementDebutFoot() {
 
 function deroulementFinFoot(key) {
     //stop chrono
-    clearInterval(idInterval);
+    stopChrono();
     
     $(jeu).clearCanvas();
     

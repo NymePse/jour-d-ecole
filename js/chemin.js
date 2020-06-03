@@ -132,7 +132,8 @@ function setUpChemin() {
 }
 
 function deroulementDebutChemin() {
-    clearInterval(idInterval);
+    stopChrono();
+    
     creerQuestion();
     
     $(document).keydown(function(event) {
@@ -185,7 +186,7 @@ function deroulementDebutChemin() {
 
 function deroulementFinChemin(key) {
     //stop chrono
-    clearInterval(idInterval);
+    stopChrono();
     
     $(jeu).clearCanvas();    
     if(reponseBonne(key))

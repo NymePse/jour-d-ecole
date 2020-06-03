@@ -118,7 +118,7 @@ function setUpSoleil() {
 }
 
 function deroulementDebutSoleil()  {
-    clearInterval(idInterval);
+    stopChrono();
     creerQuestion();
     
     //Maj Canvas
@@ -171,7 +171,7 @@ function deroulementDebutSoleil()  {
 
 function deroulementFinSoleil(key) {
     //stop chrono
-    clearInterval(idInterval);
+    stopChrono();
     
     $(jeu).clearCanvas();
     

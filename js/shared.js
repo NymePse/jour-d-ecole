@@ -39,6 +39,7 @@ var chronoActuel;
 
 function setUpSite() {
     localStorage.clear();
+    idInterval = Array();
 }
 
 function setUpGame() {
@@ -823,7 +824,7 @@ function setChrono() {
     
     chronoActuel = 0;
     
-    idInterval = setInterval(chronometre,10);
+    idInterval.push(setInterval(chronometre,10));
 }
 
 function chronometre() {
@@ -845,13 +846,8 @@ function chronometre() {
     
     if(chronoActuel == chronoFin)
     {
-        clearInterval(idInterval);
+        stopChrono();
         chronoActuel = 0;
-        $(jeu).clearCanvas({
-            x: $(jeu).width() - 20, width: 20,
-            y: 0, height: 20
-        });
-        
         let mdj = localStorage.getItem(modeDeJeu);
         switch(mdj) {
             case "chemin":
@@ -865,4 +861,14 @@ function chronometre() {
                 break;
         }
     }
+}
+
+function stopChrono() {
+    idInterval.forEach(function(id) {
+        clearInterval(id);
+    });
+    $(jeu).clearCanvas({
+        x: $(jeu).width() - 20, width: 20,
+        y: 0, height: 20
+    });
 }
