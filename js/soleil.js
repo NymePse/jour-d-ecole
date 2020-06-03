@@ -118,6 +118,7 @@ function setUpSoleil() {
 }
 
 function deroulementDebutSoleil()  {
+    clearInterval(idInterval);
     creerQuestion();
     
     //Maj Canvas

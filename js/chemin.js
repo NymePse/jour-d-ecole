@@ -132,6 +132,7 @@ function setUpChemin() {
 }
 
 function deroulementDebutChemin() {
+    clearInterval(idInterval);
     creerQuestion();
     
     $(document).keydown(function(event) {
