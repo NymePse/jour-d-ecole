@@ -1,4 +1,4 @@
-# jour-d-ecole
+# jour-d-ecole : V0.1
 PI d'IUT : Un jeu éducatif en JS.
 
 ## Qu'est-ce que Jour D'École ?
