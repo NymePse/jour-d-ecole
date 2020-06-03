@@ -115,37 +115,47 @@ function reponseBonne(key) {
 
 //Création question & assignation réponses aux touches
 function creerQuestion() {
-    //Création de la question
-    let qstPart1 = Math.ceil(Math.random() * (10 - 1) + 1);
-    let qstPart2 = Math.ceil(Math.random() * (10 - 1) + 1);
-    let qst = qstPart1 + '+' + qstPart2;
-    let qstTotal = eval(qst);
-    localStorage.setItem('question', qst);
-    localStorage.setItem('reponse0', qstTotal);
+    let type = localStorage.getItem(typeExercice);
+    let diff = localStorage.getItem(difficulte);
     
-    //Array de réponses + création des réponses fausses
-    let reponses = Array(4);
-    reponses[0] = qstTotal;
-    let part;
-    for(let i = 1; i < 4; i++) {
-        if(Math.random() < 0.5)
-        {
-            part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
-            while(reponses.includes(part))
-                part = qstTotal + Math.ceil(Math.random() * (5 - 1) + 1);
-        }
-        else
-        {
-            part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
-            while(reponses.includes(part))
-                part = qstTotal - Math.ceil(Math.random() * (5 - 1) + 1);
-        }
-        localStorage.setItem('reponse' + i, part);
-        reponses[i] = part;
+    console.log(localStorage.getItem(difficulte));
+    
+    switch(type) {
+        case "+" :
+            creerAddition(diff);
+            break;
+        case "-":
+            creerSoustraction(diff);
+            break;
+        case "/":
+            creerDivision(diff);
+            break;
+        case "*":
+            creerMultiplication(diff);
+            break;
+        case "?":
+            let rdm = Math.random();
+            if(rdm > 0.75)
+                creerAddition(diff);
+            else if(rdm > 0.5)
+                creerSoustraction(diff);
+            else if(rdm > 0.25)
+                creerMultiplication(diff);
+            else
+                creerDivision(diff);
+            break;
     }
     
     //Affectation des réponses aux touches
     let indexSelect;
+    let reponses = Array();
+    
+    for(let i = 0; i < 4; i++)
+    {
+        reponses.push(localStorage.getItem(reponse + i));
+        console.log(reponses[i]);
+    }
+        
     fleches.forEach(function(fleche) {
         indexSelect = Math.floor(Math.random() * reponses.length);
         $(fleche).text(reponses[indexSelect]);
@@ -164,49 +174,641 @@ function quizzComplet() {
         return false;
 }
 
-function creerAddition() {
-    /*
-     * si difficulté "facile"
-     *   addition sous la dizaine
-     * si difficulté "moyen"
-     *   addition complément à la dizaine ou jusqu'à 19 max
-     * si difficulté "difficile"
-     *   addition jusqu'à 40 max
-     */
+function creerAddition(diff) {
+    
+    let partUne;
+    let partDeux;
+    let reponseAddition;
+    let reponses = Array();
+    
+    switch(diff){
+        //Un chiffre, pas de retenue
+        case "tres-simple":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (9 - 1) + 1);
+                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
+                reponseAddition = partUne + partDeux;
+            }
+            while(reponseAddition >= 10);
+            
+            reponses[0] = reponseAddition;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseAddition = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponseAddition >= 10 || reponses.includes(reponseAddition));
+                reponses[i] = reponseAddition;
+            }
+            break;
+        
+        //un chiffre avec retenue
+        case "simple":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (9 - 2) + 2);
+                partDeux = Math.ceil(Math.random() * (9 - 2) + 2);
+                reponseAddition = partUne + partDeux;
+            }
+            while(reponseAddition < 10);
+            
+            reponses[0] = reponseAddition;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseAddition = Math.ceil(Math.random() * (20 - 10) + 10);
+                }
+                while(reponses.includes(reponseAddition));
+                reponses[i] = reponseAddition;
+            }
+            break;
+            
+        //deux chiffres, total <= 69
+        case "moyen":
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (50 - 10) + 10);
+                partDeux = Math.ceil(Math.random() * (50 - 10) + 10);
+                reponseAddition = partUne + partDeux;
+            }
+            while(reponseAddition > 69);
+            
+            reponses[0] = reponseAddition;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseAddition = Math.ceil(Math.random() * (69 - 20) + 20);
+                }
+                while(reponses.includes(reponseAddition));
+                reponses[i] = reponseAddition;
+            }
+            break;
+            
+        //deux chiffres quelconques
+        case "difficile":
+            partUne = Math.ceil(Math.random() * (100 - 10) + 10);
+            partDeux = Math.ceil(Math.random() * (100 - 10) + 10);
+            reponseAddition = partUne + partDeux;
+            reponses[0] = reponseAddition;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseAddition = Math.ceil(Math.random() * (200 - 20) + 20);
+                }
+                while(reponses.includes(reponseAddition));
+                reponses[i] = reponseAddition;
+            }
+            break;
+            
+        //3 chiffres, résultat <= 999
+        case "tres-difficile":
+            do
+            {
+            partUne = Math.ceil(Math.random() * (1000 - 100) + 100);
+            partDeux = Math.ceil(Math.random() * (1000 - 100) + 100);
+            reponseAddition = partUne + partDeux;
+            }
+            while(reponseAddition > 999);
+            
+            reponses[0] = reponseAddition;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseAddition = Math.ceil(Math.random() * (999 - 200) + 200);
+                }
+                while(reponses.includes(reponseAddition));
+                reponses[i] = reponseAddition;
+            }
+            break;
+    }
+    
+    for(let y = 0; y < 4; y++)
+    {
+        localStorage.setItem(reponse + y, reponses[y]);
+    }
+    localStorage.setItem(question, partUne + " + " + partDeux);
 }
 
-function creerSoustraction() {
-    /*
-     * /!\ JAMAIS DE RESULTAT NEGATIF (nb 1 >= nb 2)
-     * si difficulté "facile"
-     *   soustraction sous la dizaine
-     * si difficulté "moyen"
-     *   soustraction au dessus de la dizaine, nb1 < 20
-     * si difficulté "difficile"
-     *   soustraction avec les dizaines, nb1 < 40
-     */
+function creerSoustraction(diff) {
+    
+    let partUne;
+    let partDeux;
+    let reponseSoustraction;
+    let reponses = Array();
+    
+    switch(diff){
+        //un chiffre
+        case "tres-simple":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (9 - 1) + 1);
+                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
+                reponseSoustraction = partUne - partDeux;
+            }
+            while(reponseSoustraction < 0);
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (9 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+        
+        //a - b, deux chiffres pour a et un pour b, le dernier chiffre de a est plus grand que b
+        case "simple":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (99 - 12) + 12);
+                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
+                reponseSoustraction = partUne - partDeux;
+            }
+            while((partUne % 10) < partDeux);
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    if(Math.random() > 0.5)
+                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (10 - 1) + 1);
+                    else
+                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //idem, sauf que le dernier chiffre de a est plus petit que b
+        case "moyen":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (99 - 12) + 12);
+                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
+                reponseSoustraction = partUne - partDeux;
+            }
+            while((partUne % 10) >= partDeux);
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    if(Math.random() > 0.5)
+                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (15 - 1) + 1);
+                    else
+                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (15 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //deux chiffres
+        case "difficile":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (99 - 10) + 10);
+                partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
+                reponseSoustraction = partUne - partDeux;
+            }
+            while(reponseSoustraction < 0);
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    if(Math.random() > 0.5)
+                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (10 - 1) + 1);
+                    else
+                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //a - b, 3 chiffres pour a et 2 pour b
+        case "tres-difficile":
+            //Créer question & réponse juste
+            do 
+            {
+                partUne = Math.ceil(Math.random() * (999 - 100) + 100);
+                partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
+                reponseSoustraction = partUne - partDeux;
+            }
+            while(reponseSoustraction < 0);
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    if(Math.random() > 0.5)
+                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (15 - 1) + 1);
+                    else
+                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (15 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+    }
+    
+    for(let y = 0; y < 4; y++)
+    {
+        localStorage.setItem(reponse + y, reponses[y]);
+    }
+    localStorage.setItem(question, partUne + " - " + partDeux);
+    
+    console.log("soustraction");
 }
 
-function creerMultiplication() {
-    /*
-     * si difficulté "facile"
-     *   
-     * si difficulté "moyen"
-     *    
-     * si difficulté "difficile"
-     *   
-     */
+function creerMultiplication(diff) {
+    
+    let partUne;
+    let partDeux;
+    let reponseSoustraction;
+    let reponses = Array();
+    let rdm;
+    
+    switch(diff){
+        // table de 2 et 10
+        case "tres-simple":
+            //Créer question & réponse juste
+            if(Math.random() > 0.5)
+                partUne = 2;
+            else
+                partUne = 10;
+            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+            reponseSoustraction = partUne * partDeux;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+        
+        //2, 3 et 10
+        case "simple":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.6)
+                partUne = 2;
+            else if(rdm > 0.3)
+                partUne = 3;
+            else
+                partUne = 10;
+            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+            reponseSoustraction = partUne * partDeux;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //2, 3, 4, 5, 10
+        case "moyen":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.8)
+                partUne = 2;
+            else if(rdm > 0.6)
+                partUne = 3;
+            else if(rdm > 0.4)
+                partUne = 4;
+            else if(rdm > 0.2)
+                partUne = 5;
+            else
+                partUne = 10;
+            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+            reponseSoustraction = partUne * partDeux;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //2, 3, 4, 5, 6, 7, 10
+        case "difficile":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.84)
+                partUne = 2;
+            else if(rdm > 0.7)
+                partUne = 3;
+            else if(rdm > 0.56)
+                partUne = 4;
+            else if(rdm > 0.42)
+                partUne = 5;
+            else if(rdm > 0.28)
+                partUne = 6;
+            else if(rdm > 0.14)
+                partUne = 7;
+            else
+                partUne = 10;
+            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+            reponseSoustraction = partUne * partDeux;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //toutes les tables
+        case "tres-difficile":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.88)
+                partUne = 2;
+            else if(rdm > 0.77)
+                partUne = 3;
+            else if(rdm > 0.66)
+                partUne = 4;
+            else if(rdm > 0.55)
+                partUne = 5;
+            else if(rdm > 0.44)
+                partUne = 6;
+            else if(rdm > 0.33)
+                partUne = 7;
+            else if(rdm > 0.22)
+                partUne = 8;
+            else if(rdm > 0.11)
+                partUne = 9;
+            else
+                partUne = 10;
+            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+            reponseSoustraction = partUne * partDeux;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+    }
+    
+    for(let y = 0; y < 4; y++)
+    {
+        localStorage.setItem(reponse + y, reponses[y]);
+    }
+    localStorage.setItem(question, partUne + " * " + partDeux);
+    
+    console.log("multiplication");
 }
 
-function creerDivision() {
-    /*
-     * si difficulté "facile"
-     *   
-     * si difficulté "moyen"
-     *   
-     * si difficulté "difficile"
-     *   
-     */
+function creerDivision(diff) {
+    let partUne;
+    let partDeux;
+    let reponseSoustraction;
+    let reponses = Array();
+    let rdm;
+    
+    switch(diff){
+        // table de 2 et 10
+        case "tres-simple":
+            //Créer question & réponse juste
+            if(Math.random() > 0.5)
+                partDeux = 2;
+            else
+                partDeux = 10;
+            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+            partUne = partDeux * reponseSoustraction;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+        
+        //2, 3 et 10
+        case "simple":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.6)
+                partDeux = 2;
+            else if(rdm > 0.3)
+                partDeux = 3;
+            else
+                partDeux = 10;
+            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+            partUne = partDeux * reponseSoustraction;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //2, 3, 4, 5, 10
+        case "moyen":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.8)
+                partDeux = 2;
+            else if(rdm > 0.6)
+                partDeux = 3;
+            else if(rdm > 0.4)
+                partDeux = 4;
+            else if(rdm > 0.2)
+                partDeux = 5;
+            else
+                partDeux = 10;
+            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+            partUne = partDeux * reponseSoustraction;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //2, 3, 4, 5, 6, 7, 10
+        case "difficile":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.84)
+                partDeux = 2;
+            else if(rdm > 0.7)
+                partDeux = 3;
+            else if(rdm > 0.56)
+                partDeux = 4;
+            else if(rdm > 0.42)
+                partDeux = 5;
+            else if(rdm > 0.28)
+                partDeux = 6;
+            else if(rdm > 0.14)
+                partDeux = 7;
+            else
+                partDeux = 10;
+            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+            partUne = partDeux * reponseSoustraction;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+            
+        //toutes les tables
+        case "tres-difficile":
+            //Créer question & réponse juste
+            rdm = Math.random();
+            if(rdm > 0.88)
+                partDeux = 2;
+            else if(rdm > 0.77)
+                partDeux = 3;
+            else if(rdm > 0.66)
+                partDeux = 4;
+            else if(rdm > 0.55)
+                partDeux = 5;
+            else if(rdm > 0.44)
+                partDeux = 6;
+            else if(rdm > 0.33)
+                partDeux = 7;
+            else if(rdm > 0.22)
+                partDeux = 8;
+            else if(rdm > 0.11)
+                partDeux = 9;
+            else
+                partDeux = 10;
+            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+            partUne = partDeux * reponseSoustraction;
+            
+            reponses[0] = reponseSoustraction;
+            
+            //Créer réponses fausses
+            for(let i = 1; i < 4; i++)
+            {
+                do
+                {
+                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                }
+                while(reponses.includes(reponseSoustraction));
+                reponses[i] = reponseSoustraction;
+            }
+            break;
+    }
+    
+    for(let y = 0; y < 4; y++)
+    {
+        localStorage.setItem(reponse + y, reponses[y]);
+    }
+    localStorage.setItem(question, partUne + " / " + partDeux);
+    
+    console.log("division");
 }
 
 function incrementerVariableLocale(nomVariable) {
@@ -253,6 +855,12 @@ function chronometre() {
     if(chronoActuel == chronoFin)
     {
         clearInterval(idInterval);
+        chronoActuel = 0;
+        $(jeu).clearCanvas({
+            x: $(jeu).width() - 20, width: 20,
+            y: 0, height: 20
+        });
+        
         let mdj = localStorage.getItem(modeDeJeu);
         switch(mdj) {
             case "chemin":
