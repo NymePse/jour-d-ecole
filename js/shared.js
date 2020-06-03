@@ -118,8 +118,6 @@ function creerQuestion() {
     let type = localStorage.getItem(typeExercice);
     let diff = localStorage.getItem(difficulte);
     
-    console.log(localStorage.getItem(difficulte));
-    
     switch(type) {
         case "+" :
             creerAddition(diff);
@@ -153,7 +151,6 @@ function creerQuestion() {
     for(let i = 0; i < 4; i++)
     {
         reponses.push(localStorage.getItem(reponse + i));
-        console.log(reponses[i]);
     }
         
     fleches.forEach(function(fleche) {
@@ -458,8 +455,6 @@ function creerSoustraction(diff) {
         localStorage.setItem(reponse + y, reponses[y]);
     }
     localStorage.setItem(question, partUne + " - " + partDeux);
-    
-    console.log("soustraction");
 }
 
 function creerMultiplication(diff) {
@@ -633,8 +628,6 @@ function creerMultiplication(diff) {
         localStorage.setItem(reponse + y, reponses[y]);
     }
     localStorage.setItem(question, partUne + " * " + partDeux);
-    
-    console.log("multiplication");
 }
 
 function creerDivision(diff) {
@@ -807,8 +800,6 @@ function creerDivision(diff) {
         localStorage.setItem(reponse + y, reponses[y]);
     }
     localStorage.setItem(question, partUne + " / " + partDeux);
-    
-    console.log("division");
 }
 
 function incrementerVariableLocale(nomVariable) {
