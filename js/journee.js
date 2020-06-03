@@ -34,10 +34,19 @@ function setUpJournee() {
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
+            $(espace).off("click");
             localStorage.setItem(modeDeJeu, "chemin");
             $(document).off("keypress");
             setUpChemin();
         }
+    });
+    
+    $(espace).click(function() {
+        $(espace).off("click");
+        $(document).off("keypress");
+        localStorage.setItem(modeDeJeu, "chemin");
+        $(document).off("keypress");
+        setUpChemin();
     });
 }
 
@@ -54,11 +63,22 @@ function journeePreFoot() {
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
+            $(espace).off("click");
             $(document).off("keypress");
             localStorage.setItem(modeDeJeu, "foot");
             setUpFoot();
         }
     });
+    
+    $(espace).click(function() {
+        $(espace).off("click");
+        $(document).off("keypress");
+        localStorage.setItem(modeDeJeu, "foot");
+        $(document).off("keypress");
+        setUpFoot();
+    });
+    
+    
 }
 
 function journeePreSoleil() {
@@ -74,10 +94,19 @@ function journeePreSoleil() {
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
+            $(espace).off("click");
             localStorage.setItem(modeDeJeu, "soleil");
             $(document).off("keypress");
             setUpSoleil();
         }
+    });
+    
+    $(espace).click(function() {
+        $(espace).off("click");
+        $(document).off("keypress");
+        localStorage.setItem(modeDeJeu, "soleil");
+        $(document).off("keypress");
+        setUpSoleil();
     });
 }
 
