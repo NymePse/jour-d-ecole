@@ -119,6 +119,22 @@ function creerQuestion() {
     let type = localStorage.getItem(typeExercice);
     let diff = localStorage.getItem(difficulte);
     
+    if(diff == "aleatoire")
+    {
+        let rdm = Math.random();
+        
+        if(rdm > 0.95)
+            diff = "tres-difficile";
+        else if(rdm > 0.86)
+            diff = "difficile";
+        else if(rdm > 0.43)
+            diff = "moyen";
+        else if(rdm > 0.2)
+            diff = "simple"
+        else
+            diff = "tres-simple";
+    }
+    
     switch(type) {
         case "+" :
             creerAddition(diff);
