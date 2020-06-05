@@ -41,8 +41,56 @@ var chronoFin;
 var chronoActuel;
 
 function setUpSite() {
-    localStorage.clear();
     idInterval = Array();
+    
+    let mdj = localStorage.getItem(modeDeJeu);
+    let fct;
+    let txt;
+    
+    if(mdj != null)
+    {
+        switch(mdj) {
+            case "chemin":
+                fct = deroulementDebutChemin;
+                txt = mdj;
+                break;
+            case "foot":
+                fct = deroulementDebutFoot;
+                txt = mdj;
+                break;
+            case "soleil":
+                fct = deroulementDebutSoleil;
+                txt = "1, 2, 3, soleil";
+                break;
+        }
+        
+        $(jeu).clearCanvas().drawText({
+            fillStyle: 'black',
+            x: $(jeu).width() /2, y: 100,
+            fontSize: 20,
+            text: 'Reprise de partie en mode '+ txt
+        });
+        
+        $(document).keypress(function() {
+            $(espace).off("click");
+            $(document).off("keypress");
+            fct();
+        });
+    }
+}
+
+function viderVariablesParties() {
+    localStorage.removeItem(score);
+    localStorage.removeItem(nbQuestions);
+    localStorage.removeItem(qstActuelle);
+    localStorage.removeItem(nbParties);
+    localStorage.removeItem(prtActuelle);
+    localStorage.removeItem(modeDeJeu);
+    localStorage.removeItem(question);
+    localStorage.removeItem(reponse + 0);
+    localStorage.removeItem(reponse + 1);
+    localStorage.removeItem(reponse + 2);
+    localStorage.removeItem(reponse + 3);
 }
 
 function majNom(val) {
