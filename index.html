@@ -32,7 +32,17 @@
 
 <body onload="setUpSite()">
     <header>
-        <h1>Jour d'École</h1>
+        <div id="top">
+            <h1>Jour d'École</h1>
+            <img src="res/icones/compte.svg">
+            <div id="compte">
+                <input type="text" onchange="majNom(this.value)">
+                <!--
+                <img src="res/icones/editer.svg">
+                -->
+            </div>
+        </div>
+        
         <div id="choix">Choix du jeu
             <select id="mode">
                 <option value="journee">Journée complète</option>

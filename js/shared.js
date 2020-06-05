@@ -27,6 +27,9 @@ const difficulte = "difficulte"; //choix difficulte
 const chrono = "chrono"; //choix chrono
 const journee = "journee"; //contient true si mode de jeu journée
 
+//Variables de compte
+const nom = "nom";
+
 //Valeurs chrono en millisecondes
 const chronoLent = 10000;
 const chronoMoyen = 7000;
@@ -40,6 +43,10 @@ var chronoActuel;
 function setUpSite() {
     localStorage.clear();
     idInterval = Array();
+}
+
+function majNom(val) {
+    localStorage.setItem(nom, val);
 }
 
 function setUpGame() {

@@ -220,6 +220,8 @@ function conclusionSoleil() {
         text: 'score : ' + localStorage.getItem('score')
     });
     
+    viderVariablesParties();
+    
     setTimeout(function() {
         if(localStorage.getItem(journee) == "true")
             conclusionJournee();
