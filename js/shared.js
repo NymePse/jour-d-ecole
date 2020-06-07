@@ -62,26 +62,39 @@ var divisionsFaites = Array();
 function setUpSite() {
     idInterval = Array();
     
-    let mdj = localStorage.getItem(LS_modeDeJeu);
+    modeDeJeu = localStorage.getItem(LS_modeDeJeu);
     let fct;
     let txt;
     
-    if(mdj != null)
+    if(modeDeJeu != null)
     {
         switch(mdj) {
             case "chemin":
                 fct = deroulementDebutChemin;
-                txt = mdj;
+                txt = modeDeJeu;
                 break;
             case "foot":
                 fct = deroulementDebutFoot;
-                txt = mdj;
+                txt = modeDeJeu;
                 break;
             case "soleil":
                 fct = deroulementDebutSoleil;
                 txt = "1, 2, 3, soleil";
                 break;
         }
+        
+        score = parseInt(localStorage.getItem(LS_score));
+        nbQuestions = parseInt(localStorage.getItem(LS_nbQuestions));
+        nbParties = parseInt(localStorage.getItem(LS_nbParties));
+        indexQuestion = parseInt(localStorage.getItem(LS_indexQuestion));
+        indexPartie = parseInt(localStorage.getItem(LS_indexPartie));
+        typeExercice = localStorage.getItem(LS_typeExercice);
+        difficulte = localStorage.getItem(LS_difficulte);
+        chrono = localStorage.getItem(LS_chrono);
+        if(localStorage.getItem(LS_journee) == "true")
+            journee = true;
+        else
+            journee = false;
         
         $(jeu).clearCanvas().drawText({
             fillStyle: 'black',
