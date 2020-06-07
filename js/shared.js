@@ -13,19 +13,17 @@ const droite = "#droite";
 const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 
-//Variables localStorage
-const question = "question"; //Contient le texte de la question
-const reponse = "reponse"; //Réponses entre 0 et 3 (à rajouter à la création), la 0 est la bonne
-const nbQuestions = "nbQuestions"; //Nombre de questions de la partie
-const qstActuelle = "qstActuelle"; //Index question actuelle
-const score = "score";
-const nbParties = "nbParties"; //Nombre de parties
-const prtActuelle = "prtActuelle"; //Index partie actuelle
-const modeDeJeu = "modeDeJeu"; //choix mode de jeu
-const typeExercice = "typeExercice"; //choix type exercice
-const difficulte = "difficulte"; //choix difficulte
-const chrono = "chrono"; //choix chrono
-const journee = "journee"; //contient true si mode de jeu journée
+//Variables localStorage (sauvegarde d'urgence)
+const LS_nbQuestions = "nbQuestions"; //Nombre de questions de la partie
+const LS_indexQuestion = "qstActuelle"; //Index question actuelle
+const LS_score = "score";
+const LS_nbParties = "nbParties"; //Nombre de parties
+const LS_indexPartie = "prtActuelle"; //Index partie actuelle
+const LS_modeDeJeu = "modeDeJeu"; //choix mode de jeu
+const LS_typeExercice = "typeExercice"; //choix type exercice
+const LS_difficulte = "difficulte"; //choix difficulte
+const LS_chrono = "chrono"; //choix chrono
+const LS_journee = "journee"; //contient true si mode de jeu journée
 
 //Variables de compte
 const nom = "nom";
@@ -40,7 +38,22 @@ var idInterval;
 var chronoFin;
 var chronoActuel;
 
-//variables questions
+//Variables parties
+var modeDeJeu;
+var partieMax;
+var indexPartie;
+var nbQuestions;
+var indexQuestion;
+var score;
+var modeDeJeu;
+var typeExercice;
+var difficulte;
+var chrono;
+var journee;
+var question;
+var reponses = Array();
+
+//Liste questions déjà faites dans la partie
 var additionsFaites = Array();
 var soustractionsFaites = Array();
 var multiplicationsFaites = Array();
@@ -86,12 +99,12 @@ function setUpSite() {
 }
 
 function viderVariablesParties() {
-    localStorage.removeItem(score);
-    localStorage.removeItem(nbQuestions);
-    localStorage.removeItem(qstActuelle);
-    localStorage.removeItem(nbParties);
-    localStorage.removeItem(prtActuelle);
-    localStorage.removeItem(modeDeJeu);
+    localStorage.removeItem(LS_chrono);
+    localStorage.removeItem(LS_nbQuestions);
+    localStorage.removeItem(LS_indexQuestion);
+    localStorage.removeItem(LS_nbParties);
+    localStorage.removeItem(LS_indexPartie);
+    localStorage.removeItem(LS_modeDeJeu);
     localStorage.removeItem(question);
     localStorage.removeItem(reponse + 0);
     localStorage.removeItem(reponse + 1);
@@ -404,7 +417,8 @@ function creerAddition(diff) {
     
     additionsFaites.push(stringQuestion);
     
-    localStorage.setItem(question, stringQuestion);
+    localStorage.setItem(questionLS
+                         , stringQuestion);
     
     
 }
@@ -571,7 +585,8 @@ function creerSoustraction(diff) {
     
     soustractionsFaites.push(stringQuestion);
     
-    localStorage.setItem(question, stringQuestion);
+    localStorage.setItem(questionLS
+                         , stringQuestion);
 }
 
 function creerMultiplication(diff) {
@@ -776,7 +791,8 @@ function creerMultiplication(diff) {
     
     multiplicationsFaites.push(stringQuestion);
     
-    localStorage.setItem(question, stringQuestion);
+    localStorage.setItem(questionLS
+                         , stringQuestion);
 }
 
 function creerDivision(diff) {
@@ -982,7 +998,8 @@ function creerDivision(diff) {
     
     divisionsFaites.push(stringQuestion);
     
-    localStorage.setItem(question, stringQuestion);
+    localStorage.setItem(questionLS
+                         , stringQuestion);
 }
 
 function incrementerVariableLocale(nomVariable) {
