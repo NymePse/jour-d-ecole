@@ -86,9 +86,13 @@
 
 function setUpSoleil() {
     //création variables LocalStorage de la partie
-    localStorage.setItem('nbQuestions', (Math.ceil(Math.random() * (6 - 3) + 3)));
-    localStorage.setItem('qstActuelle', 0);
-    localStorage.setItem('score', 0);
+    nbQuestions = Math.ceil(Math.random() * (6 - 3) + 3);
+    indexQuestion = 0;
+    score = 0;
+    
+    localStorage.setItem(LS_nbQuestions, nbQuestions);
+    localStorage.setItem(LS_indexQuestion, 0);
+    localStorage.setItem(LS_score, 0);
     
     
     //Gestion events
@@ -126,18 +130,19 @@ function deroulementDebutSoleil()  {
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 20,
         fontSize: 20,
-        text: "Question " + localStorage.getItem(qstActuelle) + " sur " +  localStorage.getItem(nbQuestions)
+        text: "Question " + indexQuestion + " sur " +  nbQuestions
     }).drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
-        text: localStorage.getItem(question)
+        text: question
     });
     
      $(document).keydown(function(event) {
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
+            $(classfleche).off("click");
             $(document).off("keydown");
             deroulementFinSoleil(event.keyCode);
         }
@@ -145,7 +150,7 @@ function deroulementDebutSoleil()  {
     
     $(classfleche).click(function(event) {
        let fleche = event.target.id;
-       $(document).off("keypress");
+       $(document).off("keydown");
        $(classfleche).off("click");
        switch(fleche) {
            case "haut":
@@ -164,8 +169,7 @@ function deroulementDebutSoleil()  {
     });
     
     //Set chrono
-    let typeChrono = localStorage.getItem(chrono);
-    if(typeChrono != "sans")
+    if(chrono != "sans")
         setChrono();
 }
 
@@ -177,7 +181,8 @@ function deroulementFinSoleil(key) {
     
     if(reponseBonne(key))
     {
-        incrementerVariableLocale(score);
+        score++;
+        localStorage.setItem(LS_score, score);
         $(jeu).drawText({
             fillStyle: 'black',
             x: $(jeu).width() / 2, y: 50,
@@ -188,16 +193,17 @@ function deroulementFinSoleil(key) {
         $(document).off('keydown');
     
         setTimeout(function() {
-        if(quizzComplet())
-        {
-            conclusionSoleil();
-        }
-        else
-        {
-            incrementerVariableLocale(qstActuelle);
-            deroulementDebutSoleil();
-        }
-    }, 1000);
+            if(quizzComplet())
+            {
+                conclusionSoleil();
+            }
+            else
+            {
+                indexQuestion++;
+                localStorage.setItem(LS_indexQuestion, indexQuestion);
+                deroulementDebutSoleil();
+            }
+        }, 1000);
     }
     else
     {
@@ -217,14 +223,14 @@ function conclusionSoleil() {
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
-        text: 'score : ' + localStorage.getItem('score')
+        text: 'score : ' + score
     });
     
     viderVariablesParties();
     viderListesQuestions();
     
     setTimeout(function() {
-        if(localStorage.getItem(journee) == "true")
+        if(journee == true)
             conclusionJournee();
     },2000);
 }

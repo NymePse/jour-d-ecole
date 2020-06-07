@@ -22,7 +22,8 @@
  */
 
 function setUpJournee() {
-    localStorage.setItem(journee, true);
+    journee = true;
+    localStorage.setItem(LS_journee, true);
     
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
@@ -43,7 +44,6 @@ function setUpJournee() {
     
     $(espace).click(function() {
         $(espace).off("click");
-        $(document).off("keypress");
         localStorage.setItem(modeDeJeu, "chemin");
         $(document).off("keypress");
         setUpChemin();
@@ -111,7 +111,8 @@ function journeePreSoleil() {
 }
 
 function conclusionJournee() {
-    localStorage.setItem(journee, false);
+    journee = false;
+    localStorage.setItem(LS_journee, false);
     
     $(classfleche).off("click");
     

@@ -100,13 +100,16 @@
  */
 
 function setUpChemin() {
-    //création variables LocalStorage de la partie
-    localStorage.setItem(nbQuestions, (Math.ceil(Math.random() * (6 - 3) + 3)));
-    localStorage.setItem(qstActuelle, 0);
-    localStorage.setItem(score, 0);
+    //set up variables de la partie
+    nbQuestions = Math.ceil(Math.random() * (6 - 3) + 3);
+    indexQuestion = 0;
+    score = 0;
+    
+    localStorage.setItem(LS_nbQuestions, nbQuestions);
+    localStorage.setItem(LS_indexQuestion, 0);
+    localStorage.setItem(LS_score, 0);
     
     //Gestion events
-    $(bouton).off("click");
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
@@ -170,17 +173,16 @@ function deroulementDebutChemin() {
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
-        text: 'Question ' + localStorage.getItem(qstActuelle) + ' sur ' + localStorage.getItem(nbQuestions)
+        text: 'Question ' + indexQuestion + ' sur ' + nbQuestions
     }).drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 100,
         fontSize: 20,
-        text: localStorage.getItem(question)
+        text: question
     });
     
     //Set chrono
-    let typeChrono = localStorage.getItem(chrono);
-    if(typeChrono != "sans")
+    if(chrono != "sans")
         setChrono();
 }
 
@@ -191,7 +193,8 @@ function deroulementFinChemin(key) {
     $(jeu).clearCanvas();    
     if(reponseBonne(key))
     {
-        incrementerVariableLocale(score);
+        score++;
+        localStorage.setItem(LS_score, score);
         $(jeu).drawText({
             fillStyle: 'black',
             x: 50, y: 50,
@@ -218,7 +221,8 @@ function deroulementFinChemin(key) {
         }
         else
         {
-            incrementerVariableLocale(qstActuelle);
+            indexQuestion++;
+            localStorage.setItem(LS_indexQuestion, indexQuestion);
             deroulementDebutChemin();
         }
     }, 1000);
@@ -232,14 +236,14 @@ function conclusionChemin() {
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
-        text: 'score : ' + localStorage.getItem('score')
+        text: 'score : ' + score
     });
     
     viderVariablesParties();
     viderListesQuestions();
     
     setTimeout(function() {
-        if(localStorage.getItem(journee) == "true")
+        if(journee == true)
             journeePreFoot();
     },2000);
 }

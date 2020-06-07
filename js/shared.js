@@ -14,16 +14,16 @@ const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 
 //Variables localStorage (sauvegarde d'urgence)
-const LS_nbQuestions = "nbQuestions"; //Nombre de questions de la partie
-const LS_indexQuestion = "qstActuelle"; //Index question actuelle
+const LS_nbQuestions = "nbQuestions";
+const LS_indexQuestion = "qstActuelle";
 const LS_score = "score";
-const LS_nbParties = "nbParties"; //Nombre de parties
-const LS_indexPartie = "prtActuelle"; //Index partie actuelle
-const LS_modeDeJeu = "modeDeJeu"; //choix mode de jeu
-const LS_typeExercice = "typeExercice"; //choix type exercice
-const LS_difficulte = "difficulte"; //choix difficulte
-const LS_chrono = "chrono"; //choix chrono
-const LS_journee = "journee"; //contient true si mode de jeu journée
+const LS_nbParties = "nbParties";
+const LS_indexPartie = "prtActuelle";
+const LS_modeDeJeu = "modeDeJeu";
+const LS_typeExercice = "typeExercice";
+const LS_difficulte = "difficulte";
+const LS_chrono = "chrono";
+const LS_journee = "journee";
 
 //Variables de compte
 const nom = "nom";
@@ -34,13 +34,13 @@ const chronoMoyen = 7000;
 const chronoRapide = 4000;
 
 //Variables chrono
-var idInterval;
+var idInterval = Array();
 var chronoFin;
 var chronoActuel;
 
 //Variables parties
 var modeDeJeu;
-var partieMax;
+var nbParties;
 var indexPartie;
 var nbQuestions;
 var indexQuestion;
@@ -62,7 +62,7 @@ var divisionsFaites = Array();
 function setUpSite() {
     idInterval = Array();
     
-    let mdj = localStorage.getItem(modeDeJeu);
+    let mdj = localStorage.getItem(LS_modeDeJeu);
     let fct;
     let txt;
     
@@ -99,17 +99,19 @@ function setUpSite() {
 }
 
 function viderVariablesParties() {
+    chrono = null;
+    nbQuestions = null;
+    indexQuestion = null;
+    nbparties = null;
+    indexPartie = null;
+    modeDeJeu = null;
+    
     localStorage.removeItem(LS_chrono);
     localStorage.removeItem(LS_nbQuestions);
     localStorage.removeItem(LS_indexQuestion);
     localStorage.removeItem(LS_nbParties);
     localStorage.removeItem(LS_indexPartie);
     localStorage.removeItem(LS_modeDeJeu);
-    localStorage.removeItem(question);
-    localStorage.removeItem(reponse + 0);
-    localStorage.removeItem(reponse + 1);
-    localStorage.removeItem(reponse + 2);
-    localStorage.removeItem(reponse + 3);
 }
 
 function viderListesQuestions() {
@@ -124,26 +126,30 @@ function majNom(val) {
 }
 
 function setUpGame() {
-    //Stop chrono si existant
-    clearInterval(idInterval);
+    //Reset chrono si existant
+    stopChrono();
+    
+    viderVariablesParties();
     
     //Reset journee
-    localStorage.setItem(journee, false);
+    journee = false;
+    localStorage.setItem(LS_journee, journee);
     
     //Enlever focus bouton
     $(bouton).blur();
     
     //Récupère les options et lance une partie en fonction
-    let mode = $(choixMode + ' :selected').val();
-    let exo = $(choixExo + ' :selected').val();
-    let diff = $(choixDiff + ' :selected').val();
-    let timer = $(choixChrono + ' :selected').val();
-    localStorage.setItem(modeDeJeu, mode);
-    localStorage.setItem(typeExercice, exo);
-    localStorage.setItem(difficulte, diff);
-    localStorage.setItem(chrono, timer);
+    modeDeJeu = $(choixMode + ' :selected').val();
+    typeExercice = $(choixExo + ' :selected').val();
+    difficulte = $(choixDiff + ' :selected').val();
+    chrono = $(choixChrono + ' :selected').val();
     
-    switch(mode) {
+    localStorage.setItem(LS_modeDeJeu, modeDeJeu);
+    localStorage.setItem(LS_typeExercice, typeExercice);
+    localStorage.setItem(LS_difficulte, difficulte);
+    localStorage.setItem(LS_chrono, chrono);
+    
+    switch(modeDeJeu) {
         case "chemin" :
             setUpChemin();
             $(bouton).blur();
@@ -158,6 +164,7 @@ function setUpGame() {
             break;
         case "journee" :
             setUpJournee();
+            $(bouton).blur();
             break;
     }
 }
@@ -197,8 +204,10 @@ function reponseBonne(key) {
 
 //Création question & assignation réponses aux touches
 function creerQuestion() {
-    let type = localStorage.getItem(typeExercice);
-    let diff = localStorage.getItem(difficulte);
+    //Reset réponses
+    reponses = [];
+    
+    let diff = difficulte;
     
     if(diff == "aleatoire")
     {
@@ -216,7 +225,7 @@ function creerQuestion() {
             diff = "tres-simple";
     }
     
-    switch(type) {
+    switch(typeExercice) {
         case "+" :
             creerAddition(diff);
             break;
@@ -244,13 +253,6 @@ function creerQuestion() {
     
     //Affectation des réponses aux touches
     let indexSelect;
-    let reponses = Array();
-    
-    for(let i = 0; i < 4; i++)
-    {
-        reponses.push(localStorage.getItem(reponse + i));
-    }
-        
     fleches.forEach(function(fleche) {
         indexSelect = Math.floor(Math.random() * reponses.length);
         $(fleche).text(reponses[indexSelect]);
@@ -260,22 +262,16 @@ function creerQuestion() {
 
 //Compare qstActuelle à nbQuestion, return true si égal (toutes questions faites)
 function quizzComplet() {
-    let index = parseInt(localStorage.getItem('qstActuelle'));
-    let max = parseInt(localStorage.getItem(nbQuestions));
-    
-    if(index >= max)
+    if(indexQuestion >= nbQuestions)
         return true;
     else
         return false;
 }
 
 function creerAddition(diff) {
-    
     let partUne;
     let partDeux;
     let reponseAddition;
-    let reponses = Array();
-    let stringQuestion;
     
     switch(diff){
         //Un chiffre, pas de retenue
@@ -286,9 +282,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 1) + 1);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseAddition = partUne + partDeux;
-                stringQuestion = partUne + " + " + partDeux;
+                question = partUne + " + " + partDeux;
             }
-            while(reponseAddition >= 10 || additionsFaites.includes(stringQuestion));
+            while(reponseAddition >= 10 || additionsFaites.includes(question));
             
             reponses[0] = reponseAddition;
             
@@ -312,9 +308,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 2) + 2);
                 partDeux = Math.ceil(Math.random() * (9 - 2) + 2);
                 reponseAddition = partUne + partDeux;
-                stringQuestion = partUne + " + " + partDeux;
+                question = partUne + " + " + partDeux;
             }
-            while(reponseAddition < 10 || additionsFaites.includes(stringQuestion));
+            while(reponseAddition < 10 || additionsFaites.includes(question));
             
             reponses[0] = reponseAddition;
             
@@ -337,9 +333,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (50 - 10) + 10);
                 partDeux = Math.ceil(Math.random() * (50 - 10) + 10);
                 reponseAddition = partUne + partDeux;
-                stringQuestion = partUne + " + " + partDeux;
+                question = partUne + " + " + partDeux;
             }
-            while(reponseAddition > 69 || additionsFaites.includes(stringQuestion));
+            while(reponseAddition > 69 || additionsFaites.includes(question));
             
             reponses[0] = reponseAddition;
             
@@ -363,9 +359,9 @@ function creerAddition(diff) {
             partDeux = Math.ceil(Math.random() * (100 - 10) + 10);
             reponseAddition = partUne + partDeux;
             reponses[0] = reponseAddition;
-            stringQuestion = partUne + " + " + partDeux;
+            question = partUne + " + " + partDeux;
             }
-            while(additionsFaites.includes(stringQuestion));
+            while(additionsFaites.includes(question));
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
@@ -386,9 +382,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (1000 - 100) + 100);
                 partDeux = Math.ceil(Math.random() * (1000 - 100) + 100);
                 reponseAddition = partUne + partDeux;
-                stringQuestion = partUne + " + " + partDeux;
+                question = partUne + " + " + partDeux;
             }
-            while(reponseAddition > 999 || additionsFaites.includes(stringQuestion));
+            while(reponseAddition > 999 || additionsFaites.includes(question));
             
             reponses[0] = reponseAddition;
             
@@ -405,22 +401,12 @@ function creerAddition(diff) {
             break;
     }
     
-    for(let y = 0; y < 4; y++)
-    {
-        localStorage.setItem(reponse + y, reponses[y]);
-    }
-    
     if(additionsFaites.length == 5)
     {
         additionsFaites.shift();
     }
     
-    additionsFaites.push(stringQuestion);
-    
-    localStorage.setItem(questionLS
-                         , stringQuestion);
-    
-    
+    additionsFaites.push(question);
 }
 
 function creerSoustraction(diff) {
@@ -428,8 +414,6 @@ function creerSoustraction(diff) {
     let partUne;
     let partDeux;
     let reponseSoustraction;
-    let reponses = Array();
-    let stringQuestion;
     
     switch(diff){
         //un chiffre
@@ -440,9 +424,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 1) + 1);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
-                stringQuestion = partUne + " - " + partDeux;
+                question = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -466,9 +450,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 12) + 12);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
-                stringQuestion = partUne + " - " + partDeux;
+                question = partUne + " - " + partDeux;
             }
-            while((partUne % 10) < partDeux || soustractionsFaites.includes(stringQuestion));
+            while((partUne % 10) < partDeux || soustractionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -495,9 +479,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 12) + 12);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
-                stringQuestion = partUne + " - " + partDeux;
+                question = partUne + " - " + partDeux;
             }
-            while((partUne % 10) >= partDeux || soustractionsFaites.includes(stringQuestion));
+            while((partUne % 10) >= partDeux || soustractionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -524,9 +508,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 10) + 10);
                 partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
                 reponseSoustraction = partUne - partDeux;
-                stringQuestion = partUne + " - " + partDeux;
+                question = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -553,9 +537,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (999 - 100) + 100);
                 partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
                 reponseSoustraction = partUne - partDeux;
-                stringQuestion = partUne + " - " + partDeux;
+                question = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -575,28 +559,17 @@ function creerSoustraction(diff) {
             break;
     }
     
-    for(let y = 0; y < 4; y++)
-    {
-        localStorage.setItem(reponse + y, reponses[y]);
-    }
-    
     if(soustractionsFaites.length == 5)
         soustractionsFaites.shift();
     
-    soustractionsFaites.push(stringQuestion);
-    
-    localStorage.setItem(questionLS
-                         , stringQuestion);
+    soustractionsFaites.push(question);
 }
 
 function creerMultiplication(diff) {
-    
     let partUne;
     let partDeux;
     let reponseSoustraction;
-    let reponses = Array();
     let rdm;
-    let stringQuestion;
     
     switch(diff){
         // table de 2 et 10
@@ -610,9 +583,9 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 reponseSoustraction = partUne * partDeux;
-                stringQuestion = partUne + " * " + partDeux;
+                question = partUne + " * " + partDeux;
             }
-            while(multiplicationsFaites.includes(stringQuestion));
+            while(multiplicationsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -642,9 +615,9 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 reponseSoustraction = partUne * partDeux;
-                stringQuestion = partUne + " * " + partDeux;
+                question = partUne + " * " + partDeux;
             }
-            while(multiplicationsFaites.includes(stringQuestion));
+            while(multiplicationsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -678,9 +651,9 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 reponseSoustraction = partUne * partDeux;
-                stringQuestion = partUne + " * " + partDeux;
+                question = partUne + " * " + partDeux;
             }
-            while(multiplicationsFaites.includes(stringQuestion));
+            while(multiplicationsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -718,9 +691,9 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 reponseSoustraction = partUne * partDeux;
-                stringQuestion = partUne + " * " + partDeux;
+                question = partUne + " * " + partDeux;
             }
-            while(multiplicationsFaites.includes(stringQuestion));
+            while(multiplicationsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -762,9 +735,9 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 reponseSoustraction = partUne * partDeux;
-                stringQuestion = partUne + " * " + partDeux;
+                question = partUne + " * " + partDeux;
             }
-            while(multiplicationsFaites.includes(stringQuestion));
+            while(multiplicationsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -781,27 +754,17 @@ function creerMultiplication(diff) {
             break;
     }
     
-    for(let y = 0; y < 4; y++)
-    {
-        localStorage.setItem(reponse + y, reponses[y]);
-    }
-    
     if(multiplicationsFaites.length == 5)
         multiplicationsFaites.shift();
     
-    multiplicationsFaites.push(stringQuestion);
-    
-    localStorage.setItem(questionLS
-                         , stringQuestion);
+    multiplicationsFaites.push(question);
 }
 
 function creerDivision(diff) {
     let partUne;
     let partDeux;
     let reponseSoustraction;
-    let reponses = Array();
     let rdm;
-    let stringQuestion;
     
     switch(diff){
         // table de 2 et 10
@@ -815,11 +778,9 @@ function creerDivision(diff) {
                     partDeux = 10;
                 reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
                 partUne = partDeux * reponseSoustraction;
-                stringQuestion = partUne + " / " + partDeux;
+                question = partUne + " / " + partDeux;
             }
-            while(divisionsFaites.includes(stringQuestion));
-            
-            
+            while(divisionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -849,9 +810,9 @@ function creerDivision(diff) {
                     partDeux = 10;
                 reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
                 partUne = partDeux * reponseSoustraction;
-                stringQuestion = partUne + " / " + partDeux;
+                question = partUne + " / " + partDeux;
             }
-            while(divisionsFaites.includes(stringQuestion));
+            while(divisionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -885,9 +846,9 @@ function creerDivision(diff) {
                     partDeux = 10;
                 reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
                 partUne = partDeux * reponseSoustraction;
-                stringQuestion = partUne + " / " + partDeux;
+                question = partUne + " / " + partDeux;
             }
-            while(divisionsFaites.includes(stringQuestion));
+            while(divisionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -925,9 +886,9 @@ function creerDivision(diff) {
                     partDeux = 10;
                 reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
                 partUne = partDeux * reponseSoustraction;
-                stringQuestion = partUne + " / " + partDeux;
+                question = partUne + " / " + partDeux;
             }
-            while(divisionsFaites.includes(stringQuestion));
+            while(divisionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -969,9 +930,9 @@ function creerDivision(diff) {
                     partDeux = 10;
                 reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
                 partUne = partDeux * reponseSoustraction;
-                stringQuestion = partUne + " / " + partDeux;
+                question = partUne + " / " + partDeux;
             }
-            while(divisionsFaites.includes(stringQuestion));
+            while(divisionsFaites.includes(question));
             
             reponses[0] = reponseSoustraction;
             
@@ -988,18 +949,10 @@ function creerDivision(diff) {
             break;
     }
     
-    for(let y = 0; y < 4; y++)
-    {
-        localStorage.setItem(reponse + y, reponses[y]);
-    }
-    
     if(divisionsFaites.length == 5)
         divisionsFaites.shift();
     
-    divisionsFaites.push(stringQuestion);
-    
-    localStorage.setItem(questionLS
-                         , stringQuestion);
+    divisionsFaites.push(question);
 }
 
 function incrementerVariableLocale(nomVariable) {
@@ -1008,8 +961,7 @@ function incrementerVariableLocale(nomVariable) {
 }
 
 function setChrono() {
-    let diffChrono = localStorage.getItem(chrono);
-    switch(diffChrono) {
+    switch(chrono) {
         case "lent":
             chronoFin = chronoLent;
             break;
@@ -1047,8 +999,7 @@ function chronometre() {
     {
         stopChrono();
         chronoActuel = 0;
-        let mdj = localStorage.getItem(modeDeJeu);
-        switch(mdj) {
+        switch(modeDeJeu) {
             case "chemin":
                 deroulementFinChemin(0);
                 break;

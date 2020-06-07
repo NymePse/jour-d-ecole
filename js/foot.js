@@ -101,11 +101,17 @@
 
 function setUpFoot() {
     //création variables LocalStorage de la partie
-    localStorage.setItem(nbParties, (Math.ceil(Math.random() * (4 - 2) + 2)))
-    localStorage.setItem(nbQuestions, (Math.ceil(Math.random() * (6 - 3) + 3)));
-    localStorage.setItem(prtActuelle, 0);
-    localStorage.setItem(qstActuelle, 0);
-    localStorage.setItem(score, 0);
+    nbParties = Math.ceil(Math.random() * (4 - 2) + 2);
+    nbQuestions = Math.ceil(Math.random() * (6 - 3) + 3);
+    indexPartie = 0;
+    indexQuestion = 0;
+    score = 0;
+    
+    localStorage.setItem(LS_nbParties, nbParties);
+    localStorage.setItem(LS_nbQuestions, nbQuestions);
+    localStorage.setItem(LS_indexPartie, 0);
+    localStorage.setItem(LS_indexQuestion, 0);
+    localStorage.setItem(LS_score, 0);
     
     //Gestion events
     $(bouton).off("click");
@@ -173,22 +179,21 @@ function deroulementDebutFoot() {
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 20,
         fontSize: 20,
-        text: 'Partie ' + localStorage.getItem(prtActuelle) + " sur " + localStorage.getItem(nbParties)
+        text: 'Partie ' + indexPartie + " sur " + nbParties
     }).drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 50,
         fontSize: 20,
-        text: 'Question ' + localStorage.getItem(qstActuelle) + " sur " + localStorage.getItem(nbQuestions)
+        text: 'Question ' + indexQuestion + " sur " + nbQuestions
     }).drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: 80,
         fontSize: 20,
-        text: localStorage.getItem(question)
+        text: question
     });
     
     //Set chrono
-    let typeChrono = localStorage.getItem(chrono);
-    if(typeChrono != "sans")
+    if(chrono != "sans")
         setChrono();
 }
 
@@ -200,7 +205,8 @@ function deroulementFinFoot(key) {
     
     if(reponseBonne(key))
     {
-        incrementerVariableLocale(qstActuelle);
+        indexQuestion++;
+        localStorage.setItem(LS_indexQuestion, indexPartie);
         $(jeu).drawText({
             fillStyle: 'black',
             x: $(jeu).width() / 2, y: 50,
@@ -210,8 +216,10 @@ function deroulementFinFoot(key) {
     }
     else
     {
-        localStorage.setItem(qstActuelle, 0);
-        incrementerVariableLocale(prtActuelle);
+        indexQuestion = 0;
+        localStorage.setItem(LS_indexQuestion, 0);
+        indexPartie++;
+        localStorage.setItem(LS_indexPartie, indexPartie);
         $(jeu).drawText({
             fillStyle: 'black',
             x: $(jeu).width() / 2, y: 50,
@@ -224,14 +232,17 @@ function deroulementFinFoot(key) {
         
         if(quizzComplet())
         {
-            localStorage.setItem(qstActuelle, 0);
-            incrementerVariableLocale(prtActuelle);
-            incrementerVariableLocale(score);
+            indexQuestion = 0;
+            localStorage.setItem(LS_indexQuestion, 0);
+            indexPartie++;
+            localStorage.setItem(LS_indexPartie, indexPartie);
+            score++;
+            localStorage.setItem(LS_score, score);
         }
         
         if(partiesCompletes())
         {
-           conclusionFoot();
+            conclusionFoot();
         }
         else
         {
@@ -248,23 +259,20 @@ function conclusionFoot() {
         fillStyle: 'black',
         x: 100, y: 100,
         fontSize: 20,
-        text: 'score : ' + localStorage.getItem('score')
+        text: 'score : ' + score
     });
     
     viderVariablesParties();
     viderListesQuestions();
     
     setTimeout(function() {
-        if(localStorage.getItem(journee) == "true")
+        if(journee == true)
             journeePreSoleil();
     },2000);
 }
     
 function partiesCompletes() {
-    let index = parseInt(localStorage.getItem(prtActuelle));
-    let max = parseInt(localStorage.getItem(nbParties));
-    
-    if(index > max)
+    if(indexPartie > nbParties)
         return true;
     else
         return false;
