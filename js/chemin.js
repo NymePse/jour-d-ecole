@@ -236,6 +236,7 @@ function conclusionChemin() {
     });
     
     viderVariablesParties();
+    viderListesQuestions();
     
     setTimeout(function() {
         if(localStorage.getItem(journee) == "true")

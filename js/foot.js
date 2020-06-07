@@ -252,6 +252,7 @@ function conclusionFoot() {
     });
     
     viderVariablesParties();
+    viderListesQuestions();
     
     setTimeout(function() {
         if(localStorage.getItem(journee) == "true")

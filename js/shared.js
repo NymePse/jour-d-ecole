@@ -40,6 +40,12 @@ var idInterval;
 var chronoFin;
 var chronoActuel;
 
+//variables questions
+var additionsFaites = Array();
+var soustractionsFaites = Array();
+var multiplicationsFaites = Array();
+var divisionsFaites = Array();
+
 function setUpSite() {
     idInterval = Array();
     
@@ -91,6 +97,13 @@ function viderVariablesParties() {
     localStorage.removeItem(reponse + 1);
     localStorage.removeItem(reponse + 2);
     localStorage.removeItem(reponse + 3);
+}
+
+function viderListesQuestions() {
+    additionsFaites = Array();
+    soustractionsFaites = Array();
+    multiplicationsFaites = Array();
+    divisionsFaites = Array();
 }
 
 function majNom(val) {
@@ -249,6 +262,7 @@ function creerAddition(diff) {
     let partDeux;
     let reponseAddition;
     let reponses = Array();
+    let stringQuestion;
     
     switch(diff){
         //Un chiffre, pas de retenue
@@ -259,8 +273,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 1) + 1);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseAddition = partUne + partDeux;
+                stringQuestion = partUne + " + " + partDeux;
             }
-            while(reponseAddition >= 10);
+            while(reponseAddition >= 10 || additionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseAddition;
             
@@ -284,8 +299,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 2) + 2);
                 partDeux = Math.ceil(Math.random() * (9 - 2) + 2);
                 reponseAddition = partUne + partDeux;
+                stringQuestion = partUne + " + " + partDeux;
             }
-            while(reponseAddition < 10);
+            while(reponseAddition < 10 || additionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseAddition;
             
@@ -308,8 +324,9 @@ function creerAddition(diff) {
                 partUne = Math.ceil(Math.random() * (50 - 10) + 10);
                 partDeux = Math.ceil(Math.random() * (50 - 10) + 10);
                 reponseAddition = partUne + partDeux;
+                stringQuestion = partUne + " + " + partDeux;
             }
-            while(reponseAddition > 69);
+            while(reponseAddition > 69 || additionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseAddition;
             
@@ -327,10 +344,15 @@ function creerAddition(diff) {
             
         //deux chiffres quelconques
         case "difficile":
+            do
+            {
             partUne = Math.ceil(Math.random() * (100 - 10) + 10);
             partDeux = Math.ceil(Math.random() * (100 - 10) + 10);
             reponseAddition = partUne + partDeux;
             reponses[0] = reponseAddition;
+            stringQuestion = partUne + " + " + partDeux;
+            }
+            while(additionsFaites.includes(stringQuestion));
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
@@ -348,11 +370,12 @@ function creerAddition(diff) {
         case "tres-difficile":
             do
             {
-            partUne = Math.ceil(Math.random() * (1000 - 100) + 100);
-            partDeux = Math.ceil(Math.random() * (1000 - 100) + 100);
-            reponseAddition = partUne + partDeux;
+                partUne = Math.ceil(Math.random() * (1000 - 100) + 100);
+                partDeux = Math.ceil(Math.random() * (1000 - 100) + 100);
+                reponseAddition = partUne + partDeux;
+                stringQuestion = partUne + " + " + partDeux;
             }
-            while(reponseAddition > 999);
+            while(reponseAddition > 999 || additionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseAddition;
             
@@ -373,7 +396,17 @@ function creerAddition(diff) {
     {
         localStorage.setItem(reponse + y, reponses[y]);
     }
-    localStorage.setItem(question, partUne + " + " + partDeux);
+    
+    if(additionsFaites.length == 5)
+    {
+        additionsFaites.shift();
+    }
+    
+    additionsFaites.push(stringQuestion);
+    
+    localStorage.setItem(question, stringQuestion);
+    
+    
 }
 
 function creerSoustraction(diff) {
@@ -382,6 +415,7 @@ function creerSoustraction(diff) {
     let partDeux;
     let reponseSoustraction;
     let reponses = Array();
+    let stringQuestion;
     
     switch(diff){
         //un chiffre
@@ -392,8 +426,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (9 - 1) + 1);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
+                stringQuestion = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0);
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -417,8 +452,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 12) + 12);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
+                stringQuestion = partUne + " - " + partDeux;
             }
-            while((partUne % 10) < partDeux);
+            while((partUne % 10) < partDeux || soustractionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -445,8 +481,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 12) + 12);
                 partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
                 reponseSoustraction = partUne - partDeux;
+                stringQuestion = partUne + " - " + partDeux;
             }
-            while((partUne % 10) >= partDeux);
+            while((partUne % 10) >= partDeux || soustractionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -473,8 +510,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (99 - 10) + 10);
                 partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
                 reponseSoustraction = partUne - partDeux;
+                stringQuestion = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0);
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -501,8 +539,9 @@ function creerSoustraction(diff) {
                 partUne = Math.ceil(Math.random() * (999 - 100) + 100);
                 partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
                 reponseSoustraction = partUne - partDeux;
+                stringQuestion = partUne + " - " + partDeux;
             }
-            while(reponseSoustraction < 0);
+            while(reponseSoustraction < 0 || soustractionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -526,7 +565,13 @@ function creerSoustraction(diff) {
     {
         localStorage.setItem(reponse + y, reponses[y]);
     }
-    localStorage.setItem(question, partUne + " - " + partDeux);
+    
+    if(soustractionsFaites.length == 5)
+        soustractionsFaites.shift();
+    
+    soustractionsFaites.push(stringQuestion);
+    
+    localStorage.setItem(question, stringQuestion);
 }
 
 function creerMultiplication(diff) {
@@ -536,17 +581,23 @@ function creerMultiplication(diff) {
     let reponseSoustraction;
     let reponses = Array();
     let rdm;
+    let stringQuestion;
     
     switch(diff){
         // table de 2 et 10
         case "tres-simple":
             //Créer question & réponse juste
-            if(Math.random() > 0.5)
-                partUne = 2;
-            else
-                partUne = 10;
-            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-            reponseSoustraction = partUne * partDeux;
+            do
+            {
+                if(Math.random() > 0.5)
+                    partUne = 2;
+                else
+                    partUne = 10;
+                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+                reponseSoustraction = partUne * partDeux;
+                stringQuestion = partUne + " * " + partDeux;
+            }
+            while(multiplicationsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -565,15 +616,20 @@ function creerMultiplication(diff) {
         //2, 3 et 10
         case "simple":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.6)
-                partUne = 2;
-            else if(rdm > 0.3)
-                partUne = 3;
-            else
-                partUne = 10;
-            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-            reponseSoustraction = partUne * partDeux;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.6)
+                    partUne = 2;
+                else if(rdm > 0.3)
+                    partUne = 3;
+                else
+                    partUne = 10;
+                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+                reponseSoustraction = partUne * partDeux;
+                stringQuestion = partUne + " * " + partDeux;
+            }
+            while(multiplicationsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -592,19 +648,24 @@ function creerMultiplication(diff) {
         //2, 3, 4, 5, 10
         case "moyen":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.8)
-                partUne = 2;
-            else if(rdm > 0.6)
-                partUne = 3;
-            else if(rdm > 0.4)
-                partUne = 4;
-            else if(rdm > 0.2)
-                partUne = 5;
-            else
-                partUne = 10;
-            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-            reponseSoustraction = partUne * partDeux;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.8)
+                    partUne = 2;
+                else if(rdm > 0.6)
+                    partUne = 3;
+                else if(rdm > 0.4)
+                    partUne = 4;
+                else if(rdm > 0.2)
+                    partUne = 5;
+                else
+                    partUne = 10;
+                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+                reponseSoustraction = partUne * partDeux;
+                stringQuestion = partUne + " * " + partDeux;
+            }
+            while(multiplicationsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -623,23 +684,28 @@ function creerMultiplication(diff) {
         //2, 3, 4, 5, 6, 7, 10
         case "difficile":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.84)
-                partUne = 2;
-            else if(rdm > 0.7)
-                partUne = 3;
-            else if(rdm > 0.56)
-                partUne = 4;
-            else if(rdm > 0.42)
-                partUne = 5;
-            else if(rdm > 0.28)
-                partUne = 6;
-            else if(rdm > 0.14)
-                partUne = 7;
-            else
-                partUne = 10;
-            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-            reponseSoustraction = partUne * partDeux;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.84)
+                    partUne = 2;
+                else if(rdm > 0.7)
+                    partUne = 3;
+                else if(rdm > 0.56)
+                    partUne = 4;
+                else if(rdm > 0.42)
+                    partUne = 5;
+                else if(rdm > 0.28)
+                    partUne = 6;
+                else if(rdm > 0.14)
+                    partUne = 7;
+                else
+                    partUne = 10;
+                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+                reponseSoustraction = partUne * partDeux;
+                stringQuestion = partUne + " * " + partDeux;
+            }
+            while(multiplicationsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -658,27 +724,32 @@ function creerMultiplication(diff) {
         //toutes les tables
         case "tres-difficile":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.88)
-                partUne = 2;
-            else if(rdm > 0.77)
-                partUne = 3;
-            else if(rdm > 0.66)
-                partUne = 4;
-            else if(rdm > 0.55)
-                partUne = 5;
-            else if(rdm > 0.44)
-                partUne = 6;
-            else if(rdm > 0.33)
-                partUne = 7;
-            else if(rdm > 0.22)
-                partUne = 8;
-            else if(rdm > 0.11)
-                partUne = 9;
-            else
-                partUne = 10;
-            partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-            reponseSoustraction = partUne * partDeux;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.88)
+                    partUne = 2;
+                else if(rdm > 0.77)
+                    partUne = 3;
+                else if(rdm > 0.66)
+                    partUne = 4;
+                else if(rdm > 0.55)
+                    partUne = 5;
+                else if(rdm > 0.44)
+                    partUne = 6;
+                else if(rdm > 0.33)
+                    partUne = 7;
+                else if(rdm > 0.22)
+                    partUne = 8;
+                else if(rdm > 0.11)
+                    partUne = 9;
+                else
+                    partUne = 10;
+                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
+                reponseSoustraction = partUne * partDeux;
+                stringQuestion = partUne + " * " + partDeux;
+            }
+            while(multiplicationsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -699,7 +770,13 @@ function creerMultiplication(diff) {
     {
         localStorage.setItem(reponse + y, reponses[y]);
     }
-    localStorage.setItem(question, partUne + " * " + partDeux);
+    
+    if(multiplicationsFaites.length == 5)
+        multiplicationsFaites.shift();
+    
+    multiplicationsFaites.push(stringQuestion);
+    
+    localStorage.setItem(question, stringQuestion);
 }
 
 function creerDivision(diff) {
@@ -708,17 +785,25 @@ function creerDivision(diff) {
     let reponseSoustraction;
     let reponses = Array();
     let rdm;
+    let stringQuestion;
     
     switch(diff){
         // table de 2 et 10
         case "tres-simple":
             //Créer question & réponse juste
-            if(Math.random() > 0.5)
-                partDeux = 2;
-            else
-                partDeux = 10;
-            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-            partUne = partDeux * reponseSoustraction;
+            do
+            {
+                if(Math.random() > 0.5)
+                    partDeux = 2;
+                else
+                    partDeux = 10;
+                reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                partUne = partDeux * reponseSoustraction;
+                stringQuestion = partUne + " / " + partDeux;
+            }
+            while(divisionsFaites.includes(stringQuestion));
+            
+            
             
             reponses[0] = reponseSoustraction;
             
@@ -737,15 +822,20 @@ function creerDivision(diff) {
         //2, 3 et 10
         case "simple":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.6)
-                partDeux = 2;
-            else if(rdm > 0.3)
-                partDeux = 3;
-            else
-                partDeux = 10;
-            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-            partUne = partDeux * reponseSoustraction;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.6)
+                    partDeux = 2;
+                else if(rdm > 0.3)
+                    partDeux = 3;
+                else
+                    partDeux = 10;
+                reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                partUne = partDeux * reponseSoustraction;
+                stringQuestion = partUne + " / " + partDeux;
+            }
+            while(divisionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -764,19 +854,24 @@ function creerDivision(diff) {
         //2, 3, 4, 5, 10
         case "moyen":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.8)
-                partDeux = 2;
-            else if(rdm > 0.6)
-                partDeux = 3;
-            else if(rdm > 0.4)
-                partDeux = 4;
-            else if(rdm > 0.2)
-                partDeux = 5;
-            else
-                partDeux = 10;
-            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-            partUne = partDeux * reponseSoustraction;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.8)
+                    partDeux = 2;
+                else if(rdm > 0.6)
+                    partDeux = 3;
+                else if(rdm > 0.4)
+                    partDeux = 4;
+                else if(rdm > 0.2)
+                    partDeux = 5;
+                else
+                    partDeux = 10;
+                reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                partUne = partDeux * reponseSoustraction;
+                stringQuestion = partUne + " / " + partDeux;
+            }
+            while(divisionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -795,23 +890,28 @@ function creerDivision(diff) {
         //2, 3, 4, 5, 6, 7, 10
         case "difficile":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.84)
-                partDeux = 2;
-            else if(rdm > 0.7)
-                partDeux = 3;
-            else if(rdm > 0.56)
-                partDeux = 4;
-            else if(rdm > 0.42)
-                partDeux = 5;
-            else if(rdm > 0.28)
-                partDeux = 6;
-            else if(rdm > 0.14)
-                partDeux = 7;
-            else
-                partDeux = 10;
-            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-            partUne = partDeux * reponseSoustraction;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.84)
+                    partDeux = 2;
+                else if(rdm > 0.7)
+                    partDeux = 3;
+                else if(rdm > 0.56)
+                    partDeux = 4;
+                else if(rdm > 0.42)
+                    partDeux = 5;
+                else if(rdm > 0.28)
+                    partDeux = 6;
+                else if(rdm > 0.14)
+                    partDeux = 7;
+                else
+                    partDeux = 10;
+                reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                partUne = partDeux * reponseSoustraction;
+                stringQuestion = partUne + " / " + partDeux;
+            }
+            while(divisionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -830,27 +930,32 @@ function creerDivision(diff) {
         //toutes les tables
         case "tres-difficile":
             //Créer question & réponse juste
-            rdm = Math.random();
-            if(rdm > 0.88)
-                partDeux = 2;
-            else if(rdm > 0.77)
-                partDeux = 3;
-            else if(rdm > 0.66)
-                partDeux = 4;
-            else if(rdm > 0.55)
-                partDeux = 5;
-            else if(rdm > 0.44)
-                partDeux = 6;
-            else if(rdm > 0.33)
-                partDeux = 7;
-            else if(rdm > 0.22)
-                partDeux = 8;
-            else if(rdm > 0.11)
-                partDeux = 9;
-            else
-                partDeux = 10;
-            reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-            partUne = partDeux * reponseSoustraction;
+            do
+            {
+                rdm = Math.random();
+                if(rdm > 0.88)
+                    partDeux = 2;
+                else if(rdm > 0.77)
+                    partDeux = 3;
+                else if(rdm > 0.66)
+                    partDeux = 4;
+                else if(rdm > 0.55)
+                    partDeux = 5;
+                else if(rdm > 0.44)
+                    partDeux = 6;
+                else if(rdm > 0.33)
+                    partDeux = 7;
+                else if(rdm > 0.22)
+                    partDeux = 8;
+                else if(rdm > 0.11)
+                    partDeux = 9;
+                else
+                    partDeux = 10;
+                reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
+                partUne = partDeux * reponseSoustraction;
+                stringQuestion = partUne + " / " + partDeux;
+            }
+            while(divisionsFaites.includes(stringQuestion));
             
             reponses[0] = reponseSoustraction;
             
@@ -871,7 +976,13 @@ function creerDivision(diff) {
     {
         localStorage.setItem(reponse + y, reponses[y]);
     }
-    localStorage.setItem(question, partUne + " / " + partDeux);
+    
+    if(divisionsFaites.length == 5)
+        divisionsFaites.shift();
+    
+    divisionsFaites.push(stringQuestion);
+    
+    localStorage.setItem(question, stringQuestion);
 }
 
 function incrementerVariableLocale(nomVariable) {
