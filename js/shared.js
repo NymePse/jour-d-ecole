@@ -69,7 +69,7 @@ function setUpSite() {
     let fct;
     let txt;
     
-    if(modeDeJeu != null)
+    if(modeDeJeu != null && modeDeJeu != "journee")
     {
         switch(modeDeJeu) {
             case "chemin":
