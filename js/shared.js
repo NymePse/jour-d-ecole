@@ -70,7 +70,7 @@ function setUpSite() {
     
     if(modeDeJeu != null)
     {
-        switch(mdj) {
+        switch(modeDeJeu) {
             case "chemin":
                 fct = deroulementDebutChemin;
                 txt = modeDeJeu;
