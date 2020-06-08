@@ -113,6 +113,8 @@ function setUpFoot() {
     localStorage.setItem(LS_indexQuestion, 0);
     localStorage.setItem(LS_score, 0);
     
+    resetEventsPartie();
+    
     //Gestion events
     $(bouton).off("click");
     $(document).keypress(function(event) {
@@ -219,6 +221,10 @@ function deroulementFinFoot(key) {
     //stop chrono
     stopChrono();
     
+    resetEventsPartie();
+    
+    console.log("Fin foot");
+    
     $(jeu).clearCanvas();
     
     if(reponseBonne(key))
@@ -282,6 +288,7 @@ function conclusionFoot() {
     
     viderVariablesParties();
     viderListesQuestions();
+    resetEventsPartie();
     
     setTimeout(function() {
         if(journee == true)

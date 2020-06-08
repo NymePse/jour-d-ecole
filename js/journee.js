@@ -25,6 +25,8 @@ function setUpJournee() {
     journee = true;
     localStorage.setItem(LS_journee, true);
     
+    resetEventsPartie();
+    
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: $(jeu).height() / 2,
@@ -51,6 +53,8 @@ function setUpJournee() {
 }
 
 function journeePreFoot() {
+    resetEventsPartie();
+    
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: $(jeu).height() / 2,
@@ -82,6 +86,8 @@ function journeePreFoot() {
 }
 
 function journeePreSoleil() {
+    resetEventsPartie();
+    
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',
         x: $(jeu).width() / 2, y: $(jeu).height() / 2,
@@ -114,7 +120,7 @@ function conclusionJournee() {
     journee = false;
     localStorage.setItem(LS_journee, false);
     
-    $(classfleche).off("click");
+    resetEventsPartie();
     
     $(jeu).clearCanvas().drawText({
         fillStyle: 'black',

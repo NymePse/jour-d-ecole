@@ -94,6 +94,7 @@ function setUpSoleil() {
     localStorage.setItem(LS_indexQuestion, 0);
     localStorage.setItem(LS_score, 0);
     
+    resetEventsPartie();
     
     //Gestion events
     $(bouton).off("click");
@@ -123,6 +124,10 @@ function setUpSoleil() {
 
 function deroulementDebutSoleil()  {
     stopChrono();
+    
+    resetEventsPartie();
+    
+    console.log("Fin Soleil");
     
     //Select obstacle
     do
@@ -247,6 +252,7 @@ function conclusionSoleil() {
     
     viderVariablesParties();
     viderListesQuestions();
+    resetEventsPartie();
     
     setTimeout(function() {
         if(journee == true)

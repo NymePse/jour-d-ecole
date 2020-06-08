@@ -138,6 +138,13 @@ function viderListesQuestions() {
     obstaclesFaits = Array();
 }
 
+function resetEventsPartie() {
+    $(document).off("keypress");
+    $(document).off("keydown");
+    $(classfleche).off("click");
+    $(espace).off("click");
+}
+
 function majNom(val) {
     localStorage.setItem(nom, val);
 }
@@ -147,6 +154,8 @@ function setUpGame() {
     stopChrono();
     
     viderVariablesParties();
+    
+    resetEventsPartie();
     
     //Reset journee
     journee = false;

@@ -109,6 +109,8 @@ function setUpChemin() {
     localStorage.setItem(LS_indexQuestion, 0);
     localStorage.setItem(LS_score, 0);
     
+    resetEventsPartie();
+    
     //Gestion events
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
@@ -150,9 +152,6 @@ function deroulementDebutChemin() {
     }
     
     obstaclesFaits.push(obstacle);
-    
-    console.log('Obstacle ' + obstacle);
-    console.log("anciens : " + obstaclesFaits[0]);
     
     creerQuestion();
     
@@ -212,6 +211,10 @@ function deroulementFinChemin(key) {
     //stop chrono
     stopChrono();
     
+    resetEventsPartie();
+    
+    console.log("Fin chemin");
+    
     $(jeu).clearCanvas();    
     if(reponseBonne(key))
     {
@@ -263,6 +266,7 @@ function conclusionChemin() {
     
     viderVariablesParties();
     viderListesQuestions();
+    resetEventsPartie();
     
     setTimeout(function() {
         if(journee == true)
