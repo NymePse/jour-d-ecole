@@ -134,8 +134,8 @@ function deroulementDebutSoleil()  {
     if(obstaclesFaits.length == 3)
     {
         obstaclesFaits.shift();
-        obstaclesFaits.push(obstacle);
     }
+    obstaclesFaits.push(obstacle);
     
     creerQuestion();
     
