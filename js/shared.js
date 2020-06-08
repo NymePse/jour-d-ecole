@@ -52,6 +52,7 @@ var chrono;
 var journee;
 var question;
 var reponses = Array();
+var obstacle;
 
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
