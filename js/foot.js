@@ -146,7 +146,7 @@ function deroulementDebutFoot() {
     //Select obstacle
     do
     {
-        obstacle = Math.floor(Math.random() * (4 + 1) + 1);
+        obstacle = Math.floor(Math.random() * 4);
     }
     while(obstaclesFaits.includes(obstacle));
     
@@ -203,6 +203,11 @@ function deroulementDebutFoot() {
         x: $(jeu).width() / 2, y: 80,
         fontSize: 20,
         text: question
+    }).drawText({
+        fillStyle: 'black',
+        x: $(jeu).width() / 2, y: 150,
+        fontSize: 20,
+        text: "Obstacle : " + obstacle
     });
     
     //Set chrono

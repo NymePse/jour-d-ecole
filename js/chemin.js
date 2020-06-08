@@ -140,15 +140,19 @@ function deroulementDebutChemin() {
     //Select obstacle
     do
     {
-        obstacle = Math.floor(Math.random() * (4 + 1) + 1);
+        obstacle = Math.floor(Math.random() * 4);
     }
     while(obstaclesFaits.includes(obstacle));
     
     if(obstaclesFaits.length == 3)
     {
         obstaclesFaits.shift();
-        obstaclesFaits.push(obstacle);
     }
+    
+    obstaclesFaits.push(obstacle);
+    
+    console.log('Obstacle ' + obstacle);
+    console.log("anciens : " + obstaclesFaits[0]);
     
     creerQuestion();
     
@@ -192,6 +196,11 @@ function deroulementDebutChemin() {
         x: $(jeu).width() / 2, y: 100,
         fontSize: 20,
         text: question
+    }).drawText({
+        fillStyle: 'black',
+        x: $(jeu).width() / 2, y: 150,
+        fontSize: 20,
+        text: "Obstacle : " + obstacle
     });
     
     //Set chrono
