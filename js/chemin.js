@@ -137,6 +137,19 @@ function setUpChemin() {
 function deroulementDebutChemin() {
     stopChrono();
     
+    //Select obstacle
+    do
+    {
+        obstacle = Math.floor(Math.random() * (4 + 1) + 1);
+    }
+    while(obstaclesFaits.includes(obstacle));
+    
+    if(obstaclesFaits.length == 3)
+    {
+        obstaclesFaits.shift();
+        obstaclesFaits.push(obstacle);
+    }
+    
     creerQuestion();
     
     $(document).keydown(function(event) {
