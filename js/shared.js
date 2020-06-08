@@ -53,6 +53,7 @@ var journee;
 var question;
 var reponses = Array();
 var obstacle;
+var obstaclesFaits = Array();
 
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
@@ -133,6 +134,7 @@ function viderListesQuestions() {
     soustractionsFaites = Array();
     multiplicationsFaites = Array();
     divisionsFaites = Array();
+    obstaclesFaits = Array();
 }
 
 function majNom(val) {
@@ -265,7 +267,10 @@ function creerQuestion() {
             break;
     }
     
-    //Affectation des réponses aux touches
+    setTouches();
+}
+
+function setTouches() {
     let indexSelect;
     fleches.forEach(function(fleche) {
         indexSelect = Math.floor(Math.random() * reponses.length);
