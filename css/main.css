@@ -23,3 +23,8 @@ h2 {
     min-height: 30px;
     min-width: 50px;
 }
+
+canvas {
+    min-width: 500px;
+    min-height: 400px;
+}
