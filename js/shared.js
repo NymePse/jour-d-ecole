@@ -65,8 +65,8 @@ var divisionsFaites = Array();
 //Var chemins vers images
 var imgChemin = "res/chemin/";
 var imgFoot = "res/foot/";
-var imgSoleil = "..res/soleil";
-var imgJournee = "..res/journee";
+var imgSoleil = "res/soleil/";
+var imgJournee = "res/journee/";
 
 function setUpSite() {
     idInterval = Array();

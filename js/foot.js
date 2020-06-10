@@ -332,11 +332,11 @@ function dessinerBaseFoot() {
         fillStyle: 'black',
         x: 5, y: 5,
         fontSize: 20,
-        text: indexPartie + " sur " + nbparties,
+        text: indexPartie + " sur " + nbParties,
         fromCenter: false
     }).drawText({
         fillStyle: 'black',
-        x: 15, y: 15,
+        x: 5, y: 25,
         fontSize: 20,
         text: indexQuestion + " sur " + nbQuestions,
         fromCenter: false

@@ -114,11 +114,22 @@ function setUpSoleil() {
     });
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    $(jeu).clearCanvas();
+    dessinerBaseSoleil();
+    $(jeu).drawImage({
+        source: imgSoleil + 'base_soleil.png',
+        x: 10, y:120,
+        fromCenter: false
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
-        text: "1, 2, 3, Soleil !"
+        x: 400, y: 170,
+        fontSize: 30,
+        text: 'Début du 1, 2, 3, Soleil'
+    }).drawText({
+        fillStyle: 'black',
+        x: 400, y: 230,
+        fontSize: 30,
+        text: 'Appuyez sur espace'
     });
 }
 
@@ -145,21 +156,19 @@ function deroulementDebutSoleil()  {
     creerQuestion();
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 20,
-        fontSize: 20,
-        text: "Question " + indexQuestion + " sur " +  nbQuestions
+    $(jeu).clearCanvas();
+    
+    dessinerBaseSoleil();
+    
+    $(jeu).drawImage({
+        source: imgSoleil + 'base_soleil.png',
+        x: 10, y:120,
+        fromCenter: false
     }).drawText({
         fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 50,
-        fontSize: 20,
-        text: question
-    }).drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 150,
-        fontSize: 20,
-        text: "Obstacle : " + obstacle
+        x: 400, y: 200,
+        fontSize: 30,
+        text: "Question : " + question
     });
     
      $(document).keydown(function(event) {
@@ -201,7 +210,13 @@ function deroulementFinSoleil(key) {
     //stop chrono
     stopChrono();
     
-    $(jeu).clearCanvas();
+    $(jeu).clearCanvas();  
+    dessinerBaseSoleil();
+    $(jeu).drawImage({
+        source: imgSoleil + 'base_soleil.png',
+        x: 10, y:120,
+        fromCenter: false
+    });
     
     if(reponseBonne(key))
     {
@@ -209,8 +224,8 @@ function deroulementFinSoleil(key) {
         localStorage.setItem(LS_score, score);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: $(jeu).width() / 2, y: 50,
-            fontSize: 40,
+            x: 400, y: 200,
+            fontSize: 30,
             text: "Bravo !"
         });
         
@@ -233,20 +248,26 @@ function deroulementFinSoleil(key) {
     {
         $(jeu).drawText({
             fillStyle: 'black',
-            x: $(jeu).width() / 2, y: 50,
-            fontSize: 40,
-            text: "Fin du jeu."
-        })
+            x: 400, y: 200,
+            fontSize: 30,
+            text: "Dommage."
+        });
         setTimeout(conclusionSoleil, 1000);
     }
 }
 
 function conclusionSoleil() {
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    $(jeu).clearCanvas();
+    dessinerBaseSoleil();
+    $(jeu).drawImage({
+        source: imgSoleil + 'base_soleil.png',
+        x: 400, y:240,
+        fromCenter: true
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
+        x: 400, y: 50,
+        fontSize: 30,
         text: 'score : ' + score
     });
     
@@ -258,4 +279,24 @@ function conclusionSoleil() {
         if(journee == true)
             conclusionJournee();
     },2000);
+}
+
+function dessinerBaseSoleil() {
+    $(jeu).clearCanvas().drawRect({
+        fillStyle: 'grey',
+        x:0, y:0,
+        fromCenter: false,
+        width:800, height:400
+    }).drawRect({
+        fillStyle: 'blue',
+        x:0 , y:360,
+        width: 800, height: 40,
+        fromCenter: false
+    }).drawText({
+        fillStyle: 'black',
+        x: 5, y: 5,
+        fontSize: 20,
+        text: indexQuestion + " sur " + nbQuestions,
+        fromCenter: false
+    });
 }
