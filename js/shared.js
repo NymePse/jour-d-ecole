@@ -62,6 +62,12 @@ var soustractionsFaites = Array();
 var multiplicationsFaites = Array();
 var divisionsFaites = Array();
 
+//Var chemins vers images
+var imgChemin = "res/chemin/";
+var imgFoot = "res/foot/";
+var imgSoleil = "..res/soleil";
+var imgJournee = "..res/journee";
+
 function setUpSite() {
     idInterval = Array();
     
@@ -1033,15 +1039,13 @@ function setChrono() {
 }
 
 function chronometre() {
-    $(jeu).clearCanvas({
-        x: $(jeu).width() - 20, width: 20,
-        y: 0, height: 20
-    });
     
     chronoActuel += 10;
     let rad = (chronoActuel / chronoFin) * 360;
     
     $(jeu).drawArc({
+        layer: true,
+        name: 'chrono',
         strokeStyle: 'black',
         strokeWidth: 5,
         x: $(jeu).innerWidth()-15, y: 15,
@@ -1070,9 +1074,5 @@ function chronometre() {
 function stopChrono() {
     idInterval.forEach(function(id) {
         clearInterval(id);
-    });
-    $(jeu).clearCanvas({
-        x: $(jeu).width() - 20, width: 20,
-        y: 0, height: 20
     });
 }

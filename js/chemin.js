@@ -117,6 +117,7 @@ function setUpChemin() {
         {
             $(document).off("keypress");
             $(espace).off("click");
+            $(jeu).setLayerGroup('txtIntro', { visible: false });
             deroulementDebutChemin();
         }
     });
@@ -124,15 +125,27 @@ function setUpChemin() {
     $(espace).click(function() {
         $(document).off("keypress");
         $(espace).off("click");
+        $(jeu).setLayer('spc', { visible: false });
+        $(jeu).setLayerGroup('txtIntro', { visible: false });
         deroulementDebutChemin();
     });
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    dessinerBaseChemin();
+    $(jeu).drawImage({
+        source: 'res/chemin/base_chemin.png',
+        x: 10, y:120,
+        fromCenter: false
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
-        text: "Appuyer sur espace"
+        x: 400, y: 170,
+        fontSize: 30,
+        text: 'Début du chemin'
+    }).drawText({
+        fillStyle: 'black',
+        x: 400, y: 230,
+        fontSize: 30,
+        text: 'Appuyez sur espace'
     });
 }
 
@@ -185,21 +198,19 @@ function deroulementDebutChemin() {
     });
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 50,
-        fontSize: 20,
-        text: 'Question ' + indexQuestion + ' sur ' + nbQuestions
+    $(jeu).clearCanvas();
+    
+    dessinerBaseChemin();
+    
+    $(jeu).drawImage({
+        source: 'res/chemin/base_chemin.png',
+        x: 10, y:120,
+        fromCenter: false
     }).drawText({
         fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 100,
-        fontSize: 20,
-        text: question
-    }).drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 150,
-        fontSize: 20,
-        text: "Obstacle : " + obstacle
+        x: 400, y: 200,
+        fontSize: 30,
+        text: "Question : " + question
     });
     
     //Set chrono
@@ -215,15 +226,22 @@ function deroulementFinChemin(key) {
     
     console.log("Fin chemin");
     
-    $(jeu).clearCanvas();    
+    $(jeu).clearCanvas();  
+    dessinerBaseChemin();
+    $(jeu).drawImage({
+        source: 'res/chemin/base_chemin.png',
+        x: 10, y:120,
+        fromCenter: false
+    });
+    
     if(reponseBonne(key))
     {
         score++;
         localStorage.setItem(LS_score, score);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
-            fontSize: 40,
+            x: 400, y: 200,
+            fontSize: 30,
             text: "Bravo !"
         });
     }
@@ -231,8 +249,8 @@ function deroulementFinChemin(key) {
     {
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 50, y: 50,
-            fontSize: 40,
+            x: 400, y: 200,
+            fontSize: 30,
             text: "Dommage !"
         })
     }
@@ -257,10 +275,16 @@ function deroulementFinChemin(key) {
 
 function conclusionChemin() {
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    $(jeu).clearCanvas();
+    dessinerBaseChemin();
+    $(jeu).drawImage({
+        source: 'res/chemin/base_chemin.png',
+        x: 400, y:240,
+        fromCenter: true
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
+        x: 400, y: 50,
+        fontSize: 30,
         text: 'score : ' + score
     });
     
@@ -272,4 +296,24 @@ function conclusionChemin() {
         if(journee == true)
             journeePreFoot();
     },2000);
+}
+
+function dessinerBaseChemin() {
+    $(jeu).clearCanvas().drawRect({
+        fillStyle: 'green',
+        x:0, y:0,
+        fromCenter: false,
+        width:800, height:400
+    }).drawRect({
+        fillStyle: 'grey',
+        x:0 , y:360,
+        width: 800, height: 40,
+        fromCenter: false
+    }).drawText({
+        fillStyle: 'black',
+        x: 5, y: 5,
+        fontSize: 20,
+        text: indexQuestion + " sur " + nbQuestions,
+        fromCenter: false
+    });
 }
