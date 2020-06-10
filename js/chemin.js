@@ -131,9 +131,10 @@ function setUpChemin() {
     });
     
     //Maj Canvas
+    $(jeu).clearCanvas();
     dessinerBaseChemin();
     $(jeu).drawImage({
-        source: 'res/chemin/base_chemin.png',
+        source: imgChemin + 'base_chemin.png',
         x: 10, y:120,
         fromCenter: false
     }).drawText({
@@ -203,7 +204,7 @@ function deroulementDebutChemin() {
     dessinerBaseChemin();
     
     $(jeu).drawImage({
-        source: 'res/chemin/base_chemin.png',
+        source: imgChemin + 'base_chemin.png',
         x: 10, y:120,
         fromCenter: false
     }).drawText({
@@ -229,7 +230,7 @@ function deroulementFinChemin(key) {
     $(jeu).clearCanvas();  
     dessinerBaseChemin();
     $(jeu).drawImage({
-        source: 'res/chemin/base_chemin.png',
+        source: imgChemin + 'base_chemin.png',
         x: 10, y:120,
         fromCenter: false
     });
@@ -252,7 +253,7 @@ function deroulementFinChemin(key) {
             x: 400, y: 200,
             fontSize: 30,
             text: "Dommage !"
-        })
+        });
     }
     
     $(document).off('keydown');
@@ -278,7 +279,7 @@ function conclusionChemin() {
     $(jeu).clearCanvas();
     dessinerBaseChemin();
     $(jeu).drawImage({
-        source: 'res/chemin/base_chemin.png',
+        source: imgChemin + 'base_chemin.png',
         x: 400, y:240,
         fromCenter: true
     }).drawText({

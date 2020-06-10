@@ -133,11 +133,22 @@ function setUpFoot() {
     });
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    $(jeu).clearCanvas();
+    dessinerBaseFoot();
+    $(jeu).drawImage({
+        source: imgFoot + 'base_foot.png',
+        x: 10, y:120,
+        fromCenter: false
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
-        text: "Appuyer sur espace"
+        x: 400, y: 170,
+        fontSize: 30,
+        text: 'Début du foot'
+    }).drawText({
+        fillStyle: 'black',
+        x: 400, y: 230,
+        fontSize: 30,
+        text: 'Appuyez sur espace'
     });
 }
 
@@ -190,26 +201,17 @@ function deroulementDebutFoot() {
     });
     
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 20,
-        fontSize: 20,
-        text: 'Partie ' + indexPartie + " sur " + nbParties
+    $(jeu).clearCanvas();
+    dessinerBaseFoot();
+    $(jeu).drawImage({
+        source: imgFoot + 'base_foot.png',
+        x: 10, y:120,
+        fromCenter: false
     }).drawText({
         fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 50,
-        fontSize: 20,
-        text: 'Question ' + indexQuestion + " sur " + nbQuestions
-    }).drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 80,
-        fontSize: 20,
-        text: question
-    }).drawText({
-        fillStyle: 'black',
-        x: $(jeu).width() / 2, y: 150,
-        fontSize: 20,
-        text: "Obstacle : " + obstacle
+        x: 400, y: 200,
+        fontSize: 30,
+        text: "Question : " + question
     });
     
     //Set chrono
@@ -225,7 +227,13 @@ function deroulementFinFoot(key) {
     
     console.log("Fin foot");
     
-    $(jeu).clearCanvas();
+    $(jeu).clearCanvas();  
+    dessinerBaseFoot();
+    $(jeu).drawImage({
+        source: imgFoot + 'base_foot.png',
+        x: 10, y:120,
+        fromCenter: false
+    });
     
     if(reponseBonne(key))
     {
@@ -233,8 +241,8 @@ function deroulementFinFoot(key) {
         localStorage.setItem(LS_indexQuestion, indexPartie);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: $(jeu).width() / 2, y: 50,
-            fontSize: 20,
+            x: 400, y: 200,
+            fontSize: 30,
             text: "Bravo !"
         });
     }
@@ -246,8 +254,8 @@ function deroulementFinFoot(key) {
         localStorage.setItem(LS_indexPartie, indexPartie);
         $(jeu).drawText({
             fillStyle: 'black',
-            x: $(jeu).width() / 2, y: 50,
-            fontSize: 20,
+            x: 400, y: 200,
+            fontSize: 30,
             text: "Dommage !"
         });
     }
@@ -279,10 +287,16 @@ function deroulementFinFoot(key) {
 
 function conclusionFoot() {
     //Maj Canvas
-    $(jeu).clearCanvas().drawText({
+    $(jeu).clearCanvas();
+    dessinerBaseFoot();
+    $(jeu).drawImage({
+        source: imgFoot + 'base_foot.png',
+        x: 400, y:240,
+        fromCenter: true
+    }).drawText({
         fillStyle: 'black',
-        x: 100, y: 100,
-        fontSize: 20,
+        x: 400, y: 50,
+        fontSize: 30,
         text: 'score : ' + score
     });
     
@@ -301,4 +315,30 @@ function partiesCompletes() {
         return true;
     else
         return false;
+}
+
+function dessinerBaseFoot() {
+    $(jeu).clearCanvas().drawRect({
+        fillStyle: 'grey',
+        x:0, y:0,
+        fromCenter: false,
+        width:800, height:400
+    }).drawRect({
+        fillStyle: 'green',
+        x:0 , y:360,
+        width: 800, height: 40,
+        fromCenter: false
+    }).drawText({
+        fillStyle: 'black',
+        x: 5, y: 5,
+        fontSize: 20,
+        text: indexPartie + " sur " + nbparties,
+        fromCenter: false
+    }).drawText({
+        fillStyle: 'black',
+        x: 15, y: 15,
+        fontSize: 20,
+        text: indexQuestion + " sur " + nbQuestions,
+        fromCenter: false
+    });
 }
