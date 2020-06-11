@@ -224,7 +224,7 @@ function deroulementDebutChemin() {
             break;
         case 1:
             $(jeu).drawImage({
-                source: imgChemin + 'obstacle2.png',
+                source: imgChemin + 'obstacle4.png',
                 x: 700, y:310,
                 fromCenter: false
             });
@@ -238,7 +238,7 @@ function deroulementDebutChemin() {
             break;
         case 3:
             $(jeu).drawImage({
-                source: imgChemin + 'obstacle4.png',
+                source: imgChemin + 'obstacle2.png',
                 x: 700, y:310,
                 fromCenter: false
             });
@@ -290,14 +290,14 @@ function deroulementFinChemin(key) {
     $(document).off('keydown');
     
     setTimeout(function() {
+        indexQuestion++;
+        localStorage.setItem(LS_indexQuestion, indexQuestion);
         if(quizzComplet())
         {
             conclusionChemin();
         }
         else
         {
-            indexQuestion++;
-            localStorage.setItem(LS_indexQuestion, indexQuestion);
             deroulementDebutChemin();
         }
     }, 1000);
