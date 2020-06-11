@@ -212,16 +212,43 @@ function deroulementFinSoleil(key) {
     
     $(jeu).clearCanvas();  
     dessinerBaseSoleil();
-    $(jeu).drawImage({
-        source: imgSoleil + 'base_soleil.png',
-        x: 10, y:120,
-        fromCenter: false
-    });
     
     if(reponseBonne(key))
     {
         score++;
         localStorage.setItem(LS_score, score);
+        
+        switch(obstacle){
+            case 0:
+                $(jeu).drawImage({
+                    source: imgSoleil + 'obstacle1.png',
+                    x: 10, y:120,
+        fromCenter: false
+                });
+                break;
+            case 1:
+                $(jeu).drawImage({
+                    source: imgSoleil + 'obstacle2.png',
+                    x: 10, y:120,
+        fromCenter: false
+                });
+                break;
+            case 2:
+                $(jeu).drawImage({
+                    source: imgSoleil + 'obstacle3.png',
+                    x: 10, y:120,
+        fromCenter: false
+                });
+                break;
+            case 3:
+                $(jeu).drawImage({
+                    source: imgSoleil + 'obstacle4.png',
+                    x: 10, y:120,
+        fromCenter: false
+                });
+                break;
+        }
+        
         $(jeu).drawText({
             fillStyle: 'black',
             x: 400, y: 200,

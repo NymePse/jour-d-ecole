@@ -214,6 +214,48 @@ function deroulementDebutFoot() {
         text: "Question : " + question
     });
     
+    if(indexQuestion == nbQuestions)
+    {
+        $(jeu).drawImage({
+            source: imgFoot + 'cage.png',
+            x: 600, y:110,
+            fromCenter: false
+        });
+    }
+    else
+    {
+        switch(obstacle){
+            case 0:
+                $(jeu).drawImage({
+                    source: imgFoot + 'obstacle1.png',
+                    x: 600, y:110,
+                    fromCenter: false
+                });
+                break;
+            case 1:
+                $(jeu).drawImage({
+                    source: imgFoot + 'obstacle2.png',
+                    x: 600, y:110,
+                    fromCenter: false
+                });
+                break;
+            case 2:
+                $(jeu).drawImage({
+                    source: imgFoot + 'obstacle3.png',
+                    x: 600, y:110,
+                    fromCenter: false
+                });
+                break;
+            case 3:
+                $(jeu).drawImage({
+                    source: imgFoot + 'obstacle4.png',
+                    x: 600, y:110,
+                    fromCenter: false
+                });
+                break;
+        }
+    }
+    
     //Set chrono
     if(chrono != "sans")
         setChrono();
