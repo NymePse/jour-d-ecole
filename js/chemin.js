@@ -214,6 +214,37 @@ function deroulementDebutChemin() {
         text: "Question : " + question
     });
     
+    switch(obstacle){
+        case 0:
+            $(jeu).drawImage({
+                source: imgChemin + 'obstacle1.png',
+                x: 700, y:310,
+                fromCenter: false
+            });
+            break;
+        case 1:
+            $(jeu).drawImage({
+                source: imgChemin + 'obstacle2.png',
+                x: 700, y:310,
+                fromCenter: false
+            });
+            break;
+        case 2:
+            $(jeu).drawImage({
+                source: imgChemin + 'obstacle3.png',
+                x: 700, y:310,
+                fromCenter: false
+            });
+            break;
+        case 3:
+            $(jeu).drawImage({
+                source: imgChemin + 'obstacle4.png',
+                x: 700, y:310,
+                fromCenter: false
+            });
+            break;
+    }
+    
     //Set chrono
     if(chrono != "sans")
         setChrono();
