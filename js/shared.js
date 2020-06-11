@@ -288,7 +288,7 @@ function creerQuestion() {
 
 function setTouches() {
     let indexSelect;
-    let flechesTemp = fleches;
+    let flechesTemp = [haut, gauche, bas, droite];
     
     if(modeDeJeu == "chemin")
     {
@@ -322,7 +322,7 @@ function setTouches() {
 
 //Compare qstActuelle à nbQuestion, return true si égal (toutes questions faites)
 function quizzComplet() {
-    if(indexQuestion >= nbQuestions)
+    if(indexQuestion > nbQuestions)
         return true;
     else
         return false;
