@@ -210,6 +210,9 @@ function deroulementFinSoleil(key) {
     //stop chrono
     stopChrono();
     
+    indexQuestion++;
+    localStorage.setItem(LS_indexQuestion, indexQuestion);
+    
     $(jeu).clearCanvas();  
     dessinerBaseSoleil();
     
@@ -265,8 +268,6 @@ function deroulementFinSoleil(key) {
             }
             else
             {
-                indexQuestion++;
-                localStorage.setItem(LS_indexQuestion, indexQuestion);
                 deroulementDebutSoleil();
             }
         }, 1000);
