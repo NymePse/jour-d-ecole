@@ -21,7 +21,55 @@
  * incrémente indexPhase 
  */
 
+function introduction() {
+    //Dessin introduction
+    $(jeu).drawText({
+        fillStyle: 'black',
+        x: 400, y: 200,
+        fontSize: 30,
+        text: 'Début de partie, appuyer sur espace'
+    });
+    
+    //Set Up variables partie
+    enPartie = true;
+    indexPhase = 0;
+    miTemps = 0;
+    scoreAmi = 0;
+    scoreEnnemie = 0;
+    
+    //Set up sauvegarde locale
+    localStorage.setItem(LS_enPartie, enPartie);
+    localStorage.setItem(LS_indexPhase, indexPhase);
+    localStorage.setItem(LS_miTemps, miTemps);
+    localStorage.setItem(LS_scoreAmi, scoreAmi);
+    localStorage.setItem(LS_scoreEnnemie, LS_scoreEnnemie);
+    
+    //event lancer partie
+    $(espace).text("Continuer");
+    $(document).keypress(function(event) {
+        if(event.keyCode == 32)
+        {
+            resetEventsPartie();
+            partie();
+        }
+    });
+    
+    $(espace).click(function() {
+        resetEventsPartie();
+        partie();
+    });
+}
+
 function partie() {}
+
+function debutBoucle() {}
+
+function finBoucle() {}
+
+
+
+
+//-------------------------------------------------------------------------
 
 function setUpFoot() {
     //création variables LocalStorage de la partie
@@ -301,6 +349,8 @@ function dessinerBaseFoot() {
         fromCenter: false
     });
 }
+
+//-------------------------------------------------------------------------
 
 //Fonctions de création questions & réponses + affectations touches
 function creerQuestion() {
