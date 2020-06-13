@@ -1,0 +1,49 @@
+/* GLOBAL */
+div {
+    width: 100%;
+    min-height: 50px;
+    border-style: solid;
+    border-width: medium;
+    border-color: black;
+    
+    &#fleches {
+        width: 300px;
+    }
+}
+
+/* FLECHES */
+@margin-fleche: 5px;
+
+.fleche {
+    display: inline-block;
+    height: 75px;
+    width: 75px;
+    margin-left: @margin-fleche;
+    margin-right: @margin-fleche;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+    &#haut, &#bas {
+        display: block;
+        border-color: red;
+        margin-top: @margin-fleche;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+#hb {
+    width: auto;
+}
+
+#hb
+
+#espace {
+    height: 75px;
+    width: 150px;
+}
+
+canvas {
+    min-height: 200px;
+    min-width: 400px;
+}
