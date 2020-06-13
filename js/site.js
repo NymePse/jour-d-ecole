@@ -152,7 +152,7 @@ function setUpGame() {
     
     $(bouton).blur();
     
-    partie();
+    introduction();
 }
     
 function setUpCompte() {
