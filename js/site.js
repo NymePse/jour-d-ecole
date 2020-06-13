@@ -44,6 +44,7 @@ var chronoActuel;
 var enPartie;
 var versEnnemie;
 var nbPhases;
+var tailleTerrain;
 var indexPhase;
 var miTemps;
 var scoreAmi;
@@ -57,6 +58,12 @@ var reponses = Array();
 var obstacle;
 var obstaclesFaits = Array();
 
+//Nombre phases et taille terrain selon longueur partie
+var phasesCourte = 9;
+var phasesLongue = 15;
+var tailleCourte = 4;
+var tailleLongue = 6;
+
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
 var soustractionsFaites = Array();
@@ -67,43 +74,18 @@ var divisionsFaites = Array();
 var imgFoot = "res/foot/";
 var icones = "res/icones/";
 
+//TODO
 function setUpSite() {
-    idInterval = Array();
+    //TODO
+    /*
+     * reset chrono
+     * récup LS_enPartie
+     * si == true
+     *   proposer reprendre partie (afficher toutes info)
+     *   events reprendre partie
+     */
     
-    modeDeJeu = localStorage.getItem(LS_modeDeJeu);
-    let fct;
-    let txt;
-    
-    if(modeDeJeu != null && modeDeJeu != "journee")
-    {
-        switch(modeDeJeu) {
-            case "chemin":
-                fct = deroulementDebutChemin;
-                txt = modeDeJeu;
-                break;
-            case "foot":
-                fct = deroulementDebutFoot;
-                txt = modeDeJeu;
-                break;
-            case "soleil":
-                fct = deroulementDebutSoleil;
-                txt = "1, 2, 3, soleil";
-                break;
-        }
-        
-        score = parseInt(localStorage.getItem(LS_score));
-        nbQuestions = parseInt(localStorage.getItem(LS_nbQuestions));
-        nbParties = parseInt(localStorage.getItem(LS_nbParties));
-        indexQuestion = parseInt(localStorage.getItem(LS_indexQuestion));
-        indexPartie = parseInt(localStorage.getItem(LS_indexPartie));
-        typeExercice = localStorage.getItem(LS_typeExercice);
-        difficulte = localStorage.getItem(LS_difficulte);
-        chrono = localStorage.getItem(LS_chrono);
-        if(localStorage.getItem(LS_journee) == "true")
-            journee = true;
-        else
-            journee = false;
-        
+    /* EVENTS
         $(jeu).clearCanvas().drawText({
             fillStyle: 'black',
             x: $(jeu).width() /2, y: 100,
@@ -116,23 +98,36 @@ function setUpSite() {
             $(document).off("keypress");
             fct();
         });
-    }
+    */
 }
 
 function viderVariablesParties() {
+    enPartie = false;
+    versEnnemie = null;
+    nbPhases = null;
+    indexPhase = null;
+    miTemps = null;
+    scoreAmi = null;
+    scoreEnnemie = null;
+    typeExercice = null;
+    difficulte = null;
     chrono = null;
-    nbQuestions = null;
-    indexQuestion = null;
-    nbparties = null;
-    indexPartie = null;
-    modeDeJeu = null;
+    question = null;
+    bonneReponse = null;
+    reponses = Array();
+    obstacle = null;
+    obstaclesFaits = Array();
     
+    localStorage.removeItem(LS_enPartie);
+    localStorage.removeItem(LS_versEnnemie);
+    localStorage.removeItem(LS_nbPhases);
+    localStorage.removeItem(LS_indexPhase);
+    localStorage.removeItem(LS_scoreAmi);
+    localStorage.removeItem(LS_scoreEnnemie);
+    localStorage.removeItem(LS_miTemps);
+    localStorage.removeItem(LS_typeExercice);
+    localStorage.removeItem(LS_difficulte);
     localStorage.removeItem(LS_chrono);
-    localStorage.removeItem(LS_nbQuestions);
-    localStorage.removeItem(LS_indexQuestion);
-    localStorage.removeItem(LS_nbParties);
-    localStorage.removeItem(LS_indexPartie);
-    localStorage.removeItem(LS_modeDeJeu);
 }
 
 function viderListesQuestions() {
@@ -154,53 +149,17 @@ function majNom(val) {
     localStorage.setItem(nom, val);
 }
 
+//TODO
 function setUpGame() {
-    //Reset chrono si existant
-    stopChrono();
-    
-    viderVariablesParties();
-    
-    resetEventsPartie();
-    
-    //Reset journee
-    journee = false;
-    localStorage.setItem(LS_journee, journee);
-    
-    //Enlever focus bouton
-    $(bouton).blur();
-    
-    //Récupère les options et lance une partie en fonction
-    modeDeJeu = $(choixMode + ' :selected').val();
-    typeExercice = $(choixExo + ' :selected').val();
-    difficulte = $(choixDiff + ' :selected').val();
-    chrono = $(choixChrono + ' :selected').val();
-    
-    localStorage.setItem(LS_modeDeJeu, modeDeJeu);
-    localStorage.setItem(LS_typeExercice, typeExercice);
-    localStorage.setItem(LS_difficulte, difficulte);
-    localStorage.setItem(LS_chrono, chrono);
-    
-    switch(modeDeJeu) {
-        case "chemin" :
-            setUpChemin();
-            $(bouton).blur();
-            break;
-        case "soleil" :
-            setUpSoleil();
-            $(bouton).blur();
-            break;
-        case "foot" :
-            setUpFoot();
-            $(bouton).blur();
-            break;
-        case "journee" :
-            setUpJournee();
-            $(bouton).blur();
-            break;
-    }
+    //TODO
+    /*
+     * reset chrono
+     * récupérer les choix
+     * lancer partie
+     */
 }
 
-//Retur true si bonne réponse donnée
+//TODO : réviser moment utilisé + récupération réponse (quand touche pressée)
 function reponseBonne(key) {
     if(key != 0)
     {
@@ -285,6 +244,7 @@ function creerQuestion() {
     setTouches();
 }
 
+//TODO : enlever chemin + simplifier ?
 function setTouches() {
     let indexSelect;
     let flechesTemp = [haut, gauche, bas, droite];
@@ -319,7 +279,7 @@ function setTouches() {
     });
 }
 
-//Compare qstActuelle à nbQuestion, return true si égal (toutes questions faites)
+//TODO : actualiser variables
 function quizzComplet() {
     if(indexQuestion > nbQuestions)
         return true;
@@ -1037,6 +997,7 @@ function setChrono() {
     idInterval.push(setInterval(chronometre,10));
 }
 
+//TODO : actualiser avec un seul mode
 function chronometre() {
     
     chronoActuel += 10;
@@ -1074,4 +1035,6 @@ function stopChrono() {
     idInterval.forEach(function(id) {
         clearInterval(id);
     });
+    
+    idInterval = Array();
 }
