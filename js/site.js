@@ -16,6 +16,7 @@ const espace = "#espace";
 //Variables localStorage (sauvegarde d'urgence)
 const LS_enPartie = "enPartie"
 const LS_versEnnemie = "versEnnemie";
+const LS_balleAuCentre = "balleAuCentre";
 const LS_nbPhases = "nbPhases";
 const LS_indexPhase = "indexPhase";
 const LS_scoreAmi = "scoreAmi";
@@ -48,6 +49,7 @@ var chronoActuel;
 //Variables parties
 var enPartie;
 var versEnnemie;
+var balleAuCentre;
 var nbPhases;
 var tailleTerrain;
 var indexPhase;
