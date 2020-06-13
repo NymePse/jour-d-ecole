@@ -12,8 +12,9 @@
     <meta name="author" content="Arnaud LYSENSOONE--BIJOU">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <!-- STYLE -->
+    <link rel="stylesheet/less" type="text/css" href="style/style.less" />
+    <script src="style/less.min.js" ></script>
 
     <!-- JS -->
     <script src="js/jquery-3.5.1.min.js"></script>
@@ -84,13 +85,13 @@
     <div id="controles">
         boutons cliquables + touchscreen
         <div id="fleches">
-            <div class="fleche" id="haut">haut</div>
             <div class="fleche" id="gauche">gauche</div>
-            <div class="fleche" id="bas">bas</div>
+            <div id="hb">
+                <div class="fleche" id="haut">haut</div>
+                <div class="fleche" id="bas">bas</div>
+            </div>
             <div class="fleche" id="droite">droite</div>
         </div>
-        
-        <h2></h2>
         
         <div id="espace">espace</div>
     </div>
