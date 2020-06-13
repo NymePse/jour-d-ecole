@@ -1,4 +1,5 @@
 //Sélecteurs élements Jquery
+const choixLongueur = "#longueur";
 const choixExo = "#exercice";
 const choixDiff = "#difficulte";
 const choixChrono = "#chrono";
@@ -114,6 +115,34 @@ function setUpGame() {
      * récupérer les choix
      * lancer partie
      */
+    
+    //Reset info partie
+    stopChrono();
+    resetEventsPartie();
+    viderListesQuestions();
+    viderVariablesParties();
+    
+    //Récupérer valeurs choisies
+    let longueur = $(choixLongueur + " :selected").val();
+    typeExercice = $(choixExo + " :selected").val();
+    difficulte = $(choixDiff + " :selected").val();
+    chrono = $(choixChrono + " :selected").val();
+    
+    //set partie selon taille voulue
+    switch(longueur) {
+        case "courte":
+            nbPhases = phasesCourte;
+            tailleTerrain = tailleCourte;
+            break;
+        case "longue":
+            nbPhases = phasesLongue;
+            tailleTerrain = tailleLongue;
+            break;
+    }
+    
+    $(bouton).blur();
+    
+    partie();
 }
 
 
