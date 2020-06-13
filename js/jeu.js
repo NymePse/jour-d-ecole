@@ -25,6 +25,7 @@
 var enPartie;
 var versEnnemie;
 var balleAuCentre;
+var balleCentreMT1;
 var nbPhases;
 var tailleTerrain;
 var indexPhase;
@@ -81,6 +82,7 @@ function introduction() {
     //Set Up variables partie
     enPartie = true;
     balleAuCentre = Math.round(Math.random());
+    balleCentreMT1 = balleAuCentre;
     indexPhase = 0;
     indexTerrain = tailleTerrain / 2;
     miTemps = 0;
@@ -132,6 +134,11 @@ function partie() {
     {
         miTemps++;
         indexPhase = 0;
+        
+        if(balleCentreMT1 == 0)
+            balleAuCentre = 1;
+        else
+            balleAuCentre = 0;
         
         localStorage.setItem(LS_miTemps, miTemps);
         localStorage.setItem(LS_indexPhase, indexPhase);
