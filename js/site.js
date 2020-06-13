@@ -46,6 +46,7 @@ var versEnnemie;
 var nbPhases;
 var tailleTerrain;
 var indexPhase;
+var indexTerrain;
 var miTemps;
 var scoreAmi;
 var scoreEnnemie;
