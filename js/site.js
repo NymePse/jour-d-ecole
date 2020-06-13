@@ -1,5 +1,4 @@
 //Sélecteurs élements Jquery
-const choixMode = "#mode";
 const choixExo = "#exercice";
 const choixDiff = "#difficulte";
 const choixChrono = "#chrono";
@@ -14,19 +13,22 @@ const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 
 //Variables localStorage (sauvegarde d'urgence)
-const LS_nbQuestions = "nbQuestions";
-const LS_indexQuestion = "qstActuelle";
-const LS_score = "score";
-const LS_nbParties = "nbParties";
-const LS_indexPartie = "prtActuelle";
-const LS_modeDeJeu = "modeDeJeu";
+const LS_enPartie = "enPartie"
+const LS_versEnnemie = "versEnnemie";
+const LS_nbPhases = "nbPhases";
+const LS_indexPhase = "indexPhase";
+const LS_scoreAmi = "scoreAmi";
+const LS_scoreEnnemie = "scoreEnnemie";
+const LS_miTemps = "miTemps";
 const LS_typeExercice = "typeExercice";
 const LS_difficulte = "difficulte";
 const LS_chrono = "chrono";
-const LS_journee = "journee";
 
 //Variables de compte
-const nom = "nom";
+const LS_nom = "nom";
+const LS_nbVictoires = "nbVictoires";
+const LS_nbButs = "nbButs";
+const LS_nbBonnesReponses = "nbBonnesReponses";
 
 //Valeurs chrono en millisecondes
 const chronoLent = 10000;
@@ -39,17 +41,16 @@ var chronoFin;
 var chronoActuel;
 
 //Variables parties
-var modeDeJeu;
-var nbParties;
-var indexPartie;
-var nbQuestions;
-var indexQuestion;
-var score;
-var modeDeJeu;
+var enPartie;
+var versEnnemie;
+var nbPhases;
+var indexPhase;
+var miTemps;
+var scoreAmi;
+var scoreEnnemie;
 var typeExercice;
 var difficulte;
 var chrono;
-var journee;
 var question;
 var bonneReponse;
 var reponses = Array();
@@ -63,10 +64,8 @@ var multiplicationsFaites = Array();
 var divisionsFaites = Array();
 
 //Var chemins vers images
-var imgChemin = "res/chemin/";
 var imgFoot = "res/foot/";
-var imgSoleil = "res/soleil/";
-var imgJournee = "res/journee/";
+var icones = "res/icones/";
 
 function setUpSite() {
     idInterval = Array();
