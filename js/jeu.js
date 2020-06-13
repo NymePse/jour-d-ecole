@@ -49,18 +49,73 @@ function introduction() {
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
+            //$(espace).hide();
             resetEventsPartie();
             partie();
         }
     });
     
     $(espace).click(function() {
+        //$(espace).hide();
         resetEventsPartie();
         partie();
     });
 }
 
-function partie() {}
+function partie() {
+    /*
+     * si indexPhase > nbPhases
+     *   miTemps++;
+     *   indexPhase = 0;
+     * si miTemps < 2
+     *   debutBoucle();
+     * sinon
+     *   afficher score final;
+     *   afficher texte selon score;
+     *   maj compte;
+     *   setUpCompte();
+     */
+    
+    //Mi-temps finie ?
+    if(indexPhase > nbPhases)
+    {
+        miTemps++;
+        indexPhase = 0;
+        
+        localStorage.setItem(LS_miTemps, miTemps);
+        localStorage.setItem(LS_indexPhase, indexPhase);
+    }
+    
+    //Match fini ?
+    if(miTemps == 2)
+    {
+        let difference = scoreAmi - scoreEnnemie;
+        let txt;
+        if(difference > 0)
+        {
+            txt = "Match gagné";
+            incrementerVariableLocale(LS_nbVictoires);
+        }
+        else if(difference == 0)
+            txt = "Match nul.";
+        else
+            txt = "Match perdu...";
+        
+        $(jeu).drawText({
+            fillStyle: 'black',
+            x: 400, y:100,
+            fontSize: 30,
+            text: scoreAmi + " à " + scoreEnnemie
+        }).drawText({
+            fillStyle: 'black',
+            x: 400, y: 300,
+            fontSize: 30,
+            text: txt
+        });
+        
+        setUpCompte();
+    }
+}
 
 function debutBoucle() {}
 
