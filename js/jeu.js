@@ -21,6 +21,8 @@
  * incrémente indexPhase 
  */
 
+function partie() {}
+
 function setUpFoot() {
     //création variables LocalStorage de la partie
     nbParties = Math.ceil(Math.random() * (4 - 2) + 2);
@@ -272,13 +274,6 @@ function conclusionFoot() {
         if(journee == true)
             journeePreSoleil();
     },2000);
-}
-    
-function partiesCompletes() {
-    if(indexPartie > nbParties)
-        return true;
-    else
-        return false;
 }
 
 function dessinerBaseFoot() {
@@ -1082,9 +1077,17 @@ function creerDivision(diff) {
 }
 
 //Fonctions de vérification
-//TODO : actualiser variables
+//TODO : actualiser variables + nom
 function quizzComplet() {
     if(indexQuestion > nbQuestions)
+        return true;
+    else
+        return false;
+}
+
+//TODO : actualiser variables + nom
+function partiesCompletes() {
+    if(indexPartie > nbParties)
         return true;
     else
         return false;
