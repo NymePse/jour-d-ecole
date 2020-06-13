@@ -30,6 +30,10 @@ const LS_nom = "nom";
 const LS_nbVictoires = "nbVictoires";
 const LS_nbButs = "nbButs";
 const LS_nbBonnesReponses = "nbBonnesReponses";
+const zoneNom = "#nom";
+const txtVictoires = "#nbv";
+const txtButs = "#nbb";
+const txtReponses = "#nbbr";
 
 //Valeurs chrono en millisecondes
 const chronoLent = 10000;
@@ -81,11 +85,24 @@ function setUpSite() {
     //TODO
     /*
      * reset chrono
+     * récup info compte
+     * afficher infos
      * récup LS_enPartie
      * si == true
      *   proposer reprendre partie (afficher toutes info)
      *   events reprendre partie
      */
+    
+    stopChrono();
+    
+    setUpCompte();
+    
+    let EP = localStorage.getItem(LS_enPartie);
+    
+    if(EP == "true")
+    {
+       
+    }
     
     /* EVENTS
         $(jeu).clearCanvas().drawText({
@@ -107,14 +124,7 @@ function majNom(val) {
     localStorage.setItem(nom, val);
 }
 
-//TODO
 function setUpGame() {
-    //TODO
-    /*
-     * reset chrono
-     * récupérer les choix
-     * lancer partie
-     */
     
     //Reset info partie
     stopChrono();
@@ -144,7 +154,18 @@ function setUpGame() {
     
     partie();
 }
-
+    
+function setUpCompte() {
+    let nm = localStorage.getItem(LS_nom);
+    let vt = localStorage.getItem(LS_nbVictoires);
+    let bt = localStorage.getItem(LS_nbButs);
+    let brt = localStorage.getItem(LS_nbBonnesReponses);
+    
+    $(zoneNom).val(nm);
+    $(txtVictoires).val(vt);
+    $(txtButs).val(bt);
+    $(txtReponses).val(brt);
+}
 
 
 
