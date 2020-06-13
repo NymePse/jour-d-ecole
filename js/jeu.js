@@ -50,19 +50,19 @@ var tailleLongue = 6;
 var tmpsPhase;
 
 //Variables affichage
-var VA_balleAuCentre = "res/balleCentre/";
-var VA_versEnnemie = "res/versEnnemie/";
-var VA_versAmi = "res/versAmi/";
-var VA_butVersEnnemie = "res/versEnnemie/but/";
-var VA_butVersAmi = "res/versAmi/but/";
-var VA_map = "res/map/";
+const VA_balleAuCentre = "res/balleCentre/";
+const VA_versEnnemie = "res/versEnnemie/";
+const VA_versAmi = "res/versAmi/";
+const VA_butVersEnnemie = "res/versEnnemie/but/";
+const VA_butVersAmi = "res/versAmi/but/";
+const VA_map_courte = ["res/map/courte/map0.jpg","res/map/courte/map1.jpg","res/map/courte/map2.jpg","res/map/courte/map3.jpg","res/map/courte/map4.jpg"];
+const VA_map_longue = ["res/map/longue/map0.jpg","res/map/longue/map1.jpg","res/map/longue/map2.jpg","res/map/longue/map3.jpg","res/map/longue/map4.jpg","res/map/longue/map5.jpg","res/map/longue/map6.jpg","res/map/longue/map7.jpg","res/map/longue/map8.jpg","res/map/longue/map9.jpg"];
 var joueurQuestion;
 var obstacleQuestion;
 var joueurVictoire;
 var obstacleVictoire;
 var joueurDefaite;
 var obstacleDefaite;
-var map;
 
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
@@ -352,6 +352,12 @@ function finBoucle(bonne) {
 }
 
 function drawBase() {
+    let map;
+    if(tailleTerrain == tailleLongue)
+        map = VA_map_longue[indexTerrain];
+    else
+        map = VA_map_courte[indexTerrain];
+    
     $(jeu).clearCanvas().drawRect({
         //Ciel
         fillStyle: '#3498db',
@@ -383,7 +389,7 @@ function drawBase() {
         text: scoreAmi + " à " + scoreEnnemie,
         fromCenter: true
     }).drawImage({
-        source: VA_map + 'map.jpg',
+        source: map,
         x: 1000-232, y:0,
         fromCenter: false
     });
