@@ -21,6 +21,54 @@
  * incrémente indexPhase 
  */
 
+//Variables parties
+var enPartie;
+var versEnnemie;
+var balleAuCentre;
+var nbPhases;
+var tailleTerrain;
+var indexPhase;
+var indexTerrain;
+var miTemps;
+var scoreAmi;
+var scoreEnnemie;
+var typeExercice;
+var difficulte;
+var chrono;
+var question;
+var bonneReponse;
+var reponses = Array();
+var obstacle;
+var obstaclesFaits = Array();
+
+//Nombre phases et taille terrain selon longueur partie
+var phasesCourte = 9;
+var phasesLongue = 15;
+var tailleCourte = 4;
+var tailleLongue = 6;
+var tmpsPhase;
+
+//Variables affichage
+var VA_balleAuCentre = "res/balleCentre/";
+var VA_versEnnemie = "res/versEnnemie/";
+var VA_versAmi = "res/versAmi/";
+var VA_butVersEnnemie = "res/versEnnemie/but/";
+var VA_butVersAmi = "res/versAmi/but/";
+var VA_map = "res/map/";
+var joueurQuestion;
+var obstacleQuestion;
+var joueurVictoire;
+var obstacleVictoire;
+var joueurDefaite;
+var obstacleDefaite;
+var map;
+
+//Liste questions déjà faites dans la partie
+var additionsFaites = Array();
+var soustractionsFaites = Array();
+var multiplicationsFaites = Array();
+var divisionsFaites = Array();
+
 function introduction() {
     //Dessin introduction
     $(jeu).drawText({
@@ -32,13 +80,16 @@ function introduction() {
     
     //Set Up variables partie
     enPartie = true;
+    balleAuCentre = Math.round(Math.random());
     indexPhase = 0;
+    indexTerrain = tailleTerrain / 2;
     miTemps = 0;
     scoreAmi = 0;
     scoreEnnemie = 0;
     
     //Set up sauvegarde locale
     localStorage.setItem(LS_enPartie, enPartie);
+    localStorage.setItem(LS_balleAuCentre, balleAuCentre);
     localStorage.setItem(LS_indexPhase, indexPhase);
     localStorage.setItem(LS_miTemps, miTemps);
     localStorage.setItem(LS_scoreAmi, scoreAmi);
@@ -115,75 +166,19 @@ function partie() {
         
         setUpCompte();
     }
+    else
+        debutBoucle();
 }
 
-function debutBoucle() {}
-
-function finBoucle() {}
-
-
-
-
-//-------------------------------------------------------------------------
-
-function setUpFoot() {
-    //création variables LocalStorage de la partie
-    nbParties = Math.ceil(Math.random() * (4 - 2) + 2);
-    nbQuestions = Math.ceil(Math.random() * (6 - 3) + 3);
-    indexPartie = 0;
-    indexQuestion = 0;
-    score = 0;
+function debutBoucle() {
+    /*
+     * choisis obstacle
+     * créer question, réponses, set touches
+     * affichage selon place dans le terrain
+     * event réponse
+     */
     
-    localStorage.setItem(LS_nbParties, nbParties);
-    localStorage.setItem(LS_nbQuestions, nbQuestions);
-    localStorage.setItem(LS_indexPartie, 0);
-    localStorage.setItem(LS_indexQuestion, 0);
-    localStorage.setItem(LS_score, 0);
-    
-    resetEventsPartie();
-    
-    //Gestion events
-    $(bouton).off("click");
-    $(document).keypress(function(event) {
-        if(event.keyCode == 32)
-        {
-            $(document).off("keypress");
-            $(espace).off("click");
-            deroulementDebutFoot();
-        }
-    });
-    
-    $(espace).click(function() {
-        $(document).off("keypress");
-        $(espace).off("click");
-        deroulementDebutFoot();
-    });
-    
-    //Maj Canvas
-    $(jeu).clearCanvas();
-    dessinerBaseFoot();
-    $(jeu).drawImage({
-        source: imgFoot + 'base_foot.png',
-        x: 10, y:120,
-        fromCenter: false
-    }).drawText({
-        fillStyle: 'black',
-        x: 400, y: 170,
-        fontSize: 30,
-        text: 'Début du foot'
-    }).drawText({
-        fillStyle: 'black',
-        x: 400, y: 230,
-        fontSize: 30,
-        text: 'Appuyez sur espace'
-    });
-}
-
-function deroulementDebutFoot() {
-    //stop chrono
-    stopChrono();
-    
-    //Select obstacle
+    //Choix obstacle
     do
     {
         obstacle = Math.floor(Math.random() * 4);
@@ -196,14 +191,69 @@ function deroulementDebutFoot() {
     }
     obstaclesFaits.push(obstacle);
     
+    //Création question, réponses, set touches
     creerQuestion();
     
+    //Sélection éléments affichage (pendant question, victoire et échec)
+    //Balle au centre ?
+    if(balleAuCentre != 2)
+    {
+        //Balle à ami ?
+        if(balleAuCentre == 0)
+        {
+            
+        }
+        else
+        {
+            
+        }
+    }
+    else
+    {
+        //Vers buts ennemies ? 
+        if(versEnnemie)
+        {
+            //Devant le but ennemie ?
+            if(indexTerrain == tailleTerrain)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
+        else
+        {
+            //Devant le but ami ?
+            if(indexTerrain == 0)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    
+    //Affichage
+    drawBase();
+    
+    $(jeu).drawText({
+        fillStyle: 'black',
+        x: 500, y: 250,
+        fontSize: 30,
+        text: question
+    });
+    
+    //évènements de réponse
     $(document).keydown(function(event) {
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
             $(document).off("keydown");
-            deroulementFinFoot(event.keyCode);
+            finBoucle(reponseBonne(event.keyCode));
         }
     });
     
@@ -213,194 +263,121 @@ function deroulementDebutFoot() {
        $(classfleche).off("click");
        switch(fleche) {
            case "haut":
-               deroulementFinFoot(38);
+               finBoucle(reponseBonne(38));
                break;
            case "gauche":
-               deroulementFinFoot(37);
+               finBoucle(reponseBonne(37));
                break;
            case "bas":
-               deroulementFinFoot(40);
+               finBoucle(reponseBonne(40));
                break;
            case "droite":
-               deroulementFinFoot(39);
+               finBoucle(reponseBonne(39));
                break;
        }
     });
-    
-    //Maj Canvas
-    $(jeu).clearCanvas();
-    dessinerBaseFoot();
-    $(jeu).drawImage({
-        source: imgFoot + 'base_foot.png',
-        x: 10, y:120,
-        fromCenter: false
-    }).drawText({
-        fillStyle: 'black',
-        x: 400, y: 200,
-        fontSize: 30,
-        text: "Question : " + question
-    });
-    
-    if(indexQuestion == nbQuestions)
-    {
-        $(jeu).drawImage({
-            source: imgFoot + 'cage.png',
-            x: 600, y:110,
-            fromCenter: false
-        });
-    }
-    else
-    {
-        switch(obstacle){
-            case 0:
-                $(jeu).drawImage({
-                    source: imgFoot + 'obstacle1.png',
-                    x: 600, y:110,
-                    fromCenter: false
-                });
-                break;
-            case 1:
-                $(jeu).drawImage({
-                    source: imgFoot + 'obstacle2.png',
-                    x: 600, y:110,
-                    fromCenter: false
-                });
-                break;
-            case 2:
-                $(jeu).drawImage({
-                    source: imgFoot + 'obstacle3.png',
-                    x: 600, y:110,
-                    fromCenter: false
-                });
-                break;
-            case 3:
-                $(jeu).drawImage({
-                    source: imgFoot + 'obstacle4.png',
-                    x: 600, y:110,
-                    fromCenter: false
-                });
-                break;
-        }
-    }
-    
-    //Set chrono
-    if(chrono != "sans")
-        setChrono();
 }
 
-function deroulementFinFoot(key) {
-    //stop chrono
-    stopChrono();
+function finBoucle(bonne) {
+    /*
+     *  si reponse bonne
+     *    si indexTerrain = terrain
+     *      balleAuCentre = 1
+     *      indexTerrain = terrain / 2
+     *      affichage
+     *    sinon
+     *      indexTerrain++
+     *      affichage
+     *  sinon
+     *    si indexTerrain = 0
+     *      balleAuCentre = 0
+     *      indexTerrain = terrain / 2
+     *      affichage
+     *    sinon
+     *      indexTerrain--
+     *      affichage
+     * 
+     *   affichage
+     * 
+     *   partie()
+     */
     
-    resetEventsPartie();
-    
-    console.log("Fin foot");
-    
-    $(jeu).clearCanvas();  
-    dessinerBaseFoot();
-    $(jeu).drawImage({
-        source: imgFoot + 'base_foot.png',
-        x: 10, y:120,
-        fromCenter: false
-    });
-    
-    if(reponseBonne(key))
+    if(bonne)
     {
-        indexQuestion++;
-        localStorage.setItem(LS_indexQuestion, indexPartie);
-        $(jeu).drawText({
-            fillStyle: 'black',
-            x: 400, y: 200,
-            fontSize: 30,
-            text: "Bravo !"
-        });
-    }
-    else
-    {
-        indexQuestion = 0;
-        localStorage.setItem(LS_indexQuestion, 0);
-        indexPartie++;
-        localStorage.setItem(LS_indexPartie, indexPartie);
-        $(jeu).drawText({
-            fillStyle: 'black',
-            x: 400, y: 200,
-            fontSize: 30,
-            text: "Dommage !"
-        });
-    }
-    
-    setTimeout(function() {
-        
-        if(quizzComplet())
+        if(indexTerrain == tailleTerrain)
         {
-            indexQuestion = 0;
-            localStorage.setItem(LS_indexQuestion, 0);
-            indexPartie++;
-            localStorage.setItem(LS_indexPartie, indexPartie);
-            score++;
-            localStorage.setItem(LS_score, score);
-        }
-        
-        if(partiesCompletes())
-        {
-            conclusionFoot();
+            balleAuCentre = 1;
+            indexTerrain = tailleTerrain /2;
+            scoreAmi++;
         }
         else
         {
-            deroulementDebutFoot();
+            indexTerrain++;
+            
         }
-    }, 1000);
+    }
+    else
+    {
+        if(indexTerrain == 0)
+        {
+            balleAuCentre = 0;
+            indexTerrain = tailleTerrain / 2;
+            scoreEnnemie++;
+        }
+        else
+        {
+            indexTerrain--;
+        }
+    }
     
+    indexPhase++;
     
+    //Maj variables locales
+    localStorage.setItem(LS_balleAuCentre, balleAuCentre);
+    localStorage.setItem(LS_indexTerrain, indexTerrain);
+    localStorage.setItem(LS_scoreAmi, scoreAmi);
+    localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
+    localStorage.setItem(LS_indexPhase, indexPhase);
+    
+    drawBase();
+    
+    partie();
 }
 
-function conclusionFoot() {
-    //Maj Canvas
-    $(jeu).clearCanvas();
-    dessinerBaseFoot();
-    $(jeu).drawImage({
-        source: imgFoot + 'base_foot.png',
-        x: 400, y:240,
-        fromCenter: true
-    }).drawText({
-        fillStyle: 'black',
-        x: 400, y: 50,
-        fontSize: 30,
-        text: 'score : ' + score
-    });
-    
-    viderVariablesParties();
-    viderListesQuestions();
-    resetEventsPartie();
-    
-    setTimeout(function() {
-        if(journee == true)
-            journeePreSoleil();
-    },2000);
-}
-
-function dessinerBaseFoot() {
+function drawBase() {
     $(jeu).clearCanvas().drawRect({
-        fillStyle: 'grey',
+        //Ciel
+        fillStyle: '#3498db',
         x:0, y:0,
         fromCenter: false,
-        width:800, height:400
+        width:1000, height:500
     }).drawRect({
+        //Sol
         fillStyle: 'green',
-        x:0 , y:360,
-        width: 800, height: 40,
+        x:0 , y:460,
+        width: 1000, height: 40,
         fromCenter: false
     }).drawText({
         fillStyle: 'black',
         x: 5, y: 5,
         fontSize: 20,
-        text: indexPartie + " sur " + nbParties,
+        text: "Mi-Temps " + (miTemps+1),
         fromCenter: false
     }).drawText({
         fillStyle: 'black',
         x: 5, y: 25,
         fontSize: 20,
-        text: indexQuestion + " sur " + nbQuestions,
+        text: (indexPhase * tmpsPhase) + "e minute",
+        fromCenter: false
+    }).drawText({
+        fillStyle: 'black',
+        x: 500, y: 10,
+        fontSize: 20,
+        text: scoreAmi + " à " + scoreEnnemie,
+        fromCenter: true
+    }).drawImage({
+        source: VA_map + 'map.jpg',
+        x: 1000-232, y:0,
         fromCenter: false
     });
 }
@@ -463,29 +440,6 @@ function creerQuestion() {
 function setTouches() {
     let indexSelect;
     let flechesTemp = [haut, gauche, bas, droite];
-    
-    if(modeDeJeu == "chemin")
-    {
-        let flecheBonne;
-        switch(obstacle){
-            case 0:
-                flecheBonne = haut;
-                break;
-            case 1:
-                flecheBonne = gauche;
-                break;
-            case 2:
-                flecheBonne = bas;
-                break;
-            case 3:
-                flecheBonne = droite;
-                break;
-        }
-        
-        $(flecheBonne).text(reponses[0]);
-        reponses.shift();
-        flechesTemp.splice(flechesTemp.indexOf(flecheBonne), 1);
-    }
         
     flechesTemp.forEach(function(fleche) {
         indexSelect = Math.floor(Math.random() * reponses.length);
@@ -1231,113 +1185,5 @@ function reponseBonne(key) {
         return false;
 }
 
-//Fonctions de chronomètre
-function setChrono() {
-    switch(chrono) {
-        case "lent":
-            chronoFin = chronoLent;
-            break;
-        case "moyen":
-            chronoFin = chronoMoyen;
-            break;
-        case "rapide":
-            chronoFin = chronoRapide;
-            break;
-    }
-    
-    chronoActuel = 0;
-    
-    idInterval.push(setInterval(chronometre,10));
-}
 
-//TODO : actualiser avec un seul mode + fin renvoie false
-function chronometre() {
-    
-    chronoActuel += 10;
-    let rad = (chronoActuel / chronoFin) * 360;
-    
-    $(jeu).drawArc({
-        layer: true,
-        name: 'chrono',
-        strokeStyle: 'black',
-        strokeWidth: 5,
-        x: $(jeu).innerWidth()-15, y: 15,
-        radius: 10,
-        start: 0, end: rad
-    });
-    
-    if(chronoActuel == chronoFin)
-    {
-        stopChrono();
-        chronoActuel = 0;
-        switch(modeDeJeu) {
-            case "chemin":
-                deroulementFinChemin(0);
-                break;
-            case "foot":
-                deroulementFinFoot(0);
-                break;
-            case "soleil":
-                deroulementFinSoleil(0);
-                break;
-        }
-    }
-}
 
-function stopChrono() {
-    idInterval.forEach(function(id) {
-        clearInterval(id);
-    });
-    
-    idInterval = Array();
-}
-
-//Autres fonctions
-function incrementerVariableLocale(nomVariable) {
-    let valeur = parseInt(localStorage.getItem(nomVariable));
-    localStorage.setItem(nomVariable, valeur + 1);
-}
-
-function viderVariablesParties() {
-    enPartie = false;
-    versEnnemie = null;
-    nbPhases = null;
-    indexPhase = null;
-    miTemps = null;
-    scoreAmi = null;
-    scoreEnnemie = null;
-    typeExercice = null;
-    difficulte = null;
-    chrono = null;
-    question = null;
-    bonneReponse = null;
-    reponses = Array();
-    obstacle = null;
-    obstaclesFaits = Array();
-    
-    localStorage.removeItem(LS_enPartie);
-    localStorage.removeItem(LS_versEnnemie);
-    localStorage.removeItem(LS_nbPhases);
-    localStorage.removeItem(LS_indexPhase);
-    localStorage.removeItem(LS_scoreAmi);
-    localStorage.removeItem(LS_scoreEnnemie);
-    localStorage.removeItem(LS_miTemps);
-    localStorage.removeItem(LS_typeExercice);
-    localStorage.removeItem(LS_difficulte);
-    localStorage.removeItem(LS_chrono);
-}
-
-function viderListesQuestions() {
-    additionsFaites = Array();
-    soustractionsFaites = Array();
-    multiplicationsFaites = Array();
-    divisionsFaites = Array();
-    obstaclesFaits = Array();
-}
-
-function resetEventsPartie() {
-    $(document).off("keypress");
-    $(document).off("keydown");
-    $(classfleche).off("click");
-    $(espace).off("click");
-}

@@ -19,6 +19,7 @@ const LS_versEnnemie = "versEnnemie";
 const LS_balleAuCentre = "balleAuCentre";
 const LS_nbPhases = "nbPhases";
 const LS_indexPhase = "indexPhase";
+const LS_indexTerrain = "indexTerrain";
 const LS_scoreAmi = "scoreAmi";
 const LS_scoreEnnemie = "scoreEnnemie";
 const LS_miTemps = "miTemps";
@@ -36,50 +37,15 @@ const txtVictoires = "#nbv";
 const txtButs = "#nbb";
 const txtReponses = "#nbbr";
 
-//Valeurs chrono en millisecondes
-const chronoLent = 10000;
-const chronoMoyen = 7000;
-const chronoRapide = 4000;
-
 //Variables chrono
 var idInterval = Array();
 var chronoFin;
 var chronoActuel;
-
-//Variables parties
-var enPartie;
-var versEnnemie;
-var balleAuCentre;
-var nbPhases;
-var tailleTerrain;
-var indexPhase;
-var indexTerrain;
-var miTemps;
-var scoreAmi;
-var scoreEnnemie;
-var typeExercice;
-var difficulte;
-var chrono;
-var question;
-var bonneReponse;
-var reponses = Array();
-var obstacle;
-var obstaclesFaits = Array();
-
-//Nombre phases et taille terrain selon longueur partie
-var phasesCourte = 9;
-var phasesLongue = 15;
-var tailleCourte = 4;
-var tailleLongue = 6;
-
-//Liste questions déjà faites dans la partie
-var additionsFaites = Array();
-var soustractionsFaites = Array();
-var multiplicationsFaites = Array();
-var divisionsFaites = Array();
+const chronoLent = 10000;
+const chronoMoyen = 7000;
+const chronoRapide = 4000;
 
 //Var chemins vers images
-var imgFoot = "res/foot/";
 var icones = "res/icones/";
 
 //TODO
@@ -145,10 +111,12 @@ function setUpGame() {
         case "courte":
             nbPhases = phasesCourte;
             tailleTerrain = tailleCourte;
+            tmpsPhase = 5;
             break;
         case "longue":
             nbPhases = phasesLongue;
             tailleTerrain = tailleLongue;
+            tmpsPhase = 3;
             break;
     }
     
@@ -169,14 +137,103 @@ function setUpCompte() {
     $(txtReponses).val(brt);
 }
 
+//Fonctions de chronomètre
+function setChrono() {
+    switch(chrono) {
+        case "lent":
+            chronoFin = chronoLent;
+            break;
+        case "moyen":
+            chronoFin = chronoMoyen;
+            break;
+        case "rapide":
+            chronoFin = chronoRapide;
+            break;
+    }
+    
+    chronoActuel = 0;
+    
+    idInterval.push(setInterval(chronometre,10));
+}
 
+//TODO : actualiser avec un seul mode + fin renvoie false
+function chronometre() {
+    
+    chronoActuel += 10;
+    let rad = (chronoActuel / chronoFin) * 360;
+    
+    $(jeu).drawArc({
+        layer: true,
+        name: 'chrono',
+        strokeStyle: 'black',
+        strokeWidth: 5,
+        x: $(jeu).innerWidth()-15, y: 15,
+        radius: 10,
+        start: 0, end: rad
+    });
+    
+    if(chronoActuel == chronoFin)
+    {
+        stopChrono();
+        chronoActuel = 0;
+        finBoucle(false);
+    }
+}
 
+function stopChrono() {
+    idInterval.forEach(function(id) {
+        clearInterval(id);
+    });
+    
+    idInterval = Array();
+}
 
+//Autres fonctions
+function incrementerVariableLocale(nomVariable) {
+    let valeur = parseInt(localStorage.getItem(nomVariable));
+    localStorage.setItem(nomVariable, valeur + 1);
+}
 
+function viderVariablesParties() {
+    enPartie = false;
+    versEnnemie = null;
+    nbPhases = null;
+    indexPhase = null;
+    miTemps = null;
+    scoreAmi = null;
+    scoreEnnemie = null;
+    typeExercice = null;
+    difficulte = null;
+    chrono = null;
+    question = null;
+    bonneReponse = null;
+    reponses = Array();
+    obstacle = null;
+    obstaclesFaits = Array();
+    
+    localStorage.removeItem(LS_enPartie);
+    localStorage.removeItem(LS_versEnnemie);
+    localStorage.removeItem(LS_nbPhases);
+    localStorage.removeItem(LS_indexPhase);
+    localStorage.removeItem(LS_scoreAmi);
+    localStorage.removeItem(LS_scoreEnnemie);
+    localStorage.removeItem(LS_miTemps);
+    localStorage.removeItem(LS_typeExercice);
+    localStorage.removeItem(LS_difficulte);
+    localStorage.removeItem(LS_chrono);
+}
 
+function viderListesQuestions() {
+    additionsFaites = Array();
+    soustractionsFaites = Array();
+    multiplicationsFaites = Array();
+    divisionsFaites = Array();
+    obstaclesFaits = Array();
+}
 
-
-
-
-
-
+function resetEventsPartie() {
+    $(document).off("keypress");
+    $(document).off("keydown");
+    $(classfleche).off("click");
+    $(espace).off("click");
+}
