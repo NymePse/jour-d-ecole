@@ -998,7 +998,7 @@ function setChrono() {
     idInterval.push(setInterval(chronometre,10));
 }
 
-//TODO : actualiser avec un seul mode
+//TODO : actualiser avec un seul mode + fin renvoie false
 function chronometre() {
     
     chronoActuel += 10;
