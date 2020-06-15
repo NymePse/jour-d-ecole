@@ -53,16 +53,14 @@ var tmpsPhase;
 const VA_balleAuCentre = "res/balleCentre/";
 const VA_versEnnemie = "res/versEnnemie/";
 const VA_versAmi = "res/versAmi/";
-const VA_butVersEnnemie = "res/versEnnemie/but/";
-const VA_butVersAmi = "res/versAmi/but/";
 const VA_map_courte = ["res/map/courte/map0.jpg","res/map/courte/map1.jpg","res/map/courte/map2.jpg","res/map/courte/map3.jpg","res/map/courte/map4.jpg"];
 const VA_map_longue = ["res/map/longue/map0.jpg","res/map/longue/map1.jpg","res/map/longue/map2.jpg","res/map/longue/map3.jpg","res/map/longue/map4.jpg","res/map/longue/map5.jpg","res/map/longue/map6.jpg","res/map/longue/map7.jpg","res/map/longue/map8.jpg","res/map/longue/map9.jpg"];
-var joueurQuestion;
-var obstacleQuestion;
-var joueurVictoire;
-var obstacleVictoire;
-var joueurDefaite;
-var obstacleDefaite;
+var gaucheQuestion;
+var droiteQuestion;
+var gaucheVictoire;
+var droiteVictoire;
+var gaucheDefaite;
+var droiteDefaite;
 
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
@@ -208,11 +206,25 @@ function debutBoucle() {
         //Balle à ami ?
         if(balleAuCentre == 0)
         {
-            
+            gaucheQuestion = VA_versEnnemie + "ami_run.png";
+            droiteQuestion = VA_versEnnemie + "ennemie_run.png";
+                
+            gaucheVictoire = VA_versEnnemie + "defaite_ennemie.png";
+            droiteVictoire = VA_versEnnemie + "ami_run.png";
+                
+            gaucheDefaite = VA_versEnnemie + "victoire_ennemie.png";
+            droiteDefaite = VA_versEnnemie + "defaite_ami.png";
         }
         else
         {
-            
+            droiteQuestion = VA_versAmi + "ami_run.png";
+            gaucheQuestion = VA_versAmi + "ennemie_run.png";
+                
+            droiteVictoire = VA_versAmi + "victoire_ami.png";
+            gaucheVictoire = VA_versAmi + "defaite_ennemie.png";
+                
+            droiteDefaite = VA_versAmi + "defaite_ami.png";
+            gaucheDefaite = VA_versAmi + "ennemie_run.png";
         }
     }
     else
@@ -223,11 +235,25 @@ function debutBoucle() {
             //Devant le but ennemie ?
             if(indexTerrain == tailleTerrain)
             {
+                gaucheQuestion = VA_versEnnemie + "ami_run.png";
+                droiteQuestion = VA_versEnnemie + "but.png";
                 
+                gaucheVictoire = VA_versEnnemie + "but_marque.png";
+                droiteVictoire = VA_versEnnemie + "but.png";
+                
+                gaucheDefaite = VA_versEnnemie + "defaite_ami.png";
+                droiteDefaite = VA_versEnnemie + "but.png";
             }
             else
             {
+                gaucheQuestion = VA_versEnnemie + "ami_run.png";
+                droiteQuestion = VA_versEnnemie + "ennemie_run.png";
                 
+                gaucheVictoire = VA_versEnnemie + "defaite_ennemie.png";
+                droiteVictoire = VA_versEnnemie + "ami_run.png";
+                
+                gaucheDefaite = VA_versEnnemie + "victoire_ennemie.png";
+                droiteDefaite = VA_versEnnemie + "defaite_ami.png";
             }
         }
         else
@@ -235,11 +261,25 @@ function debutBoucle() {
             //Devant le but ami ?
             if(indexTerrain == 0)
             {
+                droiteQuestion = VA_versAmi + "but.png";
+                gaucheQuestion = VA_versAmi + "ennemie_run.png";
                 
+                droiteVictoire = VA_versAmi + "but_marque.png";
+                gaucheVictoire = VA_versAmi + "but.png";
+                
+                droiteDefaite = VA_versAmi + "defaite_ennemie.png";
+                gaucheDefaite = VA_versAmi + "but.png";
             }
             else
             {
+                droiteQuestion = VA_versAmi + "ami_run.png";
+                gaucheQuestion = VA_versAmi + "ennemie_run.png";
                 
+                droiteVictoire = VA_versAmi + "victoire_ami.png";
+                gaucheVictoire = VA_versAmi + "defaite_ennemie.png";
+                
+                droiteDefaite = VA_versAmi + "defaite_ami.png";
+                gaucheDefaite = VA_versAmi + "ennemie_run.png";
             }
         }
     }
