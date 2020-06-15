@@ -70,6 +70,7 @@ var divisionsFaites = Array();
 
 function introduction() {
     //Dessin introduction
+    $(jeu).clearCanvas();
     $(jeu).drawText({
         fillStyle: 'black',
         x: 400, y: 200,
@@ -182,8 +183,6 @@ function debutBoucle() {
      * affichage selon place dans le terrain
      * event réponse
      */
-    
-    console.log("Index : " + indexTerrain + ", Terrain max : " + tailleTerrain);
     
     //Choix obstacle
     do
@@ -343,6 +342,10 @@ function debutBoucle() {
                break;
        }
     });
+    
+    //Chronomètre
+    if(chrono != "sans")
+        setChrono();
 }
 
 function finBoucle(bonne) {
@@ -370,6 +373,8 @@ function finBoucle(bonne) {
      */
     let imgGauche;
     let imgDroite;
+    
+    stopChrono();
     
     if(bonne)
     {
@@ -440,7 +445,7 @@ function drawBase() {
     else
         map = VA_map_courte[indexTerrain];
     
-    $(jeu).clearCanvas().drawRect({
+    $(jeu).drawRect({
         //Ciel
         fillStyle: '#3498db',
         x:0, y:0,

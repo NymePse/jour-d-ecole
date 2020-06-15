@@ -162,12 +162,15 @@ function chronometre() {
     chronoActuel += 10;
     let rad = (chronoActuel / chronoFin) * 360;
     
+    $(jeu).drawRect({
+        fillStyle: '#3498db',
+        x: 500, y: 100,
+        height: 20, width: 20
+    });
     $(jeu).drawArc({
-        layer: true,
-        name: 'chrono',
         strokeStyle: 'black',
         strokeWidth: 5,
-        x: $(jeu).innerWidth()-15, y: 15,
+        x: 500, y: 100,
         radius: 10,
         start: 0, end: rad
     });
