@@ -217,14 +217,14 @@ function debutBoucle() {
         }
         else
         {
-            droiteQuestion = VA_versAmi + "ami_run.png";
-            gaucheQuestion = VA_versAmi + "ennemie_run.png";
+            gaucheQuestion = VA_versAmi + "ami_run.png";
+            droiteQuestion = VA_versAmi + "ennemie_run.png";
                 
-            droiteVictoire = VA_versAmi + "victoire_ami.png";
-            gaucheVictoire = VA_versAmi + "defaite_ennemie.png";
+            gaucheVictoire = VA_versAmi + "victoire_ami.png";
+            droiteVictoire = VA_versAmi + "defaite_ennemie.png";
                 
-            droiteDefaite = VA_versAmi + "defaite_ami.png";
-            gaucheDefaite = VA_versAmi + "ennemie_run.png";
+            gaucheDefaite = VA_versAmi + "defaite_ami.png";
+            droiteDefaite = VA_versAmi + "ennemie_run.png";
         }
     }
     else
@@ -287,6 +287,16 @@ function debutBoucle() {
     //Affichage
     drawBase();
     
+    $(jeu).drawImage({
+        source: gaucheQuestion,
+        x: 0, y: 260,
+        fromCenter: false
+    }).drawImage({
+        source: droiteQuestion,
+        x: 800, y: 260,
+        fromCenter: false
+    });
+    
     $(jeu).drawText({
         fillStyle: 'black',
         x: 500, y: 250,
@@ -348,9 +358,14 @@ function finBoucle(bonne) {
      * 
      *   partie()
      */
+    let imgGauche;
+    let imgDroite;
     
     if(bonne)
     {
+        imgGauche = gaucheVictoire;
+        imgDroite = droiteVictoire;
+        
         if(indexTerrain == tailleTerrain)
         {
             balleAuCentre = 1;
@@ -365,6 +380,9 @@ function finBoucle(bonne) {
     }
     else
     {
+        imgGauche = gaucheDefaite;
+        imgDroite = droiteDefaite;
+        
         if(indexTerrain == 0)
         {
             balleAuCentre = 0;
@@ -388,7 +406,17 @@ function finBoucle(bonne) {
     
     drawBase();
     
-    partie();
+    $(jeu).drawImage({
+        source: imgGauche,
+        x: 400, y: 260,
+        fromCenter: false
+    }).drawImage({
+        source: imgDroite,
+        x: 600, y: 260,
+        fromCenter: false
+    });
+    
+    setTimeout(partie, 2000);
 }
 
 function drawBase() {
