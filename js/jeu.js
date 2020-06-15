@@ -183,6 +183,8 @@ function debutBoucle() {
      * event réponse
      */
     
+    console.log("Index : " + indexTerrain + ", Terrain max : " + tailleTerrain);
+    
     //Choix obstacle
     do
     {
@@ -206,6 +208,7 @@ function debutBoucle() {
         //Balle à ami ?
         if(balleAuCentre == 0)
         {
+            console.log("Balle au centre, ami");
             gaucheQuestion = VA_versEnnemie + "ami_run.png";
             droiteQuestion = VA_versEnnemie + "ennemie_run.png";
                 
@@ -217,6 +220,7 @@ function debutBoucle() {
         }
         else
         {
+            console.log("Balle au centre, ennemie");
             gaucheQuestion = VA_versAmi + "ami_run.png";
             droiteQuestion = VA_versAmi + "ennemie_run.png";
                 
@@ -226,6 +230,8 @@ function debutBoucle() {
             gaucheDefaite = VA_versAmi + "defaite_ami.png";
             droiteDefaite = VA_versAmi + "ennemie_run.png";
         }
+        
+        balleAuCentre = 2;
     }
     else
     {
@@ -235,6 +241,7 @@ function debutBoucle() {
             //Devant le but ennemie ?
             if(indexTerrain == tailleTerrain)
             {
+                console.log("Vers ennemie, but");
                 gaucheQuestion = VA_versEnnemie + "ami_run.png";
                 droiteQuestion = VA_versEnnemie + "but.png";
                 
@@ -246,6 +253,7 @@ function debutBoucle() {
             }
             else
             {
+                console.log("Vers ennemie, chemin");
                 gaucheQuestion = VA_versEnnemie + "ami_run.png";
                 droiteQuestion = VA_versEnnemie + "ennemie_run.png";
                 
@@ -261,6 +269,7 @@ function debutBoucle() {
             //Devant le but ami ?
             if(indexTerrain == 0)
             {
+                console.log("Vers ami, but");
                 droiteQuestion = VA_versAmi + "but.png";
                 gaucheQuestion = VA_versAmi + "ennemie_run.png";
                 
@@ -272,6 +281,7 @@ function debutBoucle() {
             }
             else
             {
+                console.log("vers ami, chemin");
                 droiteQuestion = VA_versAmi + "ami_run.png";
                 gaucheQuestion = VA_versAmi + "ennemie_run.png";
                 
@@ -366,6 +376,8 @@ function finBoucle(bonne) {
         imgGauche = gaucheVictoire;
         imgDroite = droiteVictoire;
         
+        versEnnemie = true;
+        
         if(indexTerrain == tailleTerrain)
         {
             balleAuCentre = 1;
@@ -382,6 +394,8 @@ function finBoucle(bonne) {
     {
         imgGauche = gaucheDefaite;
         imgDroite = droiteDefaite;
+        
+        versEnnemie = false;
         
         if(indexTerrain == 0)
         {
