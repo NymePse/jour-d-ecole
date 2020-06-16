@@ -1,49 +1,143 @@
 /* GLOBAL */
-div {
+body {
+    background-color: green;
+}
+
+/* TITLE BAR */
+#top {
     width: 100%;
-    min-height: 50px;
-    border-style: solid;
-    border-width: medium;
-    border-color: black;
     
-    &#fleches {
-        width: 300px;
+    margin-bottom: 5px;
+    
+    & h1{
+        text-align: center;
+        font-size: 50px;
+        margin-top: 5px;
+    }
+    
+    & img {
+        position: absolute;
+        right: 0;
+        top: 5px;
     }
 }
 
-/* FLECHES */
-@margin-fleche: 5px;
-
-.fleche {
-    display: inline-block;
-    height: 75px;
-    width: 75px;
-    margin-left: @margin-fleche;
-    margin-right: @margin-fleche;
-    margin-top: 0px;
-    margin-bottom: 0px;
+/* ACCOUNT BAR */
+#compte {
+    background-color: skyblue;
+    padding-top: 10px;
+    margin-bottom: 20px;
     
-    &#haut, &#bas {
+    & input {
         display: block;
-        border-color: red;
-        margin-top: @margin-fleche;
-        margin-left: 0px;
-        margin-right: 0px;
+        background-color: green;
+        margin-right: auto;
+        margin-left: auto;
+        height: 25px;
+        width: 200px;
+        font-size: 20px;
+        text-align: center;
+    }
+    
+    & #valeurs {
+        text-align: center;
+        
+        & p {
+            display: inline-block;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
     }
 }
 
-#hb {
-    width: auto;
+/* SELECTORS BAR */
+#choix {
+    text-align: center;
+    margin-bottom: 20px;
+    
+    & select {
+        background-color: skyblue;
+        margin-right: 10px;
+    }
+    
+    & button {
+        background-color: skyblue;
+    }
 }
 
-#hb
-
-#espace {
-    height: 75px;
-    width: 150px;
-}
-
+/* CANVAS */
 canvas {
-    min-height: 200px;
-    min-width: 400px;
+    background-color: skyblue;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    display: block;
 }
+
+/* CONTROLS */
+#controles {
+    text-align: center;
+    
+    & #fleches {
+        display: inline-block;
+        width: auto;
+        margin-right: 20px;
+        
+        & #hb {
+            width: auto;
+            display: inline-block;
+            border: none;
+        }
+        
+        & .fleche {
+            display: inline-block;
+            border-style: solid;
+            background-color: skyblue;
+            font-size: 20px;
+            height: 75px;
+            width: 75px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+
+            &#haut, &#bas {
+                display: block;
+                margin-top: 5px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+        }
+    }
+    
+    & #espace {
+        display: inline-block;
+        border-style: solid;
+        background-color: skyblue;
+        text-align: center;
+        font-size: 20px;
+        width: 250px;
+        height: 75px;
+    }
+}
+
+/* TEXT TUTORIAL */
+#tuto {
+    text-align: center;
+    background-color: skyblue;
+    margin-top: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/*
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+*/

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Jeux d'École</title>
+    <title>Abeille et Balle</title>
 
     <!-- META -->
     <meta charset="UTF-8">
@@ -12,10 +12,10 @@
     <meta name="author" content="Arnaud LYSENSOONE--BIJOU">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- STYLE 
+    <!-- STYLE -->
     <link rel="stylesheet/less" type="text/css" href="style/style.less" />
-    <script src="style/less.min.js" ></script> -->
-    <link rel="stylesheet" type="text/css" href="style/style.css" /> 
+    <script src="style/less.min.js" ></script> 
+    <!-- <link rel="stylesheet" type="text/css" href="style/style.css" /> -->
 
     <!-- JS -->
     <script src="js/jquery-3.5.1.min.js"></script>
@@ -32,10 +32,13 @@
 <body onload="setUpSite()">
     <header>
         <div id="top">
-            <h1>Jeux d'École</h1>
-            <img src="res/icones/compte.svg">
-            <div id="compte">
-                <input id="nom" type="text" onchange="majNom(this.value)">
+            <h1>Footbzzz</h1>
+            <img src="res/icones/compte.svg" onclick="affichageCompte()">
+        </div>
+        
+        <div id="compte">
+            <input id="nom" type="text" onchange="majNom(this.value)">
+            <div id="valeurs">
                 <p>Victoires totales : <span id="nbv"></span></p>
                 <p>Buts totaux : <span id="nbb"></span></p>
                 <p>Bonnes réponses totales : <span id="nbbr"></span></p>
@@ -79,7 +82,6 @@
     <canvas id="jeu" width="1000" height="500" style="border:1px solid #000000;"></canvas>
 
     <div id="controles">
-        boutons cliquables + touchscreen
         <div id="fleches">
             <div class="fleche" id="gauche">gauche</div>
             <div id="hb">
@@ -92,7 +94,7 @@
         <div id="espace">espace</div>
     </div>
     
-    <p>Choisis un type de question, une difficulté, une vitesse de chronomètre, puis lance une partie ! Appuis sur espace ou la case "Avancer" pour passer les textes. Quand une question est posée, les réponses s'affichent dans les cases correspondantes. Tu peut même répondre en appuyant sur les flèches du clavier !</p>
+    <p id="tuto">Choisis un type de question, une difficulté, une vitesse de chronomètre, puis lance une partie ! Appuis sur espace ou la case "Avancer" pour passer les textes. Quand une question est posée, les réponses s'affichent dans les cases correspondantes. Tu peut même répondre en appuyant sur les flèches du clavier !</p>
 </body>
 
 </html>
