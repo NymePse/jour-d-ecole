@@ -158,14 +158,15 @@ function partie() {
         else
             txt = "Match perdu...";
         
+        drawBase();
         $(jeu).drawText({
             fillStyle: 'black',
-            x: 400, y:100,
+            x: 500, y:100,
             fontSize: 30,
             text: scoreAmi + " à " + scoreEnnemie
         }).drawText({
             fillStyle: 'black',
-            x: 400, y: 300,
+            x: 500, y: 300,
             fontSize: 30,
             text: txt
         });
@@ -373,11 +374,14 @@ function finBoucle(bonne) {
     
     if(bonne)
     {
+        incrementerVariableLocale(LS_nbBonnesReponses);
+        
         if(indexTerrain == tailleTerrain)
         {
             balleAuCentre = 1;
             indexTerrain = tailleTerrain /2;
             scoreAmi++;
+            incrementerVariableLocale(LS_nbButs);
             
             $(jeu).drawImage({
                 source: amiVictoire,
