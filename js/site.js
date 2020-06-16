@@ -12,6 +12,7 @@ const bas = "#bas";
 const droite = "#droite";
 const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
+const compte = "#compte";
 
 //Variables localStorage (sauvegarde d'urgence)
 const LS_enPartie = "enPartie"
@@ -65,6 +66,8 @@ function setUpSite() {
     
     setUpCompte();
     
+    affichageCompte();
+    
     let EP = localStorage.getItem(LS_enPartie);
     
     if(EP == "true")
@@ -89,7 +92,15 @@ function setUpSite() {
 }
 
 function majNom(val) {
-    localStorage.setItem(nom, val);
+    localStorage.setItem(LS_nom, val);
+    console.log(val);
+}
+
+function affichageCompte() {
+    if($(compte).is(":visible"))
+        $(compte).hide();
+    else
+        $(compte).show();
 }
 
 function setUpGame() {
@@ -131,10 +142,23 @@ function setUpCompte() {
     let bt = localStorage.getItem(LS_nbButs);
     let brt = localStorage.getItem(LS_nbBonnesReponses);
     
+    console.log(nm + " " + vt + " " + bt + " " + brt);
+    
+    if(nm == null)
+        nm = "Nom";
+    if(vt == null)
+        vt = 0;
+    if(bt == null)
+        bt = 0;
+    if(brt == null)
+        brt = 0;
+    
+    console.log(nm + " " + vt + " " + bt + " " + brt);
+    
     $(zoneNom).val(nm);
-    $(txtVictoires).val(vt);
-    $(txtButs).val(bt);
-    $(txtReponses).val(brt);
+    $(txtVictoires).text($(txtVictoires).text() + " " + vt);
+    $(txtButs).text($(txtButs).text() + " " + bt);
+    $(txtReponses).text($(txtReponses).text() + " " + brt);
 }
 
 //Fonctions de chronomètre
