@@ -57,10 +57,10 @@ const VA_map_courte = ["res/map/courte/map0.jpg","res/map/courte/map1.jpg","res/
 const VA_map_longue = ["res/map/longue/map0.jpg","res/map/longue/map1.jpg","res/map/longue/map2.jpg","res/map/longue/map3.jpg","res/map/longue/map4.jpg","res/map/longue/map5.jpg","res/map/longue/map6.jpg","res/map/longue/map7.jpg","res/map/longue/map8.jpg","res/map/longue/map9.jpg"];
 var gaucheQuestion;
 var droiteQuestion;
-var gaucheVictoire;
-var droiteVictoire;
-var gaucheDefaite;
-var droiteDefaite;
+var amiVictoire;
+var ennemieVictoire;
+var amiDefaite;
+var ennemieDefaite;
 
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
@@ -207,27 +207,25 @@ function debutBoucle() {
         //Balle à ami ?
         if(balleAuCentre == 0)
         {
-            console.log("Balle au centre, ami");
             gaucheQuestion = VA_versEnnemie + "ami_run.png";
             droiteQuestion = VA_versEnnemie + "ennemie_run.png";
                 
-            gaucheVictoire = VA_versEnnemie + "defaite_ennemie.png";
-            droiteVictoire = VA_versEnnemie + "ami_run.png";
+            ennemieVictoire = VA_versEnnemie + "defaite_ennemie.png";
+            amiVictoire = VA_versEnnemie + "ami_run.png";
                 
-            gaucheDefaite = VA_versEnnemie + "victoire_ennemie.png";
-            droiteDefaite = VA_versEnnemie + "defaite_ami.png";
+            ennemieDefaite = VA_versEnnemie + "victoire_ennemie.png";
+            amiDefaite = VA_versEnnemie + "defaite_ami.png";
         }
         else
         {
-            console.log("Balle au centre, ennemie");
             gaucheQuestion = VA_versAmi + "ami_run.png";
             droiteQuestion = VA_versAmi + "ennemie_run.png";
                 
-            gaucheVictoire = VA_versAmi + "victoire_ami.png";
-            droiteVictoire = VA_versAmi + "defaite_ennemie.png";
+            amiVictoire = VA_versAmi + "victoire_ami.png";
+            ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
                 
-            gaucheDefaite = VA_versAmi + "defaite_ami.png";
-            droiteDefaite = VA_versAmi + "ennemie_run.png";
+            amiDefaite = VA_versAmi + "defaite_ami.png";
+            ennemieDefaite = VA_versAmi + "ennemie_run.png";
         }
         
         balleAuCentre = 2;
@@ -240,27 +238,25 @@ function debutBoucle() {
             //Devant le but ennemie ?
             if(indexTerrain == tailleTerrain)
             {
-                console.log("Vers ennemie, but");
                 gaucheQuestion = VA_versEnnemie + "ami_run.png";
                 droiteQuestion = VA_versEnnemie + "but.png";
                 
-                gaucheVictoire = VA_versEnnemie + "but_marque.png";
-                droiteVictoire = VA_versEnnemie + "but.png";
+                amiVictoire = VA_versEnnemie + "but_marque.png";
+                ennemieVictoire = VA_versEnnemie + "but.png";
                 
-                gaucheDefaite = VA_versEnnemie + "defaite_ami.png";
-                droiteDefaite = VA_versEnnemie + "but.png";
+                amiDefaite = VA_versEnnemie + "defaite_ami.png";
+                ennemieDefaite = VA_versEnnemie + "but.png";
             }
             else
             {
-                console.log("Vers ennemie, chemin");
                 gaucheQuestion = VA_versEnnemie + "ami_run.png";
                 droiteQuestion = VA_versEnnemie + "ennemie_run.png";
                 
-                gaucheVictoire = VA_versEnnemie + "defaite_ennemie.png";
-                droiteVictoire = VA_versEnnemie + "ami_run.png";
+                ennemieVictoire = VA_versEnnemie + "defaite_ennemie.png";
+                amiVictoire = VA_versEnnemie + "ami_run.png";
                 
-                gaucheDefaite = VA_versEnnemie + "victoire_ennemie.png";
-                droiteDefaite = VA_versEnnemie + "defaite_ami.png";
+                ennemieDefaite = VA_versEnnemie + "victoire_ennemie.png";
+                amiDefaite = VA_versEnnemie + "defaite_ami.png";
             }
         }
         else
@@ -268,33 +264,31 @@ function debutBoucle() {
             //Devant le but ami ?
             if(indexTerrain == 0)
             {
-                console.log("Vers ami, but");
-                droiteQuestion = VA_versAmi + "but.png";
-                gaucheQuestion = VA_versAmi + "ennemie_run.png";
+                gaucheQuestion = VA_versAmi + "but.png";
+                droiteQuestion = VA_versAmi + "ennemie_run.png";
                 
-                droiteVictoire = VA_versAmi + "but_marque.png";
-                gaucheVictoire = VA_versAmi + "but.png";
+                ennemieDefaite = VA_versAmi + "but_marque.png";
+                amiDefaite = VA_versAmi + "but.png";
                 
-                droiteDefaite = VA_versAmi + "defaite_ennemie.png";
-                gaucheDefaite = VA_versAmi + "but.png";
+                ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
+                amiVictoire = VA_versAmi + "but.png";
             }
             else
             {
-                console.log("vers ami, chemin");
                 droiteQuestion = VA_versAmi + "ami_run.png";
                 gaucheQuestion = VA_versAmi + "ennemie_run.png";
                 
-                droiteVictoire = VA_versAmi + "victoire_ami.png";
-                gaucheVictoire = VA_versAmi + "defaite_ennemie.png";
+                amiVictoire = VA_versAmi + "victoire_ami.png";
+                ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
                 
-                droiteDefaite = VA_versAmi + "defaite_ami.png";
-                gaucheDefaite = VA_versAmi + "ennemie_run.png";
+                amiDefaite = VA_versAmi + "defaite_ami.png";
+                ennemieDefaite = VA_versAmi + "ennemie_run.png";
             }
         }
     }
     
     //Affichage
-    drawBase();
+    drawBase(); 
     
     $(jeu).drawImage({
         source: gaucheQuestion,
@@ -305,6 +299,7 @@ function debutBoucle() {
         x: 800, y: 260,
         fromCenter: false
     });
+    
     
     $(jeu).drawText({
         fillStyle: 'black',
@@ -371,47 +366,80 @@ function finBoucle(bonne) {
      * 
      *   partie()
      */
-    let imgGauche;
-    let imgDroite;
     
     stopChrono();
     
+    drawBase();
+    
     if(bonne)
     {
-        imgGauche = gaucheVictoire;
-        imgDroite = droiteVictoire;
-        
-        versEnnemie = true;
-        
         if(indexTerrain == tailleTerrain)
         {
             balleAuCentre = 1;
             indexTerrain = tailleTerrain /2;
             scoreAmi++;
+            
+            $(jeu).drawImage({
+                source: amiVictoire,
+                x: 200, y: 260,
+                fromCenter: false
+            }).drawImage({
+                source: ennemieVictoire,
+                x: 800, y: 260,
+                fromCenter: false
+            });
         }
         else
         {
             indexTerrain++;
             
+            $(jeu).drawImage({
+                source: amiVictoire,
+                x: 600, y: 260,
+                fromCenter: false
+            }).drawImage({
+                source: ennemieVictoire,
+                x: 400, y: 260,
+                fromCenter: false
+            });
         }
+        
+        versEnnemie = true;
     }
     else
     {
-        imgGauche = gaucheDefaite;
-        imgDroite = droiteDefaite;
-        
-        versEnnemie = false;
-        
         if(indexTerrain == 0)
         {
             balleAuCentre = 0;
             indexTerrain = tailleTerrain / 2;
             scoreEnnemie++;
+            
+            $(jeu).drawImage({
+                source: ennemieDefaite,
+                x: 0, y: 260,
+                fromCenter: false
+            }).drawImage({
+                source: amiDefaite,
+                x: 600, y: 260,
+                fromCenter: false
+            });
         }
         else
         {
             indexTerrain--;
+            
+            $(jeu).drawImage({
+                source: ennemieDefaite,
+                x: 600, y: 260,
+                fromCenter: false
+            }).drawImage({
+                source: amiDefaite,
+                x: 400, y: 260,
+                fromCenter: false
+            });
         }
+        
+        versEnnemie = false;
     }
     
     indexPhase++;
@@ -422,18 +450,6 @@ function finBoucle(bonne) {
     localStorage.setItem(LS_scoreAmi, scoreAmi);
     localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
     localStorage.setItem(LS_indexPhase, indexPhase);
-    
-    drawBase();
-    
-    $(jeu).drawImage({
-        source: imgGauche,
-        x: 400, y: 260,
-        fromCenter: false
-    }).drawImage({
-        source: imgDroite,
-        x: 600, y: 260,
-        fromCenter: false
-    });
     
     setTimeout(partie, 2000);
 }
