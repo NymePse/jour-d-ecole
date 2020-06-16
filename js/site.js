@@ -145,20 +145,30 @@ function setUpCompte() {
     console.log(nm + " " + vt + " " + bt + " " + brt);
     
     if(nm == null)
+    {
         nm = "Nom";
+        localStorage.setItem(LS_nom, nm);
+    }
     if(vt == null)
+    {
         vt = 0;
+        localStorage.setItem(LS_nbVictoires, vt);
+    }
     if(bt == null)
+    {
         bt = 0;
+        localStorage.setItem(LS_nbButs, bt);
+    }
     if(brt == null)
+    {
         brt = 0;
-    
-    console.log(nm + " " + vt + " " + bt + " " + brt);
+        localStorage.setItem(LS_nbBonnesReponses, brt);
+    }
     
     $(zoneNom).val(nm);
-    $(txtVictoires).text($(txtVictoires).text() + " " + vt);
-    $(txtButs).text($(txtButs).text() + " " + bt);
-    $(txtReponses).text($(txtReponses).text() + " " + brt);
+    $(txtVictoires).text(vt);
+    $(txtButs).text(bt);
+    $(txtReponses).text(brt);
 }
 
 //Fonctions de chronomètre
