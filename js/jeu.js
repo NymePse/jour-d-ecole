@@ -1,4 +1,9 @@
-//Déroulement
+//JEU.JS
+/*
+ * Fonctions en rapport avec le déroulement d'une partie
+ */
+
+//DEROULEMENT
 /*
  * Introduction : texte introduction, renvoie vers Partie()
  * 
@@ -101,7 +106,7 @@ function introduction() {
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
-            //$(espace).hide();
+            $(espace).hide();
             resetEventsPartie();
             partie();
         }
@@ -420,11 +425,11 @@ function finBoucle(bonne) {
             
             $(jeu).drawImage({
                 source: ennemieDefaite,
-                x: 0, y: 260,
+                x: 600, y: 260,
                 fromCenter: false
             }).drawImage({
                 source: amiDefaite,
-                x: 600, y: 260,
+                x: 0, y: 260,
                 fromCenter: false
             });
         }
@@ -434,11 +439,11 @@ function finBoucle(bonne) {
             
             $(jeu).drawImage({
                 source: ennemieDefaite,
-                x: 600, y: 260,
+                x: 400, y: 260,
                 fromCenter: false
             }).drawImage({
                 source: amiDefaite,
-                x: 400, y: 260,
+                x: 600, y: 260,
                 fromCenter: false
             });
         }
