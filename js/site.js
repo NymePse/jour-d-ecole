@@ -1,3 +1,9 @@
+//SITE.JS
+/*
+ * Fonctions en rapport avec le fonctionnement du site, hors jeu directement (sauf chrono)
+ * Affichage, mise à jour du compte, etc etc...
+ */
+
 //Sélecteurs élements Jquery
 const choixLongueur = "#longueur";
 const choixExo = "#exercice";
@@ -15,7 +21,8 @@ const espace = "#espace";
 const compte = "#compte";
 
 //Variables localStorage (sauvegarde d'urgence)
-const LS_enPartie = "enPartie"
+const LS_enPartie = "enPartie";
+const LS_longueurPartie = "longueurPartie";
 const LS_versEnnemie = "versEnnemie";
 const LS_balleAuCentre = "balleAuCentre";
 const LS_nbPhases = "nbPhases";
@@ -68,27 +75,60 @@ function setUpSite() {
     
     affichageCompte();
     
+    //Une partie était-elle en cours ?
     let EP = localStorage.getItem(LS_enPartie);
-    
     if(EP == "true")
     {
-       
-    }
-    
-    /* EVENTS
-        $(jeu).clearCanvas().drawText({
+        //Récupérer toutes les variables nécessaires à la partie
+        enPartie = true;
+        
+        if(localStorage.getItem(LS_versEnnemie) == "true")
+            versEnnemie = true;
+        else
+            versEnnemie = false;
+        
+        balleAuCentre = parseInt(localStorage.getItem(LS_balleAuCentre));
+        nbPhases = parseInt(localStorage.getItem(LS_nbPhases));
+        indexPhase = parseInt(localStorage.getItem(LS_indexPhase));
+        
+        if(localStorage.getItem(LS_longueurPartie) == "courte")
+            tailleTerrain = tailleCourte;
+        else
+            tailleTerrain = tailleLongue;
+        
+        indexTerrain = parseInt(localStorage.getItem(LS_indexTerrain));
+        miTemps = parseInt(localStorage.getItem(LS_miTemps));
+        scoreAmi = parseInt(localStorage.getItem(LS_scoreAmi));
+        scoreEnnemie = parseInt(localStorage.getItem(LS_scoreEnnemie));
+        typeExercice = localStorage.getItem(LS_typeExercice);
+        difficulte = localStorage.getItem(LS_difficulte);
+        chrono = localStorage.getItem(LS_chrono);
+        
+        //Affichage
+        drawBase();
+        $(jeu).drawText({
             fillStyle: 'black',
-            x: $(jeu).width() /2, y: 100,
+            x: 500, y: 250,
             fontSize: 20,
-            text: 'Reprise de partie en mode '+ txt
+            text: "Pour reprendre la partie, appuyez sur Espace"
         });
         
-        $(document).keypress(function() {
-            $(espace).off("click");
-            $(document).off("keypress");
-            fct();
+        //Event reprendre la partie
+        $(document).keypress(function(event) {
+            if(event.keyCode == 32)
+            {
+                $(espace).hide();
+                resetEventsPartie();
+                partie();
+            }
         });
-    */
+        
+        $(espace).click(function() {
+            $(espace).hide();
+            resetEventsPartie();
+            partie();
+        });
+    }
 }
 
 function majNom(val) {
@@ -116,6 +156,8 @@ function setUpGame() {
     typeExercice = $(choixExo + " :selected").val();
     difficulte = $(choixDiff + " :selected").val();
     chrono = $(choixChrono + " :selected").val();
+    
+    localStorage.setItem(LS_longueurPartie, longueur);
     
     //set partie selon taille voulue
     switch(longueur) {
