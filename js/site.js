@@ -215,6 +215,9 @@ function setUpGame() {
 }
     
 function setUpCompte() {
+    console.log("set up compte");
+    
+    //Variables de compte : nom & scores
     let nm = localStorage.getItem(LS_nom);
     let vt = localStorage.getItem(LS_nbVictoires);
     let bt = localStorage.getItem(LS_nbButs);
@@ -247,6 +250,62 @@ function setUpCompte() {
     $(txtVictoires).text(vt);
     $(txtButs).text(bt);
     $(txtReponses).text(brt);
+    
+    //Trophés
+    let mtf = localStorage.getItem(T_matchTresFacile);
+    let mf = localStorage.getItem(T_matchFacile);
+    let mm = localStorage.getItem(T_matchMoyen);
+    let md = localStorage.getItem(T_matchDifficile);
+    let mtd = localStorage.getItem(T_matchTresDifficile);
+    
+    let bu = localStorage.getItem(T_unBut);
+    let bd = localStorage.getItem(T_deuxButs);
+    let bc = localStorage.getItem(T_cinqButs);
+    let bdi = localStorage.getItem(T_dixButs);
+    
+    let vu = localStorage.getItem(T_uneVictoire);
+    let vd = localStorage.getItem(T_deuxVictoires);
+    let vc = localStorage.getItem(T_cinqVictoires);
+    let vdi = localStorage.getItem(T_dixVictoires);
+    
+    //Activer trophés gagnés
+    let trophes = Array();
+    
+    if(mtf == "true")
+        trophes.push(t_tf);
+    if(mf == "true")
+        trophes.push(t_f);
+    if(mm == "true")
+        trophes.push(t_m);
+    if(md == "true")
+        trophes.push(t_d);
+    if(mtd == "true")
+        trophes.push(t_td);
+    
+    if(bu == "true")
+        trophes.push(t_1b);
+    if(bd == "true")
+        trophes.push(t_2b);
+    if(bc == "true")
+        trophes.push(t_5b);
+    if(bdi == "true")
+        trophes.push(t_10b);
+    
+    if(vu == "true")
+        trophes.push(t_1v);
+    if(vd == "true")
+        trophes.push(t_2v);
+    if(vc == "true")
+        trophes.push(t_5v);
+    if(vdi == "true")
+        trophes.push(t_10v);
+    
+    console.log(trophes);
+    
+    trophes.forEach(function(trophe) {
+        console.log(trophe);
+        $(trophe).css("background-color","yellow");
+    });
 }
 
 //Fonctions de chronomètre
