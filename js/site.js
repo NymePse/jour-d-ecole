@@ -40,10 +40,40 @@ const LS_nom = "nom";
 const LS_nbVictoires = "nbVictoires";
 const LS_nbButs = "nbButs";
 const LS_nbBonnesReponses = "nbBonnesReponses";
+
+//Trophés
+const T_uneVictoire = "uneVictoire";
+const T_deuxVictoires = "deuxVictoires";
+const T_cinqVictoires = "cinqVictoires";
+const T_dixVictoires = "dixVictoires";
+const T_unBut = "unBut";
+const T_deuxButs = "deuxButs";
+const T_cinqButs = "cinqButs";
+const T_dixButs = "dixButs";
+const T_matchTresFacile = "matchTresFacile";
+const T_matchFacile = "matchFacile";
+const T_matchMoyen = "matchMoyen";
+const T_matchDifficile = "matchDifficile";
+const T_matchTresDifficile = "matchTresDifficile";
+
+//Elements HTML compte
 const zoneNom = "#nom";
 const txtVictoires = "#nbv";
 const txtButs = "#nbb";
 const txtReponses = "#nbbr";
+const t_tf = "#t_tf";
+const t_f = "#t_f";
+const t_m = "#t_m";
+const t_d = "#t_d";
+const t_td = "#t_td";
+const t_1v = "#t_1v";
+const t_2v = "#t_2v";
+const t_5v = "#t_5v";
+const t_10v = "#t_10v";
+const t_1b = "#t_1b";
+const t_2b = "#t_2b";
+const t_5b = "#t_5b";
+const t_10b = "#t_10b";
 
 //Variables chrono
 var idInterval = Array();
