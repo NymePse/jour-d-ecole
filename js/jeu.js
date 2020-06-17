@@ -88,7 +88,12 @@ function introduction() {
     balleAuCentre = Math.round(Math.random());
     balleCentreMT1 = balleAuCentre;
     indexPhase = 0;
-    indexTerrain = tailleTerrain / 2;
+    
+    if(tailleTerrain == tailleCourte)
+        indexTerrain = 2;
+    else
+        indexTerrain = 3;
+    
     miTemps = 0;
     scoreAmi = 0;
     scoreEnnemie = 0;
@@ -97,6 +102,7 @@ function introduction() {
     localStorage.setItem(LS_enPartie, enPartie);
     localStorage.setItem(LS_balleAuCentre, balleAuCentre);
     localStorage.setItem(LS_indexPhase, indexPhase);
+    localStorage.setItem(LS_indexTerrain, indexTerrain);
     localStorage.setItem(LS_miTemps, miTemps);
     localStorage.setItem(LS_scoreAmi, scoreAmi);
     localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
