@@ -163,6 +163,36 @@ function partie() {
         {
             txt = "Match gagné";
             incrementerVariableLocale(LS_nbVictoires);
+            
+            //maj trophés difficulté victoire
+            switch(difficulte) {
+                case "tres-simple":
+                    localStorage.setItem(T_matchTresFacile, true);
+                    break;
+                case "simple":
+                    localStorage.setItem(T_matchFacile, true);
+                    break;
+                case "moyen":
+                    localStorage.setItem(T_matchMoyen, true);
+                    break;
+                case "difficile":
+                    localStorage.setItem(T_matchDifficile, true);
+                    break;
+                case "tres-difficile":
+                    localStorage.setItem(T_matchTresDifficile, true);
+                    break;
+            }
+            
+            //maj trophés nombre victoires
+            let nbVictoires = parseInt(localStorage.getItem(LS_nbVictoires));
+            if(nbVictoires > 9)
+                localStorage.setItem(T_dixVictoires, "true");
+            else if(nbVictoires > 4)
+                localStorage.setItem(T_cinqVictoires, "true");
+            else if(nbVictoires > 1)
+                localStorage.setItem(T_deuxVictoires, "true");
+            else if(nbVictoires > 0)
+                localStorage.setItem(T_uneVictoire, "true");
         }
         else if(difference == 0)
             txt = "Match nul.";
@@ -181,6 +211,13 @@ function partie() {
             fontSize: 30,
             text: txt
         });
+        
+        enPartie = false;
+        localStorage.setItem(LS_enPartie, "false");
+        
+        resetEventsPartie();
+        viderListesQuestions();
+        viderVariablesParties();
         
         setUpCompte();
     }
@@ -464,6 +501,17 @@ function finBoucle(bonne) {
     localStorage.setItem(LS_scoreAmi, scoreAmi);
     localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
     localStorage.setItem(LS_indexPhase, indexPhase);
+    
+    //maj trophés
+    let nbButs = parseInt(localStorage.getItem(LS_nbButs));
+    if(nbButs > 9)
+        localStorage.setItem(T_dixButs, "true");
+    else if(nbButs > 4)
+        localStorage.setItem(T_cinqButs, "true");
+    else if(nbButs > 1)
+        localStorage.setItem(T_deuxButs, "true");
+    else if(nbButs > 0)
+        localStorage.setItem(T_unBut, "true");
     
     setTimeout(partie, 2000);
 }
