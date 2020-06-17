@@ -38,10 +38,31 @@
         
         <div id="compte">
             <input id="nom" type="text" onchange="majNom(this.value)">
+            
             <div id="valeurs">
                 <p>Victoires totales : <span id="nbv"></span></p>
                 <p>Buts totaux : <span id="nbb"></span></p>
                 <p>Bonnes réponses totales : <span id="nbbr"></span></p>
+            </div>
+            
+            <div class="trophes">
+                <span id="t_tf"></span>
+                <span id="t_f"></span>
+                <span id="t_m"></span>
+                <span id="t_d"></span>
+                <span id="t_td"></span>
+            </div>
+            <div class="trophes">
+                <span id="t_1v"></span>
+                <span id="t_2v"></span>
+                <span id="t_5v"></span>
+                <span id="t_10v"></span>
+            </div>
+            <div class="trophes">
+                <span id="t_1b"></span>
+                <span id="t_2b"></span>
+                <span id="t_5b"></span>
+                <span id="t_10b"></span>
             </div>
         </div>
         
@@ -83,12 +104,12 @@
 
     <div id="controles">
         <div id="fleches">
-            <div class="fleche" id="gauche">gauche</div>
+            <div class="fleche" id="gauche"><img src="res/icones/left.png"></div>
             <div id="hb">
-                <div class="fleche" id="haut">haut</div>
-                <div class="fleche" id="bas">bas</div>
+                <div class="fleche" id="haut"><img src="res/icones/up.png"></div>
+                <div class="fleche" id="bas"><img src="res/icones/down.png"></div>
             </div>
-            <div class="fleche" id="droite">droite</div>
+            <div class="fleche" id="droite"><img src="res/icones/right.png"></div>
         </div>
         
         <div id="espace">espace</div>
