@@ -92,9 +92,15 @@ function setUpSite() {
         indexPhase = parseInt(localStorage.getItem(LS_indexPhase));
         
         if(localStorage.getItem(LS_longueurPartie) == "courte")
+        {
             tailleTerrain = tailleCourte;
+            tmpsPhase = 5;
+        }
         else
+        {
             tailleTerrain = tailleLongue;
+            tmpsPhase = 3;
+        }
         
         indexTerrain = parseInt(localStorage.getItem(LS_indexTerrain));
         miTemps = parseInt(localStorage.getItem(LS_miTemps));
