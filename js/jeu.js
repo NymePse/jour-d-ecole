@@ -312,7 +312,6 @@ function debutBoucle() {
         fromCenter: false
     });
     
-    
     $(jeu).drawText({
         fillStyle: 'black',
         x: 500, y: 250,
