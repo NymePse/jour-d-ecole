@@ -99,7 +99,7 @@ function introduction() {
     localStorage.setItem(LS_indexPhase, indexPhase);
     localStorage.setItem(LS_miTemps, miTemps);
     localStorage.setItem(LS_scoreAmi, scoreAmi);
-    localStorage.setItem(LS_scoreEnnemie, LS_scoreEnnemie);
+    localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
     
     //event lancer partie
     $(espace).text("Continuer");
