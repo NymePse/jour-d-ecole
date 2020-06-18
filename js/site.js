@@ -411,3 +411,82 @@ function resetEventsPartie() {
     $(classfleche).off("click");
     $(espace).off("click");
 }
+
+function exporter() {
+    //Récupérer variables du compte
+    let nm = localStorage.getItem(LS_nom);
+    let vt = localStorage.getItem(LS_nbVictoires);
+    let bt = localStorage.getItem(LS_nbButs);
+    let brt = localStorage.getItem(LS_nbBonnesReponses);
+    
+    let mtf = localStorage.getItem(T_matchTresFacile);
+    let mf = localStorage.getItem(T_matchFacile);
+    let mm = localStorage.getItem(T_matchMoyen);
+    let md = localStorage.getItem(T_matchDifficile);
+    let mtd = localStorage.getItem(T_matchTresDifficile);
+    let trophesDiff = [mtf, mf, mm, md, mtd];
+    
+    let bu = localStorage.getItem(T_unBut);
+    let bd = localStorage.getItem(T_deuxButs);
+    let bc = localStorage.getItem(T_cinqButs);
+    let bdi = localStorage.getItem(T_dixButs);
+    let trophesBut = [bu, bd, bc, bdi];
+    
+    let vu = localStorage.getItem(T_uneVictoire);
+    let vd = localStorage.getItem(T_deuxVictoires);
+    let vc = localStorage.getItem(T_cinqVictoires);
+    let vdi = localStorage.getItem(T_dixVictoires);
+    let trophesVic = [vu, vd, vc, vdi];
+    
+    //Créer JSON
+    var compte = compte(nm, vt, bt brt, trophesDiff, trophesVic, trophesBut);
+    var compteJSON = JSON.stringify(compte);
+    
+    //Procédure de téléchargement
+    let file = new Blob(compteJSON, {type: "application/json"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a");
+        var url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = nm;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+
+function compte(nom, nbVictoires, nbButs, nbBonnesReponses, trophesDiff, trophesVic, trophesBut) {
+    this.nom = nom;
+    this.nbVictoires = nbVictoires;
+    this.nbButs = nbButs;
+    this.nbBonnesReponses = nbBonnesReponses;
+    this.trophesDiff = trophesDiff;
+    this.trophesVic = trophesVic;
+    this.trophesBut = trophesBut;
+}
+
+// Function to download data to a file
+/*
+function download(data, filename) {
+    var file = new Blob([data], {type: "application/json"});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a");
+        var url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+*/
