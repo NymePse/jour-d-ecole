@@ -19,6 +19,7 @@ const droite = "#droite";
 const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
 const compte = "#compte";
+const file_reader = "#file_reader";
 
 //Variables localStorage (sauvegarde d'urgence)
 const LS_enPartie = "enPartie";
@@ -251,6 +252,9 @@ function setUpCompte() {
     $(txtButs).text(bt);
     $(txtReponses).text(brt);
     
+    //Mise à jour trophés acquis
+    majTrophes();
+    
     //Trophés
     let mtf = localStorage.getItem(T_matchTresFacile);
     let mf = localStorage.getItem(T_matchFacile);
@@ -306,6 +310,33 @@ function setUpCompte() {
         console.log(trophe);
         $(trophe).css("background-color","yellow");
     });
+}
+
+//Fonctions mise à jour des trophés
+function majTrophes() {
+    //Récupérer valeurs compte
+    let victoires = parseInt(localStorage.getItem(LS_nbVictoires));
+    let buts = parseInt(localStorage.getItem(LS_nbButs));
+    
+    //maj trophés buts
+    if(buts > 9)
+        localStorage.setItem(T_dixButs, "true");
+    if(buts > 4)
+        localStorage.setItem(T_cinqButs, "true");
+    if(buts > 1)
+        localStorage.setItem(T_deuxButs, "true");
+    if(buts > 0)
+        localStorage.setItem(T_unBut, "true");
+    
+    //maj trophés nombre victoires
+    if(victoires > 9)
+        localStorage.setItem(T_dixVictoires, "true");
+    if(victoires > 4)
+        localStorage.setItem(T_cinqVictoires, "true");
+    if(victoires > 1)
+        localStorage.setItem(T_deuxVictoires, "true");
+    if(victoires > 0)
+        localStorage.setItem(T_uneVictoire, "true");
 }
 
 //Fonctions de chronomètre
@@ -419,8 +450,6 @@ function exporter() {
     let buts;
     let bonnesReponses;
     let trophesDiff = Array();
-    let trophesBut = Array();
-    let trophesVic = Array();
     
     //Récupérer variables du compte sûres
     nom = localStorage.getItem(LS_nom);
@@ -455,48 +484,6 @@ function exporter() {
     else
         trophesDiff.push(false);
     
-    //Trophés nombre de buts
-    if(localStorage.getItem(T_unBut) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_deuxButs) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_cinqButs) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_dixButs) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    //Trophés nombre de victoire
-    if(localStorage.getItem(T_uneVictoire) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_deuxVictoires) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_cinqVictoires) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
-    if(localStorage.getItem(T_dixVictoires) == "true")
-        trophesBut.push(true);
-    else
-        trophesBut.push(false);
-    
     //Créer JSON
     //Compte(nom, victoires, buts, bonnesReponses, trophesDiff, trophesVic, trophesBut)
     let compteObjet = {
@@ -504,11 +491,10 @@ function exporter() {
         nom: nom,
         victoires: victoires,
         bonnesReponses: bonnesReponses,
+        buts: buts,
         
         //Array trophés
-        trophesDiff: trophesDiff,
-        trophesVic: trophesVic,
-        trophesBut: trophesBut
+        trophesDiff: trophesDiff
     }
     
     let compteJSON = JSON.stringify(compteObjet);
@@ -518,8 +504,8 @@ function exporter() {
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
     else { // Others
-        var a = document.createElement("a");
-        var url = URL.createObjectURL(file);
+        let a = document.createElement("a");
+        let url = URL.createObjectURL(file);
         a.href = url;
         a.download = nom;
         document.body.appendChild(a);
@@ -531,38 +517,52 @@ function exporter() {
     }
 }
 
-
-//Objet de compte
-function Compte(nom, victoires, buts, bonnesReponses, trophesDiff, trophesVic, trophesBut) {
-    //Bases compte
-    this.nom = nom;
-    this.victoires = victoires;
-    this.buts = buts;
-    this.bonnesReponses = bonnesReponses;
+function importer(event) {
+    //Récupération du fichier json
+    let file = event.target.files[0];
     
-    //Array trophés
-    this.trophesDiff = trophesDiff;
-    this.trophesVic = trophesVic;
-    this.trophesBut = trophesBut;
-}
-
-// Function to download data to a file
-/*
-function download(data, filename) {
-    var file = new Blob([data], {type: "application/json"});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a");
-        var url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+    //Création objet de lecture
+    let fileReader = new FileReader();
+    
+    //une fois le fichier convertis en string
+    fileReader.onloadend = function(event2) {
+        console.log(event2.target.result);
+        
+        //Récupération éléments JSON
+        let compteString = event2.target.result;
+        let compteJSON = JSON.parse(compteString);
+        
+        //MAJ éléments compte depuis JSON
+        localStorage.setItem(LS_nom, compteJSON.nom);
+        localStorage.setItem(LS_nbVictoires, compteJSON.victoires);
+        localStorage.setItem(LS_nbButs, compteJSON.buts);
+        localStorage.setItem(LS_nbBonnesReponses, compteJSON.bonnesReponses);
+        
+        localStorage.setItem(T_matchTresFacile, compteJSON.trophesDiff[0]);
+        localStorage.setItem(T_matchFacile, compteJSON.trophesDiff[1]);
+        localStorage.setItem(T_matchMoyen, compteJSON.trophesDiff[2]);
+        localStorage.setItem(T_matchDifficile, compteJSON.trophesDiff[3]);
+        localStorage.setItem(T_matchTresDifficile, compteJSON.trophesDiff[4]);
+        
+        majTrophes();
+        
+        setUpCompte();
+        
+        /*
+         * let compteObjet = {
+        //Bases compte
+        nom: nom,
+        victoires: victoires,
+        bonnesReponses: bonnesReponses,
+        
+        //Array trophés
+        trophesDiff: trophesDiff,
+        trophesVic: trophesVic,
+        trophesBut: trophesBut
     }
+         */
+    }
+    
+    //lancement conversion
+    fileReader.readAsText(file);
 }
-*/
