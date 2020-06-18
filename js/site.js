@@ -413,44 +413,115 @@ function resetEventsPartie() {
 }
 
 function exporter() {
-    //Récupérer variables du compte
-    let nm = localStorage.getItem(LS_nom);
-    let vt = localStorage.getItem(LS_nbVictoires);
-    let bt = localStorage.getItem(LS_nbButs);
-    let brt = localStorage.getItem(LS_nbBonnesReponses);
+    //Set up variables pour JSON
+    let nom;
+    let victoires;
+    let buts;
+    let bonnesReponses;
+    let trophesDiff = Array();
+    let trophesBut = Array();
+    let trophesVic = Array();
     
-    let mtf = localStorage.getItem(T_matchTresFacile);
-    let mf = localStorage.getItem(T_matchFacile);
-    let mm = localStorage.getItem(T_matchMoyen);
-    let md = localStorage.getItem(T_matchDifficile);
-    let mtd = localStorage.getItem(T_matchTresDifficile);
-    let trophesDiff = [mtf, mf, mm, md, mtd];
+    //Récupérer variables du compte sûres
+    nom = localStorage.getItem(LS_nom);
+    victoires = localStorage.getItem(LS_nbVictoires);
+    buts = localStorage.getItem(LS_nbButs);
+    bonnesReponses = localStorage.getItem(LS_nbBonnesReponses);
     
-    let bu = localStorage.getItem(T_unBut);
-    let bd = localStorage.getItem(T_deuxButs);
-    let bc = localStorage.getItem(T_cinqButs);
-    let bdi = localStorage.getItem(T_dixButs);
-    let trophesBut = [bu, bd, bc, bdi];
+    //Test variables de trophés
+    //Trophés de difficulté
+    if(localStorage.getItem(T_matchTresFacile) == "true")
+        trophesDiff.push(true);
+    else
+        trophesDiff.push(false);
     
-    let vu = localStorage.getItem(T_uneVictoire);
-    let vd = localStorage.getItem(T_deuxVictoires);
-    let vc = localStorage.getItem(T_cinqVictoires);
-    let vdi = localStorage.getItem(T_dixVictoires);
-    let trophesVic = [vu, vd, vc, vdi];
+    if(localStorage.getItem(T_matchFacile) == "true")
+        trophesDiff.push(true);
+    else
+        trophesDiff.push(false);
+    
+    if(localStorage.getItem(T_matchMoyen) == "true")
+        trophesDiff.push(true);
+    else
+        trophesDiff.push(false);
+    
+    if(localStorage.getItem(T_matchDifficile) == "true")
+        trophesDiff.push(true);
+    else
+        trophesDiff.push(false);
+    
+    if(localStorage.getItem(T_matchTresDifficile) == "true")
+        trophesDiff.push(true);
+    else
+        trophesDiff.push(false);
+    
+    //Trophés nombre de buts
+    if(localStorage.getItem(T_unBut) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_deuxButs) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_cinqButs) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_dixButs) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    //Trophés nombre de victoire
+    if(localStorage.getItem(T_uneVictoire) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_deuxVictoires) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_cinqVictoires) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
+    
+    if(localStorage.getItem(T_dixVictoires) == "true")
+        trophesBut.push(true);
+    else
+        trophesBut.push(false);
     
     //Créer JSON
-    var compte = compte(nm, vt, bt brt, trophesDiff, trophesVic, trophesBut);
-    var compteJSON = JSON.stringify(compte);
+    //Compte(nom, victoires, buts, bonnesReponses, trophesDiff, trophesVic, trophesBut)
+    let compteObjet = {
+        //Bases compte
+        nom: nom,
+        victoires: victoires,
+        bonnesReponses: bonnesReponses,
+        
+        //Array trophés
+        trophesDiff: trophesDiff,
+        trophesVic: trophesVic,
+        trophesBut: trophesBut
+    }
+    
+    let compteJSON = JSON.stringify(compteObjet);
     
     //Procédure de téléchargement
-    let file = new Blob(compteJSON, {type: "application/json"});
+    let file = new Blob([compteJSON], {type: "application/json"});
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
     else { // Others
         var a = document.createElement("a");
         var url = URL.createObjectURL(file);
         a.href = url;
-        a.download = nm;
+        a.download = nom;
         document.body.appendChild(a);
         a.click();
         setTimeout(function() {
@@ -460,11 +531,16 @@ function exporter() {
     }
 }
 
-function compte(nom, nbVictoires, nbButs, nbBonnesReponses, trophesDiff, trophesVic, trophesBut) {
+
+//Objet de compte
+function Compte(nom, victoires, buts, bonnesReponses, trophesDiff, trophesVic, trophesBut) {
+    //Bases compte
     this.nom = nom;
-    this.nbVictoires = nbVictoires;
-    this.nbButs = nbButs;
-    this.nbBonnesReponses = nbBonnesReponses;
+    this.victoires = victoires;
+    this.buts = buts;
+    this.bonnesReponses = bonnesReponses;
+    
+    //Array trophés
     this.trophesDiff = trophesDiff;
     this.trophesVic = trophesVic;
     this.trophesBut = trophesBut;
