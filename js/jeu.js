@@ -923,7 +923,7 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 bonneReponse = partUne * partDeux;
-                question = partUne + " * " + partDeux;
+                question = partUne + " x " + partDeux;
             }
             while(multiplicationsFaites.includes(question));
             
@@ -955,7 +955,7 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 bonneReponse = partUne * partDeux;
-                question = partUne + " * " + partDeux;
+                question = partUne + " x " + partDeux;
             }
             while(multiplicationsFaites.includes(question));
             
@@ -991,7 +991,7 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 bonneReponse = partUne * partDeux;
-                question = partUne + " * " + partDeux;
+                question = partUne + " x " + partDeux;
             }
             while(multiplicationsFaites.includes(question));
             
@@ -1031,7 +1031,7 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 bonneReponse = partUne * partDeux;
-                question = partUne + " * " + partDeux;
+                question = partUne + " x " + partDeux;
             }
             while(multiplicationsFaites.includes(question));
             
@@ -1075,7 +1075,7 @@ function creerMultiplication(diff) {
                     partUne = 10;
                 partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
                 bonneReponse = partUne * partDeux;
-                question = partUne + " * " + partDeux;
+                question = partUne + " x " + partDeux;
             }
             while(multiplicationsFaites.includes(question));
             
