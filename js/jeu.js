@@ -78,10 +78,12 @@ function introduction() {
     $(jeu).clearCanvas();
     $(jeu).drawText({
         fillStyle: 'black',
-        x: 400, y: 200,
+        x: 500, y: 250,
         fontSize: 30,
-        text: 'Début de partie, appuyer sur espace'
+        text: 'Le match va bientôt commencer !'
     });
+    
+    $(espace).show();
     
     //Set Up variables partie
     enPartie = true;
@@ -119,7 +121,7 @@ function introduction() {
     });
     
     $(espace).click(function() {
-        //$(espace).hide();
+        $(espace).hide();
         resetEventsPartie();
         partie();
     });
