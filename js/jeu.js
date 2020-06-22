@@ -246,26 +246,20 @@ function debutBoucle() {
         //Balle à ami ?
         if(balleAuCentre == 0)
         {
-            gaucheQuestion = VA_versEnnemie + "ami_run.png";
-            droiteQuestion = VA_versEnnemie + "ennemie_run.png";
-                
-            ennemieVictoire = VA_versEnnemie + "defaite_ennemie.png";
-            amiVictoire = VA_versEnnemie + "ami_run.png";
-                
-            ennemieDefaite = VA_versEnnemie + "victoire_ennemie.png";
-            amiDefaite = VA_versEnnemie + "defaite_ami.png";
+            gaucheQuestion = VA_balleAuCentre + "centre_ami_ballon.png";
+            droiteQuestion = VA_balleAuCentre + "centre_ennemie.png";
         }
         else
         {
-            gaucheQuestion = VA_versAmi + "ami_run.png";
-            droiteQuestion = VA_versAmi + "ennemie_run.png";
-                
-            amiVictoire = VA_versAmi + "victoire_ami.png";
-            ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
-                
-            amiDefaite = VA_versAmi + "defaite_ami.png";
-            ennemieDefaite = VA_versAmi + "ennemie_run.png";
+            gaucheQuestion = VA_balleAuCentre + "centre_ami.png";
+            droiteQuestion = VA_balleAuCentre + "centre_ennemie_ballon.png";
         }
+        
+        ennemieVictoire = VA_balleAuCentre + "centre_ennemie.png";
+        amiVictoire = VA_balleAuCentre + "victoire_ami.png";
+                
+        ennemieDefaite = VA_balleAuCentre + "defaite_ennemie.png";
+        amiDefaite = VA_balleAuCentre + "centre_ami.png";
         
         balleAuCentre = 2;
     }
