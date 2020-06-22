@@ -106,6 +106,8 @@ function setUpSite() {
     
     affichageCompte();
     
+    $(espace).hide();
+    
     //Une partie était-elle en cours ?
     let EP = localStorage.getItem(LS_enPartie);
     if(EP == "true")
