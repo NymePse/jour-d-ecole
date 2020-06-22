@@ -8,3 +8,8 @@ Réalisé en HTML, CSS, Javascript avec les librairies JQuery et JCanvas.
 
 ## Licence du logiciel et des contenus média
 FootMath est placé sous licence GNU GPL3. Les média (illustrations) ne sont pas sous licence libre, et ne sont pas miens. Le jeu n'est donc pas distribuable en l'état. S'il devait être distribué, les contenu média devront donc être modifiés, ou il faudra en acheter la licence.
+
+## Remerciements
+Merci à Lina de m'avoir aidé à créer des visuels (non utilisés).
+Merci à Rémi, Julien, Quentin, Loelia et Loris d'avoir effectués quelques tests pendant le développement.
+Merci au sucre et au gras de m'avoir maintenu en état pendant le développement.
