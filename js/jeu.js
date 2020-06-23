@@ -333,9 +333,7 @@ function debutBoucle() {
         source: droiteQuestion,
         x: 800, y: 260,
         fromCenter: false
-    });
-    
-    $(jeu).drawText({
+    }).drawText({
         fillStyle: 'black',
         x: 500, y: 250,
         fontSize: 30,
@@ -1289,23 +1287,6 @@ function creerDivision(diff) {
         divisionsFaites.shift();
     
     divisionsFaites.push(question);
-}
-
-//Fonctions de vérification
-//TODO : actualiser variables + nom
-function quizzComplet() {
-    if(indexQuestion > nbQuestions)
-        return true;
-    else
-        return false;
-}
-
-//TODO : actualiser variables + nom
-function partiesCompletes() {
-    if(indexPartie > nbParties)
-        return true;
-    else
-        return false;
 }
 
 //TODO : réviser moment utilisé + récupération réponse (quand touche pressée)
