@@ -108,6 +108,23 @@ function setUpSite() {
     
     $(espace).hide();
     
+    //Mettre à jour taille canvas
+    $(window).resize(function() {
+        if($(window).width() < 1000)
+        {
+            
+            $(jeu).css("width", $(window).width());
+            $(jeu).css("height", $(window).width() / 2);
+        }
+        else
+        {
+            $(jeu).css("width", 1000);
+            $(jeu).css("height", 500);
+        }
+    });
+    
+    $(window).resize();
+    
     //Une partie était-elle en cours ?
     let EP = localStorage.getItem(LS_enPartie);
     if(EP == "true")
