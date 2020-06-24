@@ -8,7 +8,7 @@ FootMath est un jeu éducatif de mathématiques pour enfants en primaire, réali
 ## Liens
 - Pour jouer : **[FootMath](https://pseudo-nyme.github.io/jour-d-ecole/)**
 - Code Source : [Github FootMath](https://github.com/Pseudo-Nyme/jour-d-ecole)
-- Documentation : [Doc](https://github.com/Pseudo-Nyme/jour-d-ecole/blob/master/DOC.md)
+- Documentation : [Doc](./doc.html)
 
 ## Licence
 Le code est sous licence libre  [GNU GPL v3](https://www.gnu.org/licenses/licenses.fr.html)
