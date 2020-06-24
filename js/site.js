@@ -159,6 +159,7 @@ function setUpSite() {
         typeExercice = localStorage.getItem(LS_typeExercice);
         difficulte = localStorage.getItem(LS_difficulte);
         chrono = localStorage.getItem(LS_chrono);
+        difficulte = localStorage.getItem(LS_difficulte);
         
         //Affichage
         drawBase();
@@ -175,14 +176,14 @@ function setUpSite() {
             {
                 $(espace).hide();
                 resetEventsPartie();
-                partie();
+                debutBoucle();
             }
         });
         
         $(espace).click(function() {
             $(espace).hide();
             resetEventsPartie();
-            partie();
+            debutBoucle();
         });
     }
 }
@@ -213,7 +214,11 @@ function setUpGame() {
     difficulte = $(choixDiff + " :selected").val();
     chrono = $(choixChrono + " :selected").val();
     
+    //Sauvegarde locale
     localStorage.setItem(LS_longueurPartie, longueur);
+    localStorage.setItem(LS_typeExercice, typeExercice);
+    localStorage.setItem(LS_difficulte, difficulte);
+    localStorage.setItem(LS_chrono, chrono);
     
     //set partie selon taille voulue
     switch(longueur) {

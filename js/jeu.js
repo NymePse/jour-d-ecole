@@ -336,8 +336,9 @@ function debutBoucle() {
     }).drawText({
         fillStyle: 'black',
         x: 500, y: 250,
-        fontSize: 30,
-        text: question
+        fontSize: 20,
+        text: question + "",
+        fromCenter: true
     });
     
     //évènements de réponse
@@ -544,6 +545,8 @@ function creerQuestion() {
     reponses = [];
     
     let diff = difficulte;
+    
+    console.log(diff);
     
     if(diff == "aleatoire")
     {
