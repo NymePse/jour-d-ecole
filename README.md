@@ -13,3 +13,7 @@ FootMath est un jeu éducatif de mathématiques pour enfants en primaire, réali
 ## Licence
 Le code est sous licence libre  [GNU GPL v3](https://www.gnu.org/licenses/licenses.fr.html)
 En l'état du projet, toutes les ressources multimédia ne sont pas libres, ce qui peut rendre problématique sa distribution.
+
+## Crédits
+Conception & Programmation : Arnaud LYSENSOONE BIJOU
+Tests utilisateurs : Loris, Rémi, Quentin, Julien
