@@ -462,17 +462,32 @@ function finBoucle(bonne) {
         }
         else
         {
-            indexTerrain--;
+            if(indexTerrain == tailleTerrain)
+            {
+                $(jeu).drawImage({
+                    source: ennemieDefaite,
+                    x: 800, y: 260,
+                    fromCenter: false
+                }).drawImage({
+                    source: amiDefaite,
+                    x: 40, y: 260,
+                    fromCenter: false
+                });
+            }
+            else
+            {
+                $(jeu).drawImage({
+                    source: ennemieDefaite,
+                    x: 400, y: 260,
+                    fromCenter: false
+                }).drawImage({
+                    source: amiDefaite,
+                    x: 600, y: 260,
+                    fromCenter: false
+                });
+            }
             
-            $(jeu).drawImage({
-                source: ennemieDefaite,
-                x: 400, y: 260,
-                fromCenter: false
-            }).drawImage({
-                source: amiDefaite,
-                x: 600, y: 260,
-                fromCenter: false
-            });
+            indexTerrain--; 
         }
         
         versEnnemie = false;
