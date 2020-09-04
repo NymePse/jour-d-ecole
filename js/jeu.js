@@ -26,6 +26,8 @@
  * incrémente indexPhase 
  */
 
+//TODO Modifier et passer en let les variables (voir supprimer pour utiliser objet Partie)
+
 //Variables parties
 var enPartie;
 var versEnnemie;
@@ -54,6 +56,8 @@ var tailleCourte = 4;
 var tailleLongue = 6;
 var tmpsPhase;
 
+//TODO Modifier noms, modifier liste map ? + modifier images map longue (enlever 2 index)
+
 //Variables affichage
 const VA_balleAuCentre = "res/balleCentre/";
 const VA_versEnnemie = "res/versEnnemie/";
@@ -67,12 +71,25 @@ var ennemieVictoire;
 var amiDefaite;
 var ennemieDefaite;
 
+//TODO Update les liste questions avec des SizedArray
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
 var soustractionsFaites = Array();
 var multiplicationsFaites = Array();
 var divisionsFaites = Array();
 
+//TODO Réecrire/maj la fonction introduction (fusion fonction setUpGame ?) avec objet Partie
+/*
+ * (si fusion)
+ * Créer un objet Partie
+ * Récupérer les valeurs d'options de partie
+ * Mettre à jour l'objet Partie
+ * Sauvegarder l'objet Partie
+ * 
+ * (en tout cas)
+ * Afficher début de partie
+ * Créer event touches lancer la partie
+ */
 function introduction() {
     //Dessin introduction
     $(jeu).clearCanvas();
@@ -127,6 +144,19 @@ function introduction() {
     });
 }
 
+//TODO Réecrire/maj la fonction partie avec l'objet Compte et Partie
+/*
+ * Vérifier fin de mi-temps
+ * Vérifier fin de match
+ *  si oui :
+ *      maj scores compte
+ *      maj trophés
+ *      affichage fin de partie
+ *      supprimer objet Partie
+ *      maj compte, events, vider questions...
+ *  si non :
+ *      debutBoucle()
+ */
 function partie() {
     /*
      * si indexPhase > nbPhases
@@ -217,6 +247,13 @@ function partie() {
         debutBoucle();
 }
 
+//TODO Réécrire/maj la fonction debutBoucle avec l'objet Partie, simplifier/séparer la partie choix affichage ?
+/*
+ * Sélection des assets à afficher
+ * Création des questions/réponses
+ * Affichage
+ * Création event réponse
+ */
 function debutBoucle() {
     /*
      * choisis obstacle
@@ -376,6 +413,12 @@ function debutBoucle() {
         setChrono();
 }
 
+//TODO : Réécrire/maj la fonction finBoucle avec l'objet Partie, revoir gestion réponse donnée ?
+/*
+ * Vérifier réponse et avancer match selon
+ * Afficher état match selon
+ * relancer vers partie()
+ */
 function finBoucle(bonne) {
     /*
      *  si reponse bonne
@@ -508,6 +551,7 @@ function finBoucle(bonne) {
     setTimeout(partie, 2000);
 }
 
+//TODO Améliorer, simplifier ? DrawBase
 function drawBase() {
     let map;
     if(tailleTerrain == tailleLongue)
@@ -555,6 +599,8 @@ function drawBase() {
 //-------------------------------------------------------------------------
 
 //Fonctions de création questions & réponses + affectations touches
+
+//TODO Recréer entièrement création des questions/réponses, simplifier ou clarifier
 function creerQuestion() {
     //Reset réponses
     reponses = [];
@@ -608,7 +654,6 @@ function creerQuestion() {
     setTouches();
 }
 
-//TODO : enlever chemin + simplifier ?
 function setTouches() {
     let indexSelect;
     let flechesTemp = [haut, gauche, bas, droite];
@@ -1307,7 +1352,7 @@ function creerDivision(diff) {
     divisionsFaites.push(question);
 }
 
-//TODO : réviser moment utilisé + récupération réponse (quand touche pressée)
+//TODO Modifier méthode de vérification des réponses
 function reponseBonne(key) {
     if(key != 0)
     {
