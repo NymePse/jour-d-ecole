@@ -4,6 +4,8 @@
  * Affichage, mise à jour du compte, etc etc...
  */
 
+//TODO Mise à jour des variables du site
+
 //Sélecteurs élements Jquery
 const choixLongueur = "#longueur";
 const choixExo = "#exercice";
@@ -87,17 +89,18 @@ const chronoRapide = 4000;
 //Var chemins vers images
 var icones = "res/icones/";
 
-//TODO
 function setUpSite() {
-    //TODO
+    //TODO Réécrire/maj la fonction setUpSite avec les objets Compte et Partie.
     /*
-     * reset chrono
-     * récup info compte
-     * afficher infos
-     * récup LS_enPartie
-     * si == true
-     *   proposer reprendre partie (afficher toutes info)
-     *   events reprendre partie
+     * Refonte du Set Up :
+     * check si un compte existe dans LocalStorage
+     *  si oui rien faire
+     *  si non créer compte et sauvegarder
+     * check si une partie existe dans LocalStorage
+     *  si oui, reprendre la partie
+     *  si non, rien faire
+     * Actualiser affichage du compte
+     * Actualiser taille du Canvas
      */
     
     stopChrono();
@@ -201,6 +204,13 @@ function affichageCompte() {
 }
 
 function setUpGame() {
+    //TODO Réécrire/maj la fonction setUpGame avec l'objet Partie (réfléchir fusion fonction introduction()).
+    /*
+     * Créer un objet Partie
+     * Récupérer les valeurs d'options de partie
+     * Mettre à jour l'objet Partie
+     * Sauvegarder l'objet Partie
+     */
     
     //Reset info partie
     stopChrono();
@@ -240,6 +250,12 @@ function setUpGame() {
 }
     
 function setUpCompte() {
+    //TODO Réécrire/maj la fonction setUpCompte avec l'objet Compte.
+    /*
+     * Récupérer les données du compte
+     * mettre à jour les données affichées
+     */
+    
     console.log("set up compte");
     
     //Variables de compte : nom & scores
@@ -338,6 +354,12 @@ function setUpCompte() {
 
 //Fonctions mise à jour des trophés
 function majTrophes() {
+    //TODO Réécrire/maj la fonction majTrophés avec l'objet Compte.
+    /*
+     * Vérifier les valeurs pour Buts et Victoires
+     * Mettre à jour les trophés débloqués
+     */
+    
     //Récupérer valeurs compte
     let victoires = parseInt(localStorage.getItem(LS_nbVictoires));
     let buts = parseInt(localStorage.getItem(LS_nbButs));
@@ -364,6 +386,7 @@ function majTrophes() {
 }
 
 //Fonctions de chronomètre
+//TODO Recréer le chronomètre entièrement + déplacer à jeu.js
 function setChrono() {
     switch(chrono) {
         case "lent":
@@ -382,7 +405,6 @@ function setChrono() {
     idInterval.push(setInterval(chronometre,10));
 }
 
-//TODO : actualiser avec un seul mode + fin renvoie false
 function chronometre() {
     
     chronoActuel += 10;
@@ -418,6 +440,7 @@ function stopChrono() {
 }
 
 //Autres fonctions
+//TODO Supprimer incrementer, viderVariables
 function incrementerVariableLocale(nomVariable) {
     let valeur = parseInt(localStorage.getItem(nomVariable));
     localStorage.setItem(nomVariable, valeur + 1);
@@ -452,6 +475,7 @@ function viderVariablesParties() {
     localStorage.removeItem(LS_chrono);
 }
 
+//TODO Revoir viderListes avec l'objet SizedArray.
 function viderListesQuestions() {
     additionsFaites = Array();
     soustractionsFaites = Array();
@@ -460,6 +484,7 @@ function viderListesQuestions() {
     obstaclesFaits = Array();
 }
 
+//TODO Revoir et déplacer vers jeu.js la fonction resetEvents.
 function resetEventsPartie() {
     $(document).off("keypress");
     $(document).off("keydown");
@@ -467,6 +492,7 @@ function resetEventsPartie() {
     $(espace).off("click");
 }
 
+//TODO Réécrire/maj les fonctions exporter/importer avec l'objet Compte.
 function exporter() {
     //Set up variables pour JSON
     let nom;
