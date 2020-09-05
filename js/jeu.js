@@ -98,8 +98,42 @@ var divisionsFaites = Array();
  * Afficher début de partie
  * Créer event touches lancer la partie
  */
-function introduction() {
-    //Dessin introduction
+function debutPartie() {
+    //Création et set up des options de la partie
+    partie = new Partie();
+    
+    partie.enPartie = true;
+    partie.balleAuCentre = true;
+    partie.equipeCentre = Math.round(Math.random());
+    if(partie.equipeCentre == 0)
+        partie.remiseAllie = true;
+    else
+        partie.remiseAllie = false;
+    
+    switch($(choixLongueur + " :selected").val())
+    {
+        case "courte":
+            partie.tailleTerrain = 5;
+            partie.indexTerrain = 3;
+            partie.dureeMiTemps = 9;
+            break;
+        case "longue":
+            partie.tailleTerrain = 7;
+            partie.indexTerrain = 4;
+            partie.dureeMiTemps = 15;
+            break;
+    }
+    
+    partie.typeExercice = typeExercice = $(choixExo + " :selected").val();
+    partie.difficulte = difficulte = $(choixDiff + " :selected").val();
+    partie.dureeChronometre = parseInt($(choixChrono + " :selected").val());
+    
+    //Remise à zéro des éléments d'anciennes parties possibles
+    stopChrono();
+    resetEventsPartie();
+    viderListesQuestions();
+    
+    //Elements graphiques
     $(jeu).clearCanvas();
     $(jeu).drawText({
         fillStyle: 'black',
@@ -107,35 +141,13 @@ function introduction() {
         fontSize: 30,
         text: 'Le match va bientôt commencer !'
     });
-    
     $(espace).show();
-    
-    //Set Up variables partie
-    enPartie = true;
-    balleAuCentre = Math.round(Math.random());
-    balleCentreMT1 = balleAuCentre;
-    indexPhase = 0;
-    
-    if(tailleTerrain == tailleCourte)
-        indexTerrain = 2;
-    else
-        indexTerrain = 3;
-    
-    miTemps = 0;
-    scoreAmi = 0;
-    scoreEnnemie = 0;
-    
-    //Set up sauvegarde locale
-    localStorage.setItem(LS_enPartie, enPartie);
-    localStorage.setItem(LS_balleAuCentre, balleAuCentre);
-    localStorage.setItem(LS_indexPhase, indexPhase);
-    localStorage.setItem(LS_indexTerrain, indexTerrain);
-    localStorage.setItem(LS_miTemps, miTemps);
-    localStorage.setItem(LS_scoreAmi, scoreAmi);
-    localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
-    
-    //event lancer partie
     $(espace).text("Continuer");
+    
+    //Perte de focus du bouton (évite les erreurs avec les touches)
+    $(bouton).blur();
+    
+    //Evenement pour lancer la partie
     $(document).keypress(function(event) {
         if(event.keyCode == 32)
         {
@@ -152,52 +164,6 @@ function introduction() {
     });
 }
 
-function setUpGame() {
-    //TODO Réécrire/maj la fonction setUpGame avec l'objet Partie (réfléchir fusion fonction introduction()).
-    /*
-     * Créer un objet Partie
-     * Récupérer les valeurs d'options de partie
-     * Mettre à jour l'objet Partie
-     * Sauvegarder l'objet Partie
-     */
-    
-    //Reset info partie
-    stopChrono();
-    resetEventsPartie();
-    viderListesQuestions();
-    viderVariablesParties();
-    
-    //Récupérer valeurs choisies
-    let longueur = $(choixLongueur + " :selected").val();
-    typeExercice = $(choixExo + " :selected").val();
-    difficulte = $(choixDiff + " :selected").val();
-    chrono = $(choixChrono + " :selected").val();
-    
-    //Sauvegarde locale
-    localStorage.setItem(LS_longueurPartie, longueur);
-    localStorage.setItem(LS_typeExercice, typeExercice);
-    localStorage.setItem(LS_difficulte, difficulte);
-    localStorage.setItem(LS_chrono, chrono);
-    
-    //set partie selon taille voulue
-    switch(longueur) {
-        case "courte":
-            nbPhases = phasesCourte;
-            tailleTerrain = tailleCourte;
-            tmpsPhase = 5;
-            break;
-        case "longue":
-            nbPhases = phasesLongue;
-            tailleTerrain = tailleLongue;
-            tmpsPhase = 3;
-            break;
-    }
-    
-    $(bouton).blur();
-    
-    introduction();
-}
-
 //TODO Réecrire/maj la fonction partie avec l'objet Compte et Partie
 /*
  * Vérifier fin de mi-temps
@@ -211,7 +177,7 @@ function setUpGame() {
  *  si non :
  *      debutBoucle()
  */
-function partie() {
+function avancement() {
     /*
      * si indexPhase > nbPhases
      *   miTemps++;
