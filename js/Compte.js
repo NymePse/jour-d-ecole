@@ -12,16 +12,6 @@ function Compte() {
     
     //Variables de trophés
     //Bool, True si débloqués
-    //Nombre de victoires
-    this.uneVictoire = false;
-    this.deuxVictoires = false;
-    this.cinqVictoires = false;
-    this.dixVictoires = false;
-    //Nombre de buts marqués
-    this.unBut = false;
-    this.deuxButs = false;
-    this.cinqButs = false;
-    this.dixButs = false;
     //Victoire selon la difficulté
     this.mathTresFacile = false;
     this.mathFacile = false;
