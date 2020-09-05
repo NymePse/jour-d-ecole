@@ -1385,6 +1385,15 @@ function reponseBonne(key) {
         return false;
 }
 
+//TODO Revoir viderListes avec l'objet SizedArray.
+function viderListesQuestions() {
+    additionsFaites = SizedArray(1);
+    soustractionsFaites = SizedArray(1);
+    multiplicationsFaites = SizedArray(1);
+    divisionsFaites = SizedArray(1);
+    obstaclesFaits = SizedArray(1);
+}
+
 //Fonctions de chronomètre
 //TODO Recréer le chronomètre entièrement + déplacer à jeu.js
 function setChrono() {

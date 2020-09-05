@@ -205,14 +205,7 @@ function setUpCompte() {
 
 //Autres fonctions
 
-//TODO Revoir viderListes avec l'objet SizedArray.
-function viderListesQuestions() {
-    additionsFaites = Array();
-    soustractionsFaites = Array();
-    multiplicationsFaites = Array();
-    divisionsFaites = Array();
-    obstaclesFaits = Array();
-}
+
 
 
 
