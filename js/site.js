@@ -204,40 +204,6 @@ function setUpCompte() {
 
 
 //Autres fonctions
-//TODO Supprimer incrementer, viderVariables
-function incrementerVariableLocale(nomVariable) {
-    let valeur = parseInt(localStorage.getItem(nomVariable));
-    localStorage.setItem(nomVariable, valeur + 1);
-}
-
-function viderVariablesParties() {
-    enPartie = false;
-    versEnnemie = null;
-    nbPhases = null;
-    indexPhase = null;
-    miTemps = null;
-    scoreAmi = null;
-    scoreEnnemie = null;
-    typeExercice = null;
-    difficulte = null;
-    chrono = null;
-    question = null;
-    bonneReponse = null;
-    reponses = Array();
-    obstacle = null;
-    obstaclesFaits = Array();
-    
-    localStorage.removeItem(LS_enPartie);
-    localStorage.removeItem(LS_versEnnemie);
-    localStorage.removeItem(LS_nbPhases);
-    localStorage.removeItem(LS_indexPhase);
-    localStorage.removeItem(LS_scoreAmi);
-    localStorage.removeItem(LS_scoreEnnemie);
-    localStorage.removeItem(LS_miTemps);
-    localStorage.removeItem(LS_typeExercice);
-    localStorage.removeItem(LS_difficulte);
-    localStorage.removeItem(LS_chrono);
-}
 
 //TODO Revoir viderListes avec l'objet SizedArray.
 function viderListesQuestions() {
