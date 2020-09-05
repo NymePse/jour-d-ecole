@@ -59,20 +59,7 @@ const chronoRapide = 4000;
 //Var chemins vers images
 var icones = "res/icones/";
 
-function setUpSite() {
-    //TODO Réécrire/maj la fonction setUpSite avec les objets Compte et Partie.
-    /*
-     * Refonte du Set Up :
-     * check si un compte existe dans LocalStorage
-     *  si oui rien faire
-     *  si non créer compte et sauvegarder
-     * check si une partie existe dans LocalStorage
-     *  si oui, reprendre la partie
-     *  si non, rien faire
-     * Actualiser affichage du compte
-     * Actualiser taille du Canvas
-     */
-    
+function setUpSite() {    
     if(!localStorage.getItem(LS_Compte))
     {
         compte = new Compte();
@@ -165,13 +152,7 @@ function setUpGame() {
     introduction();
 }
     
-function setUpCompte() {
-    //TODO Réécrire/maj la fonction setUpCompte avec l'objet Compte.
-    /*
-     * Récupérer les données du compte
-     * mettre à jour les données affichées
-     */
-    
+function setUpCompte() {    
     $(zoneNom).val(compte.nom);
     $(txtVictoires).text(compte.nombreVictoires);
     $(txtButs).text(compte.nombreButs);
@@ -180,94 +161,44 @@ function setUpCompte() {
     //Mise à jour trophés acquis
     majTrophes();
     
-    //Trophés
-    let mtf = localStorage.getItem(T_matchTresFacile);
-    let mf = localStorage.getItem(T_matchFacile);
-    let mm = localStorage.getItem(T_matchMoyen);
-    let md = localStorage.getItem(T_matchDifficile);
-    let mtd = localStorage.getItem(T_matchTresDifficile);
-    
-    let bu = localStorage.getItem(T_unBut);
-    let bd = localStorage.getItem(T_deuxButs);
-    let bc = localStorage.getItem(T_cinqButs);
-    let bdi = localStorage.getItem(T_dixButs);
-    
-    let vu = localStorage.getItem(T_uneVictoire);
-    let vd = localStorage.getItem(T_deuxVictoires);
-    let vc = localStorage.getItem(T_cinqVictoires);
-    let vdi = localStorage.getItem(T_dixVictoires);
-    
     //Activer trophés gagnés
     let trophes = Array();
     
-    if(mtf == "true")
-        trophes.push(t_tf);
-    if(mf == "true")
-        trophes.push(t_f);
-    if(mm == "true")
-        trophes.push(t_m);
-    if(md == "true")
-        trophes.push(t_d);
-    if(mtd == "true")
-        trophes.push(t_td);
-    
-    if(bu == "true")
-        trophes.push(t_1b);
-    if(bd == "true")
-        trophes.push(t_2b);
-    if(bc == "true")
-        trophes.push(t_5b);
-    if(bdi == "true")
-        trophes.push(t_10b);
-    
-    if(vu == "true")
-        trophes.push(t_1v);
-    if(vd == "true")
-        trophes.push(t_2v);
-    if(vc == "true")
-        trophes.push(t_5v);
-    if(vdi == "true")
+    let nbVictoires = compte.nombreVictoires;
+    if(nbVictoires > 9)
         trophes.push(t_10v);
+    if(nbVictoires > 4)
+        trophes.push(t_5v);
+    if(nbVictoires > 1)
+        trophes.push(t_2v);
+    if(nbVictoires > 0)
+        trophes.push(t_1v);
     
-    console.log(trophes);
+    let nbButs = compte.nombreButs;
+    if(nbButs > 9)
+        trophes.push(t_10b);
+    if(nbButs > 4)
+        trophes.push(t_5b);
+    if(nbButs > 1)
+        trophes.push(t_2b);
+    if(nbButs > 0)
+        trophes.push(t_1b);
+    
+    if(compte.matchTresFacile)
+        trophes.push(t_tf);
+    if(compte.matchFacile)
+        trophes.push(t_f);
+    if(compte.matchMoyen)
+        trophes.push(t_m);
+    if(compte.matchDifficile)
+        trophes.push(t_d);
+    if(compte.matchTresDifficile)
+        trophes.push(t_td);
     
     trophes.forEach(function(trophe) {
         console.log(trophe);
         $(trophe).css("background-color","yellow");
     });
-}
-
-//Fonctions mise à jour des trophés
-function majTrophes() {
-    //TODO Réécrire/maj la fonction majTrophés avec l'objet Compte.
-    /*
-     * Vérifier les valeurs pour Buts et Victoires
-     * Mettre à jour les trophés débloqués
-     */
-    
-    //Récupérer valeurs compte
-    let victoires = parseInt(localStorage.getItem(LS_nbVictoires));
-    let buts = parseInt(localStorage.getItem(LS_nbButs));
-    
-    //maj trophés buts
-    if(buts > 9)
-        localStorage.setItem(T_dixButs, "true");
-    if(buts > 4)
-        localStorage.setItem(T_cinqButs, "true");
-    if(buts > 1)
-        localStorage.setItem(T_deuxButs, "true");
-    if(buts > 0)
-        localStorage.setItem(T_unBut, "true");
-    
-    //maj trophés nombre victoires
-    if(victoires > 9)
-        localStorage.setItem(T_dixVictoires, "true");
-    if(victoires > 4)
-        localStorage.setItem(T_cinqVictoires, "true");
-    if(victoires > 1)
-        localStorage.setItem(T_deuxVictoires, "true");
-    if(victoires > 0)
-        localStorage.setItem(T_uneVictoire, "true");
 }
 
 //Fonctions de chronomètre
