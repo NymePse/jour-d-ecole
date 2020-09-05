@@ -12,7 +12,7 @@ function Partie() {
     //String (char), niveau de difficulté.
     this.difficulte = "?";
     //Int, temps max du chronomètre.
-    this.dureeChronometre = "_";
+    this.dureeChronometre = 0;
     
     //Variables d'avancement de la partie
     //Int, numéro de la mi-temps actuelle (1 ou 2).
