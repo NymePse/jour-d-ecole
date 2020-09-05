@@ -71,6 +71,14 @@ var ennemieVictoire;
 var amiDefaite;
 var ennemieDefaite;
 
+//Variables chrono
+var idInterval = Array();
+var chronoFin;
+var chronoActuel;
+const chronoLent = 10000;
+const chronoMoyen = 7000;
+const chronoRapide = 4000;
+
 //TODO Update les liste questions avec des SizedArray
 //Liste questions déjà faites dans la partie
 var additionsFaites = Array();
@@ -142,6 +150,52 @@ function introduction() {
         resetEventsPartie();
         partie();
     });
+}
+
+function setUpGame() {
+    //TODO Réécrire/maj la fonction setUpGame avec l'objet Partie (réfléchir fusion fonction introduction()).
+    /*
+     * Créer un objet Partie
+     * Récupérer les valeurs d'options de partie
+     * Mettre à jour l'objet Partie
+     * Sauvegarder l'objet Partie
+     */
+    
+    //Reset info partie
+    stopChrono();
+    resetEventsPartie();
+    viderListesQuestions();
+    viderVariablesParties();
+    
+    //Récupérer valeurs choisies
+    let longueur = $(choixLongueur + " :selected").val();
+    typeExercice = $(choixExo + " :selected").val();
+    difficulte = $(choixDiff + " :selected").val();
+    chrono = $(choixChrono + " :selected").val();
+    
+    //Sauvegarde locale
+    localStorage.setItem(LS_longueurPartie, longueur);
+    localStorage.setItem(LS_typeExercice, typeExercice);
+    localStorage.setItem(LS_difficulte, difficulte);
+    localStorage.setItem(LS_chrono, chrono);
+    
+    //set partie selon taille voulue
+    switch(longueur) {
+        case "courte":
+            nbPhases = phasesCourte;
+            tailleTerrain = tailleCourte;
+            tmpsPhase = 5;
+            break;
+        case "longue":
+            nbPhases = phasesLongue;
+            tailleTerrain = tailleLongue;
+            tmpsPhase = 3;
+            break;
+    }
+    
+    $(bouton).blur();
+    
+    introduction();
 }
 
 //TODO Réecrire/maj la fonction partie avec l'objet Compte et Partie
