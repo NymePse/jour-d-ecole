@@ -109,8 +109,7 @@ function setUpSite() {
 }
 
 function majNom(val) {
-    localStorage.setItem(LS_nom, val);
-    console.log(val);
+    compte.nom = val;
 }
 
 function affichageCompte() {
