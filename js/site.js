@@ -68,7 +68,8 @@ function setUpSite() {
     
     if(localStorage.getItem(LS_Partie))
     {
-        //TODO Reprise de partie à l'ouverture de page
+        partie = localStorage.getItem(LS_Partie);
+        partie();
     }
     
     setUpCompte();
