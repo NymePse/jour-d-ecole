@@ -214,13 +214,7 @@ function viderListesQuestions() {
     obstaclesFaits = Array();
 }
 
-//TODO Revoir et déplacer vers jeu.js la fonction resetEvents.
-function resetEventsPartie() {
-    $(document).off("keypress");
-    $(document).off("keydown");
-    $(classfleche).off("click");
-    $(espace).off("click");
-}
+
 
 //TODO Réécrire/maj les fonctions exporter/importer avec l'objet Compte.
 function exporter() {

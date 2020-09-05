@@ -1439,3 +1439,11 @@ function stopChrono() {
     idInterval = Array();
 }
 
+
+//TODO Revoir et déplacer vers jeu.js la fonction resetEvents.
+function resetEventsPartie() {
+    $(document).off("keypress");
+    $(document).off("keydown");
+    $(classfleche).off("click");
+    $(espace).off("click");
+}
