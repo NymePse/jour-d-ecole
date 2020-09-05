@@ -73,7 +73,16 @@ function setUpSite() {
      * Actualiser taille du Canvas
      */
     
-    stopChrono();
+    if(!localStorage.getItem(LS_Compte))
+    {
+        compte = new Compte();
+        localStorage.setItem(LS_Compte, compte);
+    }
+    
+    if(localStorage.getItem(LS_Partie))
+    {
+        //TODO Reprise de partie à l'ouverture de page
+    }
     
     setUpCompte();
     
@@ -97,68 +106,6 @@ function setUpSite() {
     });
     
     $(window).resize();
-    
-    //Une partie était-elle en cours ?
-    let EP = localStorage.getItem(LS_enPartie);
-    if(EP == "true")
-    {
-        //Récupérer toutes les variables nécessaires à la partie
-        enPartie = true;
-        
-        if(localStorage.getItem(LS_versEnnemie) == "true")
-            versEnnemie = true;
-        else
-            versEnnemie = false;
-        
-        balleAuCentre = parseInt(localStorage.getItem(LS_balleAuCentre));
-        nbPhases = parseInt(localStorage.getItem(LS_nbPhases));
-        indexPhase = parseInt(localStorage.getItem(LS_indexPhase));
-        
-        if(localStorage.getItem(LS_longueurPartie) == "courte")
-        {
-            tailleTerrain = tailleCourte;
-            tmpsPhase = 5;
-        }
-        else
-        {
-            tailleTerrain = tailleLongue;
-            tmpsPhase = 3;
-        }
-        
-        indexTerrain = parseInt(localStorage.getItem(LS_indexTerrain));
-        miTemps = parseInt(localStorage.getItem(LS_miTemps));
-        scoreAmi = parseInt(localStorage.getItem(LS_scoreAmi));
-        scoreEnnemie = parseInt(localStorage.getItem(LS_scoreEnnemie));
-        typeExercice = localStorage.getItem(LS_typeExercice);
-        difficulte = localStorage.getItem(LS_difficulte);
-        chrono = localStorage.getItem(LS_chrono);
-        difficulte = localStorage.getItem(LS_difficulte);
-        
-        //Affichage
-        drawBase();
-        $(jeu).drawText({
-            fillStyle: 'black',
-            x: 500, y: 250,
-            fontSize: 20,
-            text: "Pour reprendre la partie, appuyez sur Espace"
-        });
-        
-        //Event reprendre la partie
-        $(document).keypress(function(event) {
-            if(event.keyCode == 32)
-            {
-                $(espace).hide();
-                resetEventsPartie();
-                debutBoucle();
-            }
-        });
-        
-        $(espace).click(function() {
-            $(espace).hide();
-            resetEventsPartie();
-            debutBoucle();
-        });
-    }
 }
 
 function majNom(val) {
