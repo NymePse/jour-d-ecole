@@ -23,41 +23,11 @@ const espace = "#espace";
 const compte = "#compte";
 const file_reader = "#file_reader";
 
-//Variables localStorage (sauvegarde d'urgence)
-const LS_enPartie = "enPartie";
-const LS_longueurPartie = "longueurPartie";
-const LS_versEnnemie = "versEnnemie";
-const LS_balleAuCentre = "balleAuCentre";
-const LS_nbPhases = "nbPhases";
-const LS_indexPhase = "indexPhase";
-const LS_indexTerrain = "indexTerrain";
-const LS_scoreAmi = "scoreAmi";
-const LS_scoreEnnemie = "scoreEnnemie";
-const LS_miTemps = "miTemps";
-const LS_typeExercice = "typeExercice";
-const LS_difficulte = "difficulte";
-const LS_chrono = "chrono";
-
-//Variables de compte
-const LS_nom = "nom";
-const LS_nbVictoires = "nbVictoires";
-const LS_nbButs = "nbButs";
-const LS_nbBonnesReponses = "nbBonnesReponses";
-
-//Trophés
-const T_uneVictoire = "uneVictoire";
-const T_deuxVictoires = "deuxVictoires";
-const T_cinqVictoires = "cinqVictoires";
-const T_dixVictoires = "dixVictoires";
-const T_unBut = "unBut";
-const T_deuxButs = "deuxButs";
-const T_cinqButs = "cinqButs";
-const T_dixButs = "dixButs";
-const T_matchTresFacile = "matchTresFacile";
-const T_matchFacile = "matchFacile";
-const T_matchMoyen = "matchMoyen";
-const T_matchDifficile = "matchDifficile";
-const T_matchTresDifficile = "matchTresDifficile";
+//Objets et mots clé de sauvegarde
+const LS_Compte = "compte";
+const LS_Partie = "partie";
+let partie;
+let compte;
 
 //Elements HTML compte
 const zoneNom = "#nom";
