@@ -201,80 +201,18 @@ function setUpCompte() {
     });
 }
 
-
-
-//Autres fonctions
-
-
-
-
-
-//TODO Réécrire/maj les fonctions exporter/importer avec l'objet Compte.
 function exporter() {
-    //Set up variables pour JSON
-    let nom;
-    let victoires;
-    let buts;
-    let bonnesReponses;
-    let trophesDiff = Array();
-    
-    //Récupérer variables du compte sûres
-    nom = localStorage.getItem(LS_nom);
-    victoires = localStorage.getItem(LS_nbVictoires);
-    buts = localStorage.getItem(LS_nbButs);
-    bonnesReponses = localStorage.getItem(LS_nbBonnesReponses);
-    
-    //Test variables de trophés
-    //Trophés de difficulté
-    if(localStorage.getItem(T_matchTresFacile) == "true")
-        trophesDiff.push(true);
-    else
-        trophesDiff.push(false);
-    
-    if(localStorage.getItem(T_matchFacile) == "true")
-        trophesDiff.push(true);
-    else
-        trophesDiff.push(false);
-    
-    if(localStorage.getItem(T_matchMoyen) == "true")
-        trophesDiff.push(true);
-    else
-        trophesDiff.push(false);
-    
-    if(localStorage.getItem(T_matchDifficile) == "true")
-        trophesDiff.push(true);
-    else
-        trophesDiff.push(false);
-    
-    if(localStorage.getItem(T_matchTresDifficile) == "true")
-        trophesDiff.push(true);
-    else
-        trophesDiff.push(false);
-    
-    //Créer JSON
-    //Compte(nom, victoires, buts, bonnesReponses, trophesDiff, trophesVic, trophesBut)
-    let compteObjet = {
-        //Bases compte
-        nom: nom,
-        victoires: victoires,
-        bonnesReponses: bonnesReponses,
-        buts: buts,
-        
-        //Array trophés
-        trophesDiff: trophesDiff
-    }
-    
-    let compteJSON = JSON.stringify(compteObjet);
+    let compteJSON = JSON.stringify(compte);
     
     //Procédure de téléchargement
     let file = new Blob([compteJSON], {type: "application/json"});
     if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
+        window.navigator.msSaveOrOpenBlob(file, compte.nom);
     else { // Others
         let a = document.createElement("a");
         let url = URL.createObjectURL(file);
         a.href = url;
-        a.download = nom;
+        a.download = compte.nom;
         document.body.appendChild(a);
         a.click();
         setTimeout(function() {
@@ -297,37 +235,10 @@ function importer(event) {
         
         //Récupération éléments JSON
         let compteString = event2.target.result;
-        let compteJSON = JSON.parse(compteString);
+        compte = JSON.parse(compteString);
         
-        //MAJ éléments compte depuis JSON
-        localStorage.setItem(LS_nom, compteJSON.nom);
-        localStorage.setItem(LS_nbVictoires, compteJSON.victoires);
-        localStorage.setItem(LS_nbButs, compteJSON.buts);
-        localStorage.setItem(LS_nbBonnesReponses, compteJSON.bonnesReponses);
-        
-        localStorage.setItem(T_matchTresFacile, compteJSON.trophesDiff[0]);
-        localStorage.setItem(T_matchFacile, compteJSON.trophesDiff[1]);
-        localStorage.setItem(T_matchMoyen, compteJSON.trophesDiff[2]);
-        localStorage.setItem(T_matchDifficile, compteJSON.trophesDiff[3]);
-        localStorage.setItem(T_matchTresDifficile, compteJSON.trophesDiff[4]);
-        
-        majTrophes();
-        
+        //Mise à jour affichage du compte
         setUpCompte();
-        
-        /*
-         * let compteObjet = {
-        //Bases compte
-        nom: nom,
-        victoires: victoires,
-        bonnesReponses: bonnesReponses,
-        
-        //Array trophés
-        trophesDiff: trophesDiff,
-        trophesVic: trophesVic,
-        trophesBut: trophesBut
-    }
-         */
     }
     
     //lancement conversion
