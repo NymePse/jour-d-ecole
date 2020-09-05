@@ -33,6 +33,8 @@ function Partie() {
     this.versEnnemie = false;
     //Bool, est-ce une remise en jeu ?
     this.balleAuCentre = false;
-    //Int, représente l'équipe ayant la balle en début de mi-temps (0 allié, 1 ennemie). 
+    //Int, représente l'équipe ayant la balle au tout début de la partie (0 allié, 1 ennemie). 
     this.equipeCentre = 0;
+    //Bool, la remise au centre est-elle pour l'allié ?
+    this.remiseAllie = false;
 }
