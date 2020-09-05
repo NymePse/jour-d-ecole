@@ -20,7 +20,7 @@ const bas = "#bas";
 const droite = "#droite";
 const fleches = [haut, gauche, bas, droite];
 const espace = "#espace";
-const compte = "#compte";
+//const compte = "#compte";
 const file_reader = "#file_reader";
 
 //Objets et mots clé de sauvegarde
@@ -172,41 +172,10 @@ function setUpCompte() {
      * mettre à jour les données affichées
      */
     
-    console.log("set up compte");
-    
-    //Variables de compte : nom & scores
-    let nm = localStorage.getItem(LS_nom);
-    let vt = localStorage.getItem(LS_nbVictoires);
-    let bt = localStorage.getItem(LS_nbButs);
-    let brt = localStorage.getItem(LS_nbBonnesReponses);
-    
-    console.log(nm + " " + vt + " " + bt + " " + brt);
-    
-    if(nm == null)
-    {
-        nm = "Nom";
-        localStorage.setItem(LS_nom, nm);
-    }
-    if(vt == null)
-    {
-        vt = 0;
-        localStorage.setItem(LS_nbVictoires, vt);
-    }
-    if(bt == null)
-    {
-        bt = 0;
-        localStorage.setItem(LS_nbButs, bt);
-    }
-    if(brt == null)
-    {
-        brt = 0;
-        localStorage.setItem(LS_nbBonnesReponses, brt);
-    }
-    
-    $(zoneNom).val(nm);
-    $(txtVictoires).text(vt);
-    $(txtButs).text(bt);
-    $(txtReponses).text(brt);
+    $(zoneNom).val(compte.nom);
+    $(txtVictoires).text(compte.nombreVictoires);
+    $(txtButs).text(compte.nombreButs);
+    $(txtReponses).text(compte.nombreBonneReponses);
     
     //Mise à jour trophés acquis
     majTrophes();
