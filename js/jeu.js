@@ -190,12 +190,23 @@ function avancement() {
         }
         else
         {
-            //TODO action fin de mi-temps
+            //Remise à 0 des variables de mi-temps
+            partie.miTemps += 1;
+            partie.indexTerrain = partie.indexCentre;
+            partie.balleAuCentre = true;
+            if(partie.equipeCentre == 0)
+                partie.versEnnemie = false;
+            else
+                partie.versEnnemie = true;
+            partie.indexQuestion = 1;
+            
+            //Relance de partie
+            debutBoucle();
         }
     }
     else
     {
-        //TODO Actions continuer la partie
+        debutBoucle();
     }
     
     /*
