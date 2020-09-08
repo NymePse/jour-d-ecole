@@ -1421,13 +1421,11 @@ function reponseBonne(key) {
                 break;
         }
 
-        if(reponseChoisie.localeCompare(bonneReponse.toString())  == 0)
+        if(parseInt(reponseChoisie) == question.bonneReponse)
             return true;
         else
             return false;
     }
-    else
-        return false;
 }
 
 //TODO Revoir viderListes avec l'objet SizedArray.
