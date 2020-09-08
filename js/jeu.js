@@ -79,12 +79,11 @@ const chronoLent = 10000;
 const chronoMoyen = 7000;
 const chronoRapide = 4000;
 
-//TODO Update les liste questions avec des SizedArray
 //Liste questions déjà faites dans la partie
-var additionsFaites = Array();
-var soustractionsFaites = Array();
-var multiplicationsFaites = Array();
-var divisionsFaites = Array();
+var additionsFaites = new SizedArray(4);
+var soustractionsFaites = new SizedArray(4);
+var multiplicationsFaites = new SizedArray(4);
+var divisionsFaites = new SizedArray(4);
 
 //TODO Réecrire/maj la fonction introduction (fusion fonction setUpGame ?) avec objet Partie
 /*
