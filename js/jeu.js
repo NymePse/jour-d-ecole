@@ -178,19 +178,25 @@ function debutPartie() {
  *      debutBoucle()
  */
 function avancement() {
-    /*
-     * si indexPhase > nbPhases
-     *   miTemps++;
-     *   indexPhase = 0;
-     * si miTemps < 2
-     *   debutBoucle();
-     * sinon
-     *   afficher score final;
-     *   afficher texte selon score;
-     *   maj compte;
-     *   setUpCompte();
-     */
+    //Fin de mi-temps ?
+    if(partie.indexQuestion >= partie.dureeMiTemps)
+    {
+        //Fin de partie ?
+        if(partie.miTemps == 2)
+        {
+            //TODO Actions de fin de partie
+        }
+        else
+        {
+            //TODO action fin de mi-temps
+        }
+    }
+    else
+    {
+        //TODO Actions continuer la partie
+    }
     
+    /*
     //Mi-temps finie ?
     if(indexPhase > nbPhases)
     {
@@ -265,6 +271,7 @@ function avancement() {
     }
     else
         debutBoucle();
+        */
 }
 
 //TODO Réécrire/maj la fonction debutBoucle avec l'objet Partie, simplifier/séparer la partie choix affichage ?
