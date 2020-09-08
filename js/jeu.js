@@ -114,11 +114,13 @@ function debutPartie() {
     {
         case "courte":
             partie.tailleTerrain = 5;
+            partie.indexCentre = 3;
             partie.indexTerrain = 3;
             partie.dureeMiTemps = 9;
             break;
         case "longue":
             partie.tailleTerrain = 7;
+            partie.indexCentre = 4;
             partie.indexTerrain = 4;
             partie.dureeMiTemps = 15;
             break;
