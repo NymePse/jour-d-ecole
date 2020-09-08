@@ -7,6 +7,8 @@ function Partie() {
     this.dureeMiTemps = 5;
     //Int, taille du terrain (5 pour court, 7 pour long).
     this.tailleTerrain = 5;
+    //Int, index du centre du terrain.
+    this.indexCentre = 3;
     //String (char), type d'exercice sélectionné.
     this.typeExercice = "?";
     //String (char), niveau de difficulté.
