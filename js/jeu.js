@@ -638,59 +638,65 @@ function drawBase() {
 //-------------------------------------------------------------------------
 
 //Fonctions de création questions & réponses + affectations touches
+let question;
 
 //TODO Recréer entièrement création des questions/réponses, simplifier ou clarifier
 function creerQuestion() {
-    //Reset réponses
-    reponses = [];
+    question = new Question();
     
-    let diff = difficulte;
-    
-    console.log(diff);
-    
-    if(diff == "aleatoire")
+    let diff = partie.difficulte;
+    if(diff == "?")
     {
-        let rdm = Math.random();
-        
-        if(rdm > 0.95)
-            diff = "tres-difficile";
-        else if(rdm > 0.86)
-            diff = "difficile";
-        else if(rdm > 0.43)
-            diff = "moyen";
-        else if(rdm > 0.2)
-            diff = "simple"
+        let hsr = Math.random();
+        if(hsr > 0.95)
+            diff = ">>";
+        else if(hsr > 0.86)
+            diff = ">";
+        else if(hsr > 0.43)
+            diff = "=";
+        else if(hsr > 0.2)
+            diff = "<";
         else
-            diff = "tres-simple";
+            diff = "<<";
     }
     
-    switch(typeExercice) {
+    question.signe = partie.typeExercice;
+    switch(partie.typeExercice){
         case "+" :
             creerAddition(diff);
             break;
         case "-":
             creerSoustraction(diff);
             break;
-        case "/":
-            creerDivision(diff);
-            break;
         case "*":
             creerMultiplication(diff);
             break;
-        case "?":
+        case "/":
+            creerDivision(diff);
+            break;
+        default:
             let rdm = Math.random();
             if(rdm > 0.75)
+            {
+                question.signe = "+";
                 creerAddition(diff);
+            }
             else if(rdm > 0.5)
+            {
+                question.signe = "-";
                 creerSoustraction(diff);
+            }
             else if(rdm > 0.25)
+            {
+                question.signe = "*";
                 creerMultiplication(diff);
+            }
             else
+            {
+                question.signe = "/";
                 creerDivision(diff);
-            break;
+            }
     }
-    
-    setTouches();
 }
 
 function setTouches() {
