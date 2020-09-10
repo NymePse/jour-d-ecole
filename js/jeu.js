@@ -301,24 +301,15 @@ function debutBoucle() {
      * event réponse
      */
     
-    //Choix obstacle
-    do
-    {
-        obstacle = Math.floor(Math.random() * 4);
-    }
-    while(obstaclesFaits.includes(obstacle));
-    
-    if(obstaclesFaits.length == 3)
-    {
-        obstaclesFaits.shift();
-    }
-    obstaclesFaits.push(obstacle);
+    //TODO Choix obstacle
     
     //Création question, réponses, set touches
     creerQuestion();
     
+    //TODO sélection des visuels
     //Sélection éléments affichage (pendant question, victoire et échec)
     //Balle au centre ?
+    /*
     if(balleAuCentre != 2)
     {
         //Balle à ami ?
@@ -397,28 +388,13 @@ function debutBoucle() {
             }
         }
     }
+    */
     
-    //Affichage
-    drawBase(); 
-    
-    $(jeu).drawImage({
-        source: gaucheQuestion,
-        x: 0, y: 260,
-        fromCenter: false
-    }).drawImage({
-        source: droiteQuestion,
-        x: 800, y: 260,
-        fromCenter: false
-    }).drawText({
-        fillStyle: 'black',
-        x: 500, y: 250,
-        fontSize: 20,
-        text: question + "",
-        fromCenter: true
-    });
+    //TODO Affichage
     
     //évènements de réponse
     $(document).keydown(function(event) {
+        resetEvents();
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
@@ -428,27 +404,26 @@ function debutBoucle() {
     });
     
     $(classfleche).click(function(event) {
+        resetEvents();
        let fleche = event.target.id;
-       $(document).off("keydown");
-       $(classfleche).off("click");
        switch(fleche) {
            case "haut":
-               finBoucle(reponseBonne(38));
+               finBoucle(reponseBonne(question.reponseHaut));
                break;
            case "gauche":
-               finBoucle(reponseBonne(37));
+               finBoucle(reponseBonne(question.reponseGauche));
                break;
            case "bas":
-               finBoucle(reponseBonne(40));
+               finBoucle(reponseBonne(question.reponseBas));
                break;
            case "droite":
-               finBoucle(reponseBonne(39));
+               finBoucle(reponseBonne(question.reponseDroite));
                break;
        }
     });
     
     //Chronomètre
-    if(chrono != "sans")
+    if(partie.dureeChronometre != 0)
         setChrono();
 }
 
@@ -1435,6 +1410,13 @@ function viderListesQuestions() {
     multiplicationsFaites = SizedArray(1);
     divisionsFaites = SizedArray(1);
     obstaclesFaits = SizedArray(1);
+}
+
+function resetEvents()
+{
+    $(document).off("keydown");
+    $(".fleche").off("click");
+    $("#espace").off("click");
 }
 
 //Fonctions de chronomètre
