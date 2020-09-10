@@ -1438,44 +1438,17 @@ function viderListesQuestions() {
 }
 
 //Fonctions de chronomètre
-//TODO Recréer le chronomètre entièrement + déplacer à jeu.js
 function setChrono() {
-    switch(chrono) {
-        case "lent":
-            chronoFin = chronoLent;
-            break;
-        case "moyen":
-            chronoFin = chronoMoyen;
-            break;
-        case "rapide":
-            chronoFin = chronoRapide;
-            break;
-    }
-    
     chronoActuel = 0;
-    
     idInterval.push(setInterval(chronometre,10));
 }
 
 function chronometre() {
-    
     chronoActuel += 10;
-    let rad = (chronoActuel / chronoFin) * 360;
     
-    $(jeu).drawRect({
-        fillStyle: '#3498db',
-        x: 500, y: 100,
-        height: 20, width: 20
-    });
-    $(jeu).drawArc({
-        strokeStyle: 'black',
-        strokeWidth: 5,
-        x: 500, y: 100,
-        radius: 10,
-        start: 0, end: rad
-    });
+    //TODO Visuels du chronomètre
     
-    if(chronoActuel == chronoFin)
+    if(chronoActuel == partie.dureeChronometre)
     {
         stopChrono();
         chronoActuel = 0;
@@ -1483,6 +1456,7 @@ function chronometre() {
     }
 }
 
+//TODO Revoir gestion intervals chrono + fin chrono
 function stopChrono() {
     idInterval.forEach(function(id) {
         clearInterval(id);
