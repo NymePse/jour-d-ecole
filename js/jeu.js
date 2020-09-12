@@ -433,7 +433,7 @@ function debutBoucle() {
  * Afficher état match selon
  * relancer vers partie()
  */
-function finBoucle(bonne) {
+function finBoucle(reponseJuste) {
     /*
      *  si reponse bonne
      *    si indexTerrain = terrain
@@ -457,112 +457,58 @@ function finBoucle(bonne) {
      *   partie()
      */
     
-    stopChrono();
+    //Mise à jour variables selon réponse & place sur le terrain
+    partie.indexTerrain = partie.indexCentre;
+    partie.indexQuestion += 1;
     
-    drawBase();
-    
-    if(bonne)
+    if(reponseJuste)
     {
-        incrementerVariableLocale(LS_nbBonnesReponses);
+        compte.nombreBonneReponses += 1;
         
-        if(indexTerrain == tailleTerrain)
+        //Au but adverse
+        if(partie.indexTerrain == partie.tailleTerrain)
         {
-            balleAuCentre = 1;
-            indexTerrain = tailleTerrain /2;
-            scoreAmi++;
-            incrementerVariableLocale(LS_nbButs);
+            compte.nombreButs += 1;
             
-            $(jeu).drawImage({
-                source: amiVictoire,
-                x: 200, y: 260,
-                fromCenter: false
-            }).drawImage({
-                source: ennemieVictoire,
-                x: 800, y: 260,
-                fromCenter: false
-            });
+            partie.butsAllies += 1;
+            partie.balleAuCentre = true;
+            partie.versEnnemie = false;
+            
         }
+        //Ailleur sur le terrain
         else
         {
-            indexTerrain++;
-            
-            $(jeu).drawImage({
-                source: amiVictoire,
-                x: 600, y: 260,
-                fromCenter: false
-            }).drawImage({
-                source: ennemieVictoire,
-                x: 400, y: 260,
-                fromCenter: false
-            });
+            partie.indexTerrain += 1;
         }
-        
-        versEnnemie = true;
     }
     else
     {
-        if(indexTerrain == 0)
+        //Au but allié
+        if(partie.indexTerrain == 1)
         {
-            balleAuCentre = 0;
-            indexTerrain = tailleTerrain / 2;
-            scoreEnnemie++;
-            
-            $(jeu).drawImage({
-                source: ennemieDefaite,
-                x: 600, y: 260,
-                fromCenter: false
-            }).drawImage({
-                source: amiDefaite,
-                x: 0, y: 260,
-                fromCenter: false
-            });
+            partie.butsEnnemies += 1;
+            partie.balleAuCentre = true;
+            partie.versEnnemie = false;
         }
+        //Ailleur sur le terrain
         else
         {
-            if(indexTerrain == tailleTerrain)
-            {
-                $(jeu).drawImage({
-                    source: ennemieDefaite,
-                    x: 800, y: 260,
-                    fromCenter: false
-                }).drawImage({
-                    source: amiDefaite,
-                    x: 40, y: 260,
-                    fromCenter: false
-                });
-            }
-            else
-            {
-                $(jeu).drawImage({
-                    source: ennemieDefaite,
-                    x: 400, y: 260,
-                    fromCenter: false
-                }).drawImage({
-                    source: amiDefaite,
-                    x: 600, y: 260,
-                    fromCenter: false
-                });
-            }
-            
-            indexTerrain--; 
+            partie.indexTerrain -= 1;
         }
-        
-        versEnnemie = false;
     }
     
-    indexPhase++;
+    //Affichage selon réponse & place sur le terrain
+    //TODO Créer affichage post-réponse
+    if(reponseJuste)
+    {
+        
+    }
+    else
+    {
+        
+    }
     
-    //Maj variables locales
-    localStorage.setItem(LS_balleAuCentre, balleAuCentre);
-    localStorage.setItem(LS_indexTerrain, indexTerrain);
-    localStorage.setItem(LS_scoreAmi, scoreAmi);
-    localStorage.setItem(LS_scoreEnnemie, scoreEnnemie);
-    localStorage.setItem(LS_indexPhase, indexPhase);
-    
-    //maj trophés
-    majTrophes();
-    
-    setTimeout(partie, 2000);
+    //TODO Créer event appuis espace pour continuer
 }
 
 //TODO Améliorer, simplifier ? DrawBase
