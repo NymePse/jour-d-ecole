@@ -394,19 +394,19 @@ function debutBoucle() {
     
     //évènements de réponse
     $(document).keydown(function(event) {
-        resetEvents();
         let codes = [37,38,39,40];
         if(codes.includes(event.keyCode))
         {
-            $(document).off("keydown");
+            stopChrono();
+            resetEvents();
             finBoucle(reponseBonne(event.keyCode));
         }
     });
     
     $(classfleche).click(function(event) {
         resetEvents();
-       let fleche = event.target.id;
-       switch(fleche) {
+        let fleche = event.target.id;
+        switch(fleche) {
            case "haut":
                finBoucle(reponseBonne(question.reponseHaut));
                break;
