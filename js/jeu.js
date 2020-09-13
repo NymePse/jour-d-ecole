@@ -617,7 +617,14 @@ function creerQuestion() {
                 question.signe = "/";
                 creerDivision(diff);
             }
+            break;
     }
+    
+    //Ajouter réponses dans les éléments cliquables
+    $(haut).text(question.reponseHaut);
+    $(bas).text(question.reponseBas);
+    $(gauche).text(question.reponseGauche);
+    $(droite).text(question.reponseDroite);
 }
 
 function setTouches() {
