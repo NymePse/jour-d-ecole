@@ -85,18 +85,7 @@ var soustractionsFaites = new SizedArray(4);
 var multiplicationsFaites = new SizedArray(4);
 var divisionsFaites = new SizedArray(4);
 
-//TODO Réecrire/maj la fonction introduction (fusion fonction setUpGame ?) avec objet Partie
-/*
- * (si fusion)
- * Créer un objet Partie
- * Récupérer les valeurs d'options de partie
- * Mettre à jour l'objet Partie
- * Sauvegarder l'objet Partie
- * 
- * (en tout cas)
- * Afficher début de partie
- * Créer event touches lancer la partie
- */
+//Fonctions principales de partie
 function debutPartie() {
     //Création et set up des options de la partie
     partie = new Partie();
@@ -134,6 +123,7 @@ function debutPartie() {
     resetEventsPartie();
     viderListesQuestions();
     
+    //TODO Modifier la partie graphique du lancement de partie
     //Elements graphiques
     $(jeu).clearCanvas();
     $(jeu).drawText({
@@ -165,19 +155,6 @@ function debutPartie() {
     });
 }
 
-//TODO Réecrire/maj la fonction partie avec l'objet Compte et Partie
-/*
- * Vérifier fin de mi-temps
- * Vérifier fin de match
- *  si oui :
- *      maj scores compte
- *      maj trophés
- *      affichage fin de partie
- *      supprimer objet Partie
- *      maj compte, events, vider questions...
- *  si non :
- *      debutBoucle()
- */
 function avancement() {
     //Fin de mi-temps ?
     if(partie.indexQuestion >= partie.dureeMiTemps)
@@ -208,22 +185,7 @@ function avancement() {
         debutBoucle();
     }
     
-    /*
-    //Mi-temps finie ?
-    if(indexPhase > nbPhases)
-    {
-        miTemps++;
-        indexPhase = 0;
-        
-        if(balleCentreMT1 == 0)
-            balleAuCentre = 1;
-        else
-            balleAuCentre = 0;
-        
-        localStorage.setItem(LS_miTemps, miTemps);
-        localStorage.setItem(LS_indexPhase, indexPhase);
-    }
-    
+    /*    
     //Match fini ?
     if(miTemps == 2)
     {
@@ -279,11 +241,7 @@ function avancement() {
         viderListesQuestions();
         viderVariablesParties();
         
-        setUpCompte();
-    }
-    else
-        debutBoucle();
-        */
+        setUpCompte();*/
 }
 
 //TODO Réécrire/maj la fonction debutBoucle avec l'objet Partie, simplifier/séparer la partie choix affichage ?
@@ -294,103 +252,13 @@ function avancement() {
  * Création event réponse
  */
 function debutBoucle() {
-    /*
-     * choisis obstacle
-     * créer question, réponses, set touches
-     * affichage selon place dans le terrain
-     * event réponse
-     */
     
     //TODO Choix obstacle
     
     //Création question, réponses, set touches
     creerQuestion();
     
-    //TODO sélection des visuels
-    //Sélection éléments affichage (pendant question, victoire et échec)
-    //Balle au centre ?
-    /*
-    if(balleAuCentre != 2)
-    {
-        //Balle à ami ?
-        if(balleAuCentre == 0)
-        {
-            gaucheQuestion = VA_balleAuCentre + "centre_ami_ballon.png";
-            droiteQuestion = VA_balleAuCentre + "centre_ennemie.png";
-        }
-        else
-        {
-            gaucheQuestion = VA_balleAuCentre + "centre_ami.png";
-            droiteQuestion = VA_balleAuCentre + "centre_ennemie_ballon.png";
-        }
-        
-        ennemieVictoire = VA_balleAuCentre + "centre_ennemie.png";
-        amiVictoire = VA_balleAuCentre + "victoire_ami.png";
-                
-        ennemieDefaite = VA_balleAuCentre + "defaite_ennemie.png";
-        amiDefaite = VA_balleAuCentre + "centre_ami.png";
-        
-        balleAuCentre = 2;
-    }
-    else
-    {
-        //Vers buts ennemies ? 
-        if(versEnnemie)
-        {
-            //Devant le but ennemie ?
-            if(indexTerrain == tailleTerrain)
-            {
-                gaucheQuestion = VA_versEnnemie + "ami_run.png";
-                droiteQuestion = VA_versEnnemie + "but.png";
-                
-                amiVictoire = VA_versEnnemie + "but_marque.png";
-                ennemieVictoire = VA_versEnnemie + "but.png";
-                
-                amiDefaite = VA_versEnnemie + "defaite_ami.png";
-                ennemieDefaite = VA_versEnnemie + "but.png";
-            }
-            else
-            {
-                gaucheQuestion = VA_versEnnemie + "ami_run.png";
-                droiteQuestion = VA_versEnnemie + "ennemie_run.png";
-                
-                ennemieVictoire = VA_versEnnemie + "defaite_ennemie.png";
-                amiVictoire = VA_versEnnemie + "ami_run.png";
-                
-                ennemieDefaite = VA_versEnnemie + "victoire_ennemie.png";
-                amiDefaite = VA_versEnnemie + "defaite_ami.png";
-            }
-        }
-        else
-        {
-            //Devant le but ami ?
-            if(indexTerrain == 0)
-            {
-                gaucheQuestion = VA_versAmi + "but.png";
-                droiteQuestion = VA_versAmi + "ennemie_run.png";
-                
-                ennemieDefaite = VA_versAmi + "but_marque.png";
-                amiDefaite = VA_versAmi + "but.png";
-                
-                ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
-                amiVictoire = VA_versAmi + "but.png";
-            }
-            else
-            {
-                droiteQuestion = VA_versAmi + "ami_run.png";
-                gaucheQuestion = VA_versAmi + "ennemie_run.png";
-                
-                amiVictoire = VA_versAmi + "victoire_ami.png";
-                ennemieVictoire = VA_versAmi + "defaite_ennemie.png";
-                
-                amiDefaite = VA_versAmi + "defaite_ami.png";
-                ennemieDefaite = VA_versAmi + "ennemie_run.png";
-            }
-        }
-    }
-    */
-    
-    //TODO Affichage
+    //TODO sélection des visuels pour la manche
     
     //évènements de réponse
     $(document).keydown(function(event) {
@@ -427,36 +295,7 @@ function debutBoucle() {
         setChrono();
 }
 
-//TODO : Réécrire/maj la fonction finBoucle avec l'objet Partie, revoir gestion réponse donnée ?
-/*
- * Vérifier réponse et avancer match selon
- * Afficher état match selon
- * relancer vers partie()
- */
 function finBoucle(reponseJuste) {
-    /*
-     *  si reponse bonne
-     *    si indexTerrain = terrain
-     *      balleAuCentre = 1
-     *      indexTerrain = terrain / 2
-     *      affichage
-     *    sinon
-     *      indexTerrain++
-     *      affichage
-     *  sinon
-     *    si indexTerrain = 0
-     *      balleAuCentre = 0
-     *      indexTerrain = terrain / 2
-     *      affichage
-     *    sinon
-     *      indexTerrain--
-     *      affichage
-     * 
-     *   affichage
-     * 
-     *   partie()
-     */
-    
     //Mise à jour variables selon réponse & place sur le terrain
     partie.indexTerrain = partie.indexCentre;
     partie.indexQuestion += 1;
