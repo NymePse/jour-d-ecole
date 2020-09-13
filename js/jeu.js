@@ -627,17 +627,6 @@ function creerQuestion() {
     $(droite).text(question.reponseDroite);
 }
 
-function setTouches() {
-    let indexSelect;
-    let flechesTemp = [haut, gauche, bas, droite];
-        
-    flechesTemp.forEach(function(fleche) {
-        indexSelect = Math.floor(Math.random() * reponses.length);
-        $(fleche).text(reponses[indexSelect]);
-        reponses.splice(indexSelect, 1);
-    });
-}
-
 function creerAddition(diff) {
     let partUne;
     let partDeux;
@@ -1398,13 +1387,4 @@ function stopChrono() {
     });
     
     idInterval = Array();
-}
-
-
-//TODO Revoir et déplacer vers jeu.js la fonction resetEvents.
-function resetEventsPartie() {
-    $(document).off("keypress");
-    $(document).off("keydown");
-    $(classfleche).off("click");
-    $(espace).off("click");
 }
