@@ -446,9 +446,12 @@ function creerQuestion() {
 }
 
 function creerAddition(diff) {
-    let partUne;
-    let partDeux;
-    let reponseAddition;
+    let partieGauche;
+    let partieDroite;
+    let reponse;
+    let enonce;
+    let setReponse = new Set();
+    let tmpReponse;
     
     switch(diff){
         //Un chiffre, pas de retenue
@@ -456,24 +459,24 @@ function creerAddition(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (9 - 1) + 1);
-                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
-                bonneReponse = partUne + partDeux;
-                question = partUne + " + " + partDeux;
+                partieGauche = getRandomBetween(1,9);
+                partieDroite = getRandomBetween(1,9);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " + " + partieDroite;
             }
-            while(bonneReponse >= 10 || additionsFaites.includes(question));
+            while(reponse >= 10 || additionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseAddition = Math.ceil(Math.random() * (10 - 1) + 1);
+                    tmpReponse = getRandomBetween(1, 10);
                 }
-                while(reponseAddition >= 10 || reponses.includes(reponseAddition));
-                reponses[i] = reponseAddition;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
         
@@ -482,24 +485,24 @@ function creerAddition(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (9 - 2) + 2);
-                partDeux = Math.ceil(Math.random() * (9 - 2) + 2);
-                bonneReponse = partUne + partDeux;
-                question = partUne + " + " + partDeux;
+                partieGauche = getRandomBetween(1, 9);
+                partieDroite = getRandomBetween(1, 9);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " + " + partieDroite;
             }
-            while(bonneReponse < 10 || additionsFaites.includes(question));
+            while(reponse < 10 || additionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseAddition = Math.ceil(Math.random() * (20 - 10) + 10);
+                    tmpReponse = getRandomBetween(1, 19);
                 }
-                while(reponses.includes(reponseAddition));
-                reponses[i] = reponseAddition;
+                while(setReponse.add(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -507,24 +510,25 @@ function creerAddition(diff) {
         case "moyen":
             do 
             {
-                partUne = Math.ceil(Math.random() * (50 - 10) + 10);
-                partDeux = Math.ceil(Math.random() * (50 - 10) + 10);
-                bonneReponse = partUne + partDeux;
-                question = partUne + " + " + partDeux;
+                partieGauche = getRandomBetween(10, 50);
+                partieDroite = getRandomBetween(10, 50);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " + " + partieDroite;
             }
-            while(bonneReponse > 69 || additionsFaites.includes(question));
+            while(bonneReponse > 69 || additionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
+            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseAddition = Math.ceil(Math.random() * (69 - 20) + 20);
+                    tmpReponse = getRandomBetween(20, 69);
                 }
-                while(reponses.includes(reponseAddition));
-                reponses[i] = reponseAddition;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -532,23 +536,25 @@ function creerAddition(diff) {
         case "difficile":
             do
             {
-            partUne = Math.ceil(Math.random() * (100 - 10) + 10);
-            partDeux = Math.ceil(Math.random() * (100 - 10) + 10);
-            bonneReponse = partUne + partDeux;
-            reponses[0] = bonneReponse;
-            question = partUne + " + " + partDeux;
+                partieGauche = getRandomBetween(10, 100);
+                partieDroite = getRandomBetween(10, 100);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " + " + partieDroite;
             }
-            while(additionsFaites.includes(question));
+            while(additionsFaites.includes(enonce));
+            
+            setReponse.add(reponse);
             
             //Créer réponses fausses
+            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseAddition = Math.ceil(Math.random() * (200 - 20) + 20);
+                    tmpReponse = getRandomBetween(20, 200);
                 }
-                while(reponses.includes(reponseAddition));
-                reponses[i] = reponseAddition;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -556,34 +562,30 @@ function creerAddition(diff) {
         case "tres-difficile":
             do
             {
-                partUne = Math.ceil(Math.random() * (1000 - 100) + 100);
-                partDeux = Math.ceil(Math.random() * (1000 - 100) + 100);
-                bonneReponse = partUne + partDeux;
-                question = partUne + " + " + partDeux;
+                partieGauche = getRandomBetween(100, 1000);
+                partieDroite = getRandomBetween(100, 1000);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " + " + partieDroite;
             }
-            while(bonneReponse > 999 || additionsFaites.includes(question));
+            while(reponse > 999 || additionsFaites.includes(enonce));
             
             reponses[0] = bonneReponse;
             
             //Créer réponses fausses
+            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseAddition = Math.ceil(Math.random() * (999 - 200) + 200);
+                    tmpReponse = getRandomBetween(200, 999);
                 }
-                while(reponses.includes(reponseAddition));
-                reponses[i] = reponseAddition;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
     }
     
-    if(additionsFaites.length == 5)
-    {
-        additionsFaites.shift();
-    }
-    
-    additionsFaites.push(question);
+    additionsFaites.addFirst(enonce);
 }
 
 function creerSoustraction(diff) {
