@@ -28,27 +28,6 @@
 
 //TODO Modifier et passer en let les variables (voir supprimer pour utiliser objet Partie)
 
-//Variables parties
-var enPartie;
-var versEnnemie;
-var balleAuCentre;
-var balleCentreMT1;
-var nbPhases;
-var tailleTerrain;
-var indexPhase;
-var indexTerrain;
-var miTemps;
-var scoreAmi;
-var scoreEnnemie;
-var typeExercice;
-var difficulte;
-var chrono;
-var question;
-var bonneReponse;
-var reponses = Array();
-var obstacle;
-var obstaclesFaits = Array();
-
 //Nombre phases et taille terrain selon longueur partie
 var phasesCourte = 9;
 var phasesLongue = 15;
@@ -473,7 +452,7 @@ function creerAddition(diff) {
     
     switch(diff){
         //Un chiffre, pas de retenue
-        case "tres-simple":
+        case "<<":
             //Créer question & réponse juste
             do 
             {
@@ -1198,6 +1177,10 @@ function resetEvents()
     $(document).off("keydown");
     $(".fleche").off("click");
     $("#espace").off("click");
+}
+
+function getRandomBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 //Fonctions de chronomètre
