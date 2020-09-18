@@ -586,13 +586,17 @@ function creerAddition(diff) {
     }
     
     additionsFaites.addFirst(enonce);
+
+    //TODO Set up les réponses aux touches
 }
 
 function creerSoustraction(diff) {
-    
-    let partUne;
-    let partDeux;
-    let reponseSoustraction;
+    let partieGauche;
+    let partieDroite;
+    let reponse;
+    let enonce;
+    let setReponse = new Set();
+    let tmpReponse;
     
     switch(diff){
         //un chiffre
@@ -600,24 +604,24 @@ function creerSoustraction(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (9 - 1) + 1);
-                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
-                bonneReponse = partUne - partDeux;
-                question = partUne + " - " + partDeux;
+                partieGauche = getRandomBetween(1, 9);
+                partieDroite = getRandomBetween(1, partieGauche);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " - " + partieDroite;
             }
-            while(bonneReponse < 0 || soustractionsFaites.includes(question));
+            while(soustractionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = Math.ceil(Math.random() * (9 - 0) + 0);
+                    tmpReponse = getRandomBetween(0, 9);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
         
@@ -626,27 +630,24 @@ function creerSoustraction(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (99 - 12) + 12);
-                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
-                bonneReponse = partUne - partDeux;
-                question = partUne + " - " + partDeux;
+                partieGauche = getRandomBetween(99, 12);
+                partieDroite = getRandomBetween(1, partieGauche % 10);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " - " + partieDroite;
             }
-            while((partUne % 10) < partDeux || soustractionsFaites.includes(question));
+            while(soustractionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    if(Math.random() > 0.5)
-                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (10 - 1) + 1);
-                    else
-                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (10 - 1) + 1);
+                    tmpReponse = getRandomBetween(partieGauche - (partieGauche % 10), partieGauche);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -655,27 +656,24 @@ function creerSoustraction(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (99 - 12) + 12);
-                partDeux = Math.ceil(Math.random() * (9 - 1) + 1);
-                bonneReponse = partUne - partDeux;
-                question = partUne + " - " + partDeux;
+                partieGauche = getRandomBetween(12, 98);
+                partieDroite = getRandomBetween(partieGauche % 10, 9);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " - " + partieDroite;
             }
-            while((partUne % 10) >= partDeux || soustractionsFaites.includes(question));
+            while(soustractionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    if(Math.random() > 0.5)
-                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (15 - 1) + 1);
-                    else
-                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (15 - 1) + 1);
+                    tmpReponse = getRandomBetween(reponse - (reponse % 10), partieGauche - (partieGauche % 10) - 1);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -684,27 +682,24 @@ function creerSoustraction(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (99 - 10) + 10);
-                partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
-                bonneReponse = partUne - partDeux;
-                question = partUne + " - " + partDeux;
+                partieGauche = getRandomBetween(10, 99);
+                partieDroite = getRandomBetween(10, partieGauche);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " - " + partieDroite;
             }
-            while(bonneReponse < 0 || soustractionsFaites.includes(question));
+            while(soustractionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    if(Math.random() > 0.5)
-                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (10 - 1) + 1);
-                    else
-                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (10 - 1) + 1);
+                    tmpReponse = getRandomBetween(Math.floor(reponse / 10), Math.ceil(reponse * 1.1));
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -713,35 +708,31 @@ function creerSoustraction(diff) {
             //Créer question & réponse juste
             do 
             {
-                partUne = Math.ceil(Math.random() * (999 - 100) + 100);
-                partDeux = Math.ceil(Math.random() * (99 - 10) + 10);
-                bonneReponse = partUne - partDeux;
-                question = partUne + " - " + partDeux;
+                partieGauche = getRandomBetween(100, 999);
+                partieDroite = getRandomBetween(99, partieGauche);
+                reponse = partieGauche + partieDroite;
+                enonce = partieGauche + " - " + partieDroite;
             }
-            while(bonneReponse < 0 || soustractionsFaites.includes(question));
+            while(soustractionsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    if(Math.random() > 0.5)
-                        reponseSoustraction = reponses[0] + Math.ceil(Math.random() * (15 - 1) + 1);
-                    else
-                        reponseSoustraction = reponses[0] - Math.ceil(Math.random() * (15 - 1) + 1);
+                    tmpReponse = getRandomBetween(Math.floor(reponse / 10), Math.ceil(reponse * 1.1));
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
     }
     
-    if(soustractionsFaites.length == 5)
-        soustractionsFaites.shift();
-    
-    soustractionsFaites.push(question);
+    soustractionsFaites.addFirst(enonce);
+
+    //TODO Set up les réponses aux touches
 }
 
 function creerMultiplication(diff) {
