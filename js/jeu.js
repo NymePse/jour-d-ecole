@@ -736,9 +736,12 @@ function creerSoustraction(diff) {
 }
 
 function creerMultiplication(diff) {
-    let partUne;
-    let partDeux;
-    let reponseSoustraction;
+    let partieGauche;
+    let partieDroite;
+    let reponse;
+    let enonce;
+    let setReponse = new Set();
+    let tmpReponse;
     let rdm;
     
     switch(diff){
@@ -747,27 +750,24 @@ function creerMultiplication(diff) {
             //Créer question & réponse juste
             do
             {
-                if(Math.random() > 0.5)
-                    partUne = 2;
-                else
-                    partUne = 10;
-                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-                bonneReponse = partUne * partDeux;
-                question = partUne + " x " + partDeux;
+                partieGauche = Math.random() > 0.5 ? 10 : 2;
+                partieDroite = getRandomBetween(1, 10);
+                reponse = partieGauche * partieDroite;
+                enonce = partieGauche + " x " + partieDroite;
             }
-            while(multiplicationsFaites.includes(question));
+            while(multiplicationsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                    tmpReponse = partieGauche * getRandomBetween(1,10);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
         
@@ -776,30 +776,31 @@ function creerMultiplication(diff) {
             //Créer question & réponse juste
             do
             {
-                rdm = Math.random();
-                if(rdm > 0.6)
-                    partUne = 2;
-                else if(rdm > 0.3)
-                    partUne = 3;
-                else
-                    partUne = 10;
-                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-                bonneReponse = partUne * partDeux;
-                question = partUne + " x " + partDeux;
+               rdm = Math.random();
+               if(rdm > 0.6)
+                    partieGauche = 2;
+               else if(rdm > 0.3)
+                    partieGauche = 3;
+               else
+                    partieGauche = 10;
+
+                partieDroite = getRandomBetween(1, 10);
+                reponse = partieGauche * partieDroite;
+                enonce = partieGauche + " x " + partieDroite;
             }
-            while(multiplicationsFaites.includes(question));
+            while(multiplicationsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                    tmpReponse = partieGauche * getRandomBetween(1, 10);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
@@ -810,35 +811,37 @@ function creerMultiplication(diff) {
             {
                 rdm = Math.random();
                 if(rdm > 0.8)
-                    partUne = 2;
+                    partieGauche = 2;
                 else if(rdm > 0.6)
-                    partUne = 3;
+                    partieGauche = 3;
                 else if(rdm > 0.4)
-                    partUne = 4;
+                    partieGauche = 4;
                 else if(rdm > 0.2)
-                    partUne = 5;
+                    partieGauche = 5;
                 else
-                    partUne = 10;
-                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-                bonneReponse = partUne * partDeux;
-                question = partUne + " x " + partDeux;
+                    partieGauche = 10;
+                
+                partieDroite = getRandomBetween(1,10);
+                reponse = partUne * partDeux;
+                enonce = partieGauche + " x " + partieDroite;
             }
-            while(multiplicationsFaites.includes(question));
+            while(multiplicationsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                    tmpReponse = partUne * getRandomBetween(1,10);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
-            
+        
+        //TODO Créer réponse fausse selon bonne
         //2, 3, 4, 5, 6, 7, 10
         case "difficile":
             //Créer question & réponse juste
@@ -846,39 +849,40 @@ function creerMultiplication(diff) {
             {
                 rdm = Math.random();
                 if(rdm > 0.84)
-                    partUne = 2;
+                    partieGauche = 2;
                 else if(rdm > 0.7)
-                    partUne = 3;
+                    partieGauche = 3;
                 else if(rdm > 0.56)
-                    partUne = 4;
+                    partieGauche = 4;
                 else if(rdm > 0.42)
-                    partUne = 5;
+                    partieGauche = 5;
                 else if(rdm > 0.28)
-                    partUne = 6;
+                    partieGauche = 6;
                 else if(rdm > 0.14)
-                    partUne = 7;
+                    partieGauche = 7;
                 else
-                    partUne = 10;
-                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-                bonneReponse = partUne * partDeux;
-                question = partUne + " x " + partDeux;
+                    partieGauche = 10;
+                partieDroite = getRandomBetween(1,10);
+                reponse = partieGauche * partieDroite;
+                enonce = partieGauche + " x " + partieDroite;
             }
-            while(multiplicationsFaites.includes(question));
+            while(multiplicationsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                    tmpReponse = partieGauche * getRandomBetween(1,10);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
             
+        //TODO Créer réponse fausse selon bonne
         //toutes les tables
         case "tres-difficile":
             //Créer question & réponse juste
@@ -886,48 +890,47 @@ function creerMultiplication(diff) {
             {
                 rdm = Math.random();
                 if(rdm > 0.88)
-                    partUne = 2;
+                    partieGauche = 2;
                 else if(rdm > 0.77)
-                    partUne = 3;
+                    partieGauche = 3;
                 else if(rdm > 0.66)
-                    partUne = 4;
+                    partieGauche = 4;
                 else if(rdm > 0.55)
-                    partUne = 5;
+                    partieGauche = 5;
                 else if(rdm > 0.44)
-                    partUne = 6;
+                    partieGauche = 6;
                 else if(rdm > 0.33)
-                    partUne = 7;
+                    partieGauche = 7;
                 else if(rdm > 0.22)
-                    partUne = 8;
+                    partieGauche = 8;
                 else if(rdm > 0.11)
-                    partUne = 9;
+                    partieGauche = 9;
                 else
-                    partUne = 10;
-                partDeux = Math.ceil(Math.random() * (10 - 0) + 0);
-                bonneReponse = partUne * partDeux;
-                question = partUne + " x " + partDeux;
+                    partieGauche = 10;
+                partieDroite = getRandomBetween(1,10);
+                reponse = partieGauche * partieDroite;
+                enonce = partieGauche + " x " + partieDroite;
             }
-            while(multiplicationsFaites.includes(question));
+            while(multiplicationsFaites.includes(enonce));
             
-            reponses[0] = bonneReponse;
+            setReponse.add(reponse);
             
             //Créer réponses fausses
             for(let i = 1; i < 4; i++)
             {
                 do
                 {
-                    reponseSoustraction = partUne * Math.ceil(Math.random() * (10 - 0) + 0);
+                    tmpReponse = partieGauche * getRandomBetween(1,10);
                 }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
+                while(setReponse.has(tmpReponse));
+                setReponse.add(tmpReponse);
             }
             break;
     }
     
-    if(multiplicationsFaites.length == 5)
-        multiplicationsFaites.shift();
-    
-    multiplicationsFaites.push(question);
+    multiplicationsFaites.addFirst(enonce);
+
+    //TODO set touches
 }
 
 function creerDivision(diff) {
