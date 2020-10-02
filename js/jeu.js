@@ -450,7 +450,7 @@ function creerAddition(diff) {
     let partieDroite;
     let reponse;
     let enonce;
-    let setReponse = new Set();
+    let setReponse = new Array();
     let tmpReponse;
     let condition;
 
@@ -488,9 +488,10 @@ function creerAddition(diff) {
         reponse = partieGauche + partieDroite;
         enonce = partieGauche + " + " + partieDroite;
     }
-    while(condition(reponse) || additionsFaites.includes(enonce))
+    while(additionsFaites.includes(enonce));
 
-    setReponse.add(reponse);
+    setReponse.push(reponse);
+    question.bonneReponse = reponse;
 
     for(let i = 0; i < 3; i++)
     {
@@ -515,13 +516,14 @@ function creerAddition(diff) {
                     break;
             }
         }
-        while(setReponse.has(tmpReponse))
-        setReponse.add(reponse);
+        while(setReponse.includes(tmpReponse))
+        setReponse.push(reponse);
     }
 
     additionsFaites.addFirst(enonce);
 
     //TODO set up touches
+    setTouches(setReponse);
 }
 
 function creerSoustraction(diff) {
@@ -529,9 +531,8 @@ function creerSoustraction(diff) {
     let partieDroite;
     let reponse;
     let enonce;
-    let setReponse = new Set();
+    let setReponse = new Array();
     let tmpReponse;
-    let condition;
 
     do
     {
@@ -568,7 +569,8 @@ function creerSoustraction(diff) {
     }
     while(soustractionsFaites.includes(enonce))
 
-    setReponse.add(reponse);
+    setReponse.push(reponse);
+    question.bonneReponse = reponse;
 
     for(let i = 0; i < 3; i++)
     {
@@ -593,13 +595,14 @@ function creerSoustraction(diff) {
                     break;
             }
         }
-        while(setReponse.has(tmpReponse))
-        setReponse.add(reponse);
+        while(setReponse.includes(tmpReponse))
+        setReponse.push(reponse);
     }
 
     soustractionsFaites.addFirst(enonce);
 
     //TODO set touches
+    setTouches(setReponse);
 }
 
 function creerMultiplication(diff) {
@@ -607,7 +610,7 @@ function creerMultiplication(diff) {
     let partieDroite;
     let reponse;
     let enonce;
-    let setReponse = new Set();
+    let setReponse = new Array();
     let tmpReponse;
     let condition;
 
@@ -656,7 +659,8 @@ function creerMultiplication(diff) {
     }
     while(multiplicationsFaites.includes(enonce))
 
-    setReponse.add(reponse);
+    setReponse.push(reponse);
+    question.bonneReponse = reponse;
 
     for(let i = 0; i < 3; i++)
     {
@@ -681,13 +685,14 @@ function creerMultiplication(diff) {
                     break;
             }
         }
-        while(setReponse.has(tmpReponse))
-        setReponse.add(reponse);
+        while(setReponse.includes(tmpReponse))
+        setReponse.push(reponse);
     }
 
     multiplicationsFaites.addFirst(enonce);
 
     //TODO set touches
+    setTouches(setReponse);
 }
 
 function creerDivisionBIS(diff) {
@@ -756,7 +761,8 @@ function creerDivisionBIS(diff) {
     }
     while(divisionsFaites.includes(enonce))
 
-    setReponse.add(reponse);
+    setReponse.push(reponse);
+    question.bonneReponse = reponse;
 
     for(let i = 0; i < 3; i++)
     {
@@ -781,13 +787,14 @@ function creerDivisionBIS(diff) {
                     break;
             }
         }
-        while(setReponse.has(tmpReponse))
-        setReponse.add(reponse);
+        while(setReponse.includes(tmpReponse))
+        setReponse.push(reponse);
     }
 
     divisionsFaites.addFirst(enonce);
 
     //TODO set touches blabla
+    setTouches(setReponse);
 }
 
 //TODO Modifier méthode de vérification des réponses
@@ -820,6 +827,26 @@ function reponseBonne(key) {
             return false;
     }
 }
+
+function setTouches(reponses) {
+    //Randomiser les réponses (méthode Durstenfeld)
+    for (let i = reponses.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = reponses[i];
+        reponses[i] = reponses[j];
+        reponses[j] = temp;
+    }
+
+    for(let y = 0; y < 4; 0++)
+    {
+        $(fleches[y]).text(reponses[y]);
+    }
+    
+    question.reponseHaut = reponses[0];
+    question.reponseGauche = reponses[1];
+    question.reponseBas = reponses[2];
+    question.reponseDroite = reponses[3];
+} 
 
 //TODO Revoir viderListes avec l'objet SizedArray.
 function viderListesQuestions() {
