@@ -452,142 +452,76 @@ function creerAddition(diff) {
     let enonce;
     let setReponse = new Set();
     let tmpReponse;
-    
-    switch(diff){
-        //Un chiffre, pas de retenue
-        case "<<":
-            //Créer question & réponse juste
-            do 
-            {
+    let condition;
+
+    do
+    {
+        switch(diff)
+        {
+            case "<<" :
+                //Réponse < 10
+                partieGauche = getRandomBetween(1,8);
+                partieDroite = getRandomBetween(1, 9 - partieGauche);
+                break;
+            case "<" :
+                //10 < Réponse < 19
                 partieGauche = getRandomBetween(1,9);
-                partieDroite = getRandomBetween(1,9);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " + " + partieDroite;
-            }
-            while(reponse >= 10 || additionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(1, 10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-        
-        //un chiffre avec retenue
-        case "simple":
-            //Créer question & réponse juste
-            do 
-            {
-                partieGauche = getRandomBetween(1, 9);
-                partieDroite = getRandomBetween(1, 9);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " + " + partieDroite;
-            }
-            while(reponse < 10 || additionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(1, 19);
-                }
-                while(setReponse.add(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //deux chiffres, total <= 69
-        case "moyen":
-            do 
-            {
+                partieDroite = getRandomBetween(10 - partieGauche ,9);
+                break;
+            case "=" :
+                //20 < Réponse < 69
                 partieGauche = getRandomBetween(10, 50);
-                partieDroite = getRandomBetween(10, 50);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " + " + partieDroite;
-            }
-            while(bonneReponse > 69 || additionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(20, 69);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //deux chiffres quelconques
-        case "difficile":
-            do
-            {
+                partieDroite = getRandomBetween(10, 69 - partieGauche);
+                break;
+            case ">" :
+                //20 < Réponse < 200
                 partieGauche = getRandomBetween(10, 100);
                 partieDroite = getRandomBetween(10, 100);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " + " + partieDroite;
-            }
-            while(additionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(20, 200);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //3 chiffres, résultat <= 999
-        case "tres-difficile":
-            do
-            {
-                partieGauche = getRandomBetween(100, 1000);
-                partieDroite = getRandomBetween(100, 1000);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " + " + partieDroite;
-            }
-            while(reponse > 999 || additionsFaites.includes(enonce));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            //TODO Créer mauvaises réponses selon bonne réponse &/Ou énoncé
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(200, 999);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
+                break;
+            case ">>" :
+                //200 < Réponse < 999
+                partieGauche = getRandomBetween(100, 899);
+                partieDroite = getRandomBetween(100, 999 - partieGauche);
+                break;
+        }
+
+        reponse = partieGauche + partieDroite;
+        enonce = partieGauche + " + " + partieDroite;
     }
-    
+    while(condition(reponse) || additionsFaites.includes(enonce))
+
+    setReponse.add(reponse);
+
+    for(let i = 0; i < 3; i++)
+    {
+        do
+        {
+            switch(diff)
+            {
+                case "<<" :
+                    tmpReponse = getRandomBetween(1, 9);
+                    break;
+                case "<" :
+                    tmpReponse = getRandomBetween(10, 19);
+                    break;
+                case "=" :
+                    tmpReponse = getRandomBetween(Math.round(reponse * 0.75), Math.round(reponse * 1.25));
+                    break;
+                case ">" :
+                    tmpReponse = getRandomBetween(Math.round(reponse * 0.87), Math.round(reponse * 1.13));
+                    break;
+                case ">>" :
+                    tmpReponse = getRandomBetween(Math.round(reponse * 0.95), Math.round(reponse * 1.05));
+                    break;
+            }
+        }
+        while(setReponse.has(tmpReponse))
+        setReponse.add(reponse);
+    }
+
     additionsFaites.addFirst(enonce);
 
-    //TODO Set up les réponses aux touches
+    //TODO set up touches
 }
 
 function creerSoustraction(diff) {
@@ -597,142 +531,75 @@ function creerSoustraction(diff) {
     let enonce;
     let setReponse = new Set();
     let tmpReponse;
-    
-    switch(diff){
-        //un chiffre
-        case "tres-simple":
-            //Créer question & réponse juste
-            do 
-            {
-                partieGauche = getRandomBetween(1, 9);
-                partieDroite = getRandomBetween(1, partieGauche);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " - " + partieDroite;
-            }
-            while(soustractionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(0, 9);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-        
-        //a - b, deux chiffres pour a et un pour b, le dernier chiffre de a est plus grand que b
-        case "simple":
-            //Créer question & réponse juste
-            do 
-            {
+    let condition;
+
+    do
+    {
+        switch(diff)
+        {
+            case "<<" :
+                //1 < Réponse < 8
+                partieGauche = getRandomBetween(2, 9);
+                partieDroite = getRandomBetween(1, partieGauche - 1);
+                break;
+            case "<" :
+                //a > b, unité de a > b
                 partieGauche = getRandomBetween(99, 12);
                 partieDroite = getRandomBetween(1, partieGauche % 10);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " - " + partieDroite;
-            }
-            while(soustractionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(partieGauche - (partieGauche % 10), partieGauche);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //idem, sauf que le dernier chiffre de a est plus petit que b
-        case "moyen":
-            //Créer question & réponse juste
-            do 
-            {
+                break;
+            case "=" :
+                //a > b, unité de a < b
                 partieGauche = getRandomBetween(12, 98);
-                partieDroite = getRandomBetween(partieGauche % 10, 9);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " - " + partieDroite;
-            }
-            while(soustractionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(reponse - (reponse % 10), partieGauche - (partieGauche % 10) - 1);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //deux chiffres
-        case "difficile":
-            //Créer question & réponse juste
-            do 
-            {
+                partieDroite = getRandomBetween((partieGauche + 1) % 10, 9);
+                break;
+            case ">" :
+                //Deux nombres à deux chiffres, réponse >= 0
                 partieGauche = getRandomBetween(10, 99);
                 partieDroite = getRandomBetween(10, partieGauche);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " - " + partieDroite;
-            }
-            while(soustractionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(Math.floor(reponse / 10), Math.ceil(reponse * 1.1));
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //a - b, 3 chiffres pour a et 2 pour b
-        case "tres-difficile":
-            //Créer question & réponse juste
-            do 
-            {
-                partieGauche = getRandomBetween(100, 999);
-                partieDroite = getRandomBetween(99, partieGauche);
-                reponse = partieGauche + partieDroite;
-                enonce = partieGauche + " - " + partieDroite;
-            }
-            while(soustractionsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = getRandomBetween(Math.floor(reponse / 10), Math.ceil(reponse * 1.1));
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
+                break;
+            case ">>" :
+            //Deux nombres à 3 chiffres, réponse >= 0
+                partieGauche = getRandomBetween(101, 999);
+                partieDroite = getRandomBetween(100, partieGauche);
+                break;
+        }
+        reponse = partieGauche - partieDroite;
+        enonce = partieGauche + " - " + partieDroite;
     }
-    
+    while(soustractionsFaites.includes(enonce))
+
+    setReponse.add(reponse);
+
+    for(let i = 0; i < 3; i++)
+    {
+        do
+        {
+            switch(diff)
+            {
+                case "<<" :
+                    tmpReponse = getRandomBetween(1, 9);
+                    break;
+                case "<" :
+                    tmpReponse = getRandomBetween(partieGauche - 12, partieGauche - 1);
+                    break;
+                case "=" :
+                    tmpReponse = getRandomBetween(((partieGauche / 10) * 10) - 10, (partieGauche / 10) * 10);
+                    break;
+                case ">" :
+                    tmpReponse = getRandomBetween(reponse * 0.90, reponse * 1.10);
+                    break;
+                case ">>" :
+                    tmpReponse = getRandomBetween(reponse * 0.97, reponse * 1.03);
+                    break;
+            }
+        }
+        while(setReponse.has(tmpReponse))
+        setReponse.add(reponse);
+    }
+
     soustractionsFaites.addFirst(enonce);
 
-    //TODO Set up les réponses aux touches
+    //TODO set touches
 }
 
 function creerMultiplication(diff) {
@@ -742,390 +609,185 @@ function creerMultiplication(diff) {
     let enonce;
     let setReponse = new Set();
     let tmpReponse;
-    let rdm;
-    
-    switch(diff){
-        // table de 2 et 10
-        case "tres-simple":
-            //Créer question & réponse juste
-            do
-            {
-                partieGauche = Math.random() > 0.5 ? 10 : 2;
-                partieDroite = getRandomBetween(1, 10);
-                reponse = partieGauche * partieDroite;
-                enonce = partieGauche + " x " + partieDroite;
-            }
-            while(multiplicationsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = partieGauche * getRandomBetween(1,10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-        
-        //2, 3 et 10
-        case "simple":
-            //Créer question & réponse juste
-            do
-            {
-               rdm = Math.random();
-               if(rdm > 0.6)
-                    partieGauche = 2;
-               else if(rdm > 0.3)
-                    partieGauche = 3;
-               else
-                    partieGauche = 10;
+    let condition;
 
+    do
+    {
+        let rdm = Math.random();
+        switch(diff)
+        {
+            case "<<" :
+                if(rdm > 0.6)
+                    partieGauche = 2;
+                else if(rdm > 0.3)
+                    partieGauche = 5;
+                else
+                    partieGauche = 10;
                 partieDroite = getRandomBetween(1, 10);
-                reponse = partieGauche * partieDroite;
-                enonce = partieGauche + " x " + partieDroite;
-            }
-            while(multiplicationsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = partieGauche * getRandomBetween(1, 10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //2, 3, 4, 5, 10
-        case "moyen":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
+                break;
+            case "<" :
                 if(rdm > 0.8)
                     partieGauche = 2;
                 else if(rdm > 0.6)
                     partieGauche = 3;
                 else if(rdm > 0.4)
-                    partieGauche = 4;
+                    partieGauche = 5;
                 else if(rdm > 0.2)
-                    partieGauche = 5;
-                else
-                    partieGauche = 10;
-                
-                partieDroite = getRandomBetween(1,10);
-                reponse = partUne * partDeux;
-                enonce = partieGauche + " x " + partieDroite;
-            }
-            while(multiplicationsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = partUne * getRandomBetween(1,10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-        
-        //TODO Créer réponse fausse selon bonne
-        //2, 3, 4, 5, 6, 7, 10
-        case "difficile":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
-                if(rdm > 0.84)
-                    partieGauche = 2;
-                else if(rdm > 0.7)
-                    partieGauche = 3;
-                else if(rdm > 0.56)
-                    partieGauche = 4;
-                else if(rdm > 0.42)
-                    partieGauche = 5;
-                else if(rdm > 0.28)
                     partieGauche = 6;
-                else if(rdm > 0.14)
-                    partieGauche = 7;
                 else
                     partieGauche = 10;
-                partieDroite = getRandomBetween(1,10);
-                reponse = partieGauche * partieDroite;
-                enonce = partieGauche + " x " + partieDroite;
-            }
-            while(multiplicationsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = partieGauche * getRandomBetween(1,10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
-            
-        //TODO Créer réponse fausse selon bonne
-        //toutes les tables
-        case "tres-difficile":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
-                if(rdm > 0.88)
-                    partieGauche = 2;
-                else if(rdm > 0.77)
-                    partieGauche = 3;
-                else if(rdm > 0.66)
-                    partieGauche = 4;
-                else if(rdm > 0.55)
-                    partieGauche = 5;
-                else if(rdm > 0.44)
-                    partieGauche = 6;
-                else if(rdm > 0.33)
-                    partieGauche = 7;
-                else if(rdm > 0.22)
-                    partieGauche = 8;
-                else if(rdm > 0.11)
-                    partieGauche = 9;
-                else
-                    partieGauche = 10;
-                partieDroite = getRandomBetween(1,10);
-                reponse = partieGauche * partieDroite;
-                enonce = partieGauche + " x " + partieDroite;
-            }
-            while(multiplicationsFaites.includes(enonce));
-            
-            setReponse.add(reponse);
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    tmpReponse = partieGauche * getRandomBetween(1,10);
-                }
-                while(setReponse.has(tmpReponse));
-                setReponse.add(tmpReponse);
-            }
-            break;
+                partieDroite = getRandomBetween(1, 10);
+                break;
+            case "=" :
+                partieGauche = getRandomBetween(1, 10);
+                partieDroite = getRandomBetween(1, 10);
+                break;
+            case ">" :
+                partieGauche = getRandomBetween(2, 10);
+                partieDroite = getRandomBetween(5, 15);
+                break;
+            case ">>" :
+                partieGauche = getRandomBetween(2, 10);
+                partieDroite = getRandomBetween(15, 25);
+                break;
+        }
+        reponse = partieGauche * partieDroite;
+        enonce = partieGauche + " x " + partieDroite;
     }
-    
+    while(multiplicationsFaites.includes(enonce))
+
+    setReponse.add(reponse);
+
+    for(let i = 0; i < 3; i++)
+    {
+        do
+        {
+            switch(diff)
+            {
+                case "<<" :
+                    tmpReponse = gaucheQuestion * getRandomBetween(1, 10);
+                    break;
+                case "<" :
+                    tmpReponse = gaucheQuestion * getRandomBetween(1, 10);
+                    break;
+                case "=" :
+                    tmpReponse = gaucheQuestion * getRandomBetween(1, 10);
+                    break;
+                case ">" :
+                    tmpReponse = gaucheQuestion * getRandomBetween(droiteQuestion - 4, droiteQuestion + 4);
+                    break;
+                case ">>" :
+                    tmpReponse = gaucheQuestion * getRandomBetween(droiteQuestion - 2, droiteQuestion + 2);
+                    break;
+            }
+        }
+        while(setReponse.has(tmpReponse))
+        setReponse.add(reponse);
+    }
+
     multiplicationsFaites.addFirst(enonce);
 
     //TODO set touches
 }
 
-function creerDivision(diff) {
-    let partUne;
-    let partDeux;
-    let reponseSoustraction;
+function creerDivisionBIS(diff) {
+    let partieGauche;
+    let partieDroite;
+    let reponse;
+    let enonce;
+    let setReponse = new Set();
+    let tmpReponse;
     let rdm;
-    
-    switch(diff){
-        // table de 2 et 10
-        case "tres-simple":
-            //Créer question & réponse juste
-            do
-            {
+
+    do
+    {
+        rdm = Math.random();
+        switch(diff)
+        {
+            case "<<" :
                 if(Math.random() > 0.5)
-                    partDeux = 2;
+                    partieDroite = 2;
                 else
-                    partDeux = 10;
-                bonneReponse = Math.ceil(Math.random() * (10 - 1) + 1);
-                partUne = partDeux * bonneReponse;
-                question = partUne + " / " + partDeux;
-            }
-            while(divisionsFaites.includes(question));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-                }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
-            }
-            break;
-        
-        //2, 3 et 10
-        case "simple":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
+                    partieDroite = 10;
+                break;
+            case "<" :
                 if(rdm > 0.6)
-                    partDeux = 2;
+                    partieDroite = 2;
                 else if(rdm > 0.3)
-                    partDeux = 3;
+                    partieDroite = 3;
                 else
                     partDeux = 10;
-                bonneReponse = Math.ceil(Math.random() * (10 - 1) + 1);
-                partUne = partDeux * bonneReponse;
-                question = partUne + " / " + partDeux;
-            }
-            while(divisionsFaites.includes(question));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-                }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
-            }
-            break;
-            
-        //2, 3, 4, 5, 10
-        case "moyen":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
+                break;
+            case "=" :
                 if(rdm > 0.8)
-                    partDeux = 2;
+                    partieDroite = 2;
                 else if(rdm > 0.6)
-                    partDeux = 3;
+                    partieDroite = 3;
                 else if(rdm > 0.4)
-                    partDeux = 4;
+                    partieDroite = 4;
                 else if(rdm > 0.2)
-                    partDeux = 5;
+                    partieDroite = 5;
                 else
-                    partDeux = 10;
-                bonneReponse = Math.ceil(Math.random() * (10 - 1) + 1);
-                partUne = partDeux * bonneReponse;
-                question = partUne + " / " + partDeux;
-            }
-            while(divisionsFaites.includes(question));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-                }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
-            }
-            break;
-            
-        //2, 3, 4, 5, 6, 7, 10
-        case "difficile":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
+                    partieDroite = 10;
+                break;
+            case ">" :
                 if(rdm > 0.84)
-                    partDeux = 2;
+                    partieDroite = 2;
                 else if(rdm > 0.7)
-                    partDeux = 3;
+                    partieDroite = 3;
                 else if(rdm > 0.56)
-                    partDeux = 4;
+                    partieDroite = 4;
                 else if(rdm > 0.42)
-                    partDeux = 5;
+                    partieDroite = 5;
                 else if(rdm > 0.28)
-                    partDeux = 6;
+                    partieDroite = 6;
                 else if(rdm > 0.14)
-                    partDeux = 7;
+                    partieDroite = 7;
                 else
-                    partDeux = 10;
-                bonneReponse = Math.ceil(Math.random() * (10 - 1) + 1);
-                partUne = partDeux * bonneReponse;
-                question = partUne + " / " + partDeux;
-            }
-            while(divisionsFaites.includes(question));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-                }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
-            }
-            break;
-            
-        //toutes les tables
-        case "tres-difficile":
-            //Créer question & réponse juste
-            do
-            {
-                rdm = Math.random();
-                if(rdm > 0.88)
-                    partDeux = 2;
-                else if(rdm > 0.77)
-                    partDeux = 3;
-                else if(rdm > 0.66)
-                    partDeux = 4;
-                else if(rdm > 0.55)
-                    partDeux = 5;
-                else if(rdm > 0.44)
-                    partDeux = 6;
-                else if(rdm > 0.33)
-                    partDeux = 7;
-                else if(rdm > 0.22)
-                    partDeux = 8;
-                else if(rdm > 0.11)
-                    partDeux = 9;
-                else
-                    partDeux = 10;
-                bonneReponse = Math.ceil(Math.random() * (10 - 1) + 1);
-                partUne = partDeux * bonneReponse;
-                question = partUne + " / " + partDeux;
-            }
-            while(divisionsFaites.includes(question));
-            
-            reponses[0] = bonneReponse;
-            
-            //Créer réponses fausses
-            for(let i = 1; i < 4; i++)
-            {
-                do
-                {
-                    reponseSoustraction = Math.ceil(Math.random() * (10 - 1) + 1);
-                }
-                while(reponses.includes(reponseSoustraction));
-                reponses[i] = reponseSoustraction;
-            }
-            break;
+                    partieDroite = 10;
+                break;
+            case ">>" :
+                partieDroite = getRandomBetween(2, 10);
+                break;
+        }
+        partieGauche = getRandomBetween(1, 10) * partieDroite;
+        reponse = partieGauche / partieDroite;
+        enonce = partieGauche + " / " + partieDroite;
     }
-    
-    if(divisionsFaites.length == 5)
-        divisionsFaites.shift();
-    
-    divisionsFaites.push(question);
+    while(divisionsFaites.includes(enonce))
+
+    setReponse.add(reponse);
+
+    for(let i = 0; i < 3; i++)
+    {
+        do
+        {
+            switch(diff)
+            {
+                case "<<" :
+                    tmpReponse = getRandomBetween(1, 10);
+                    break;
+                case "<" :
+                    tmpReponse = getRandomBetween(1, 10);
+                    break;
+                case "=" :
+                    tmpReponse = getRandomBetween(1, 10);
+                    break;
+                case ">" :
+                    tmpReponse = getRandomBetween(max(reponse - 4, 1), min(reponse + 4, 10));
+                    break;
+                case ">>" :
+                    tmpReponse = getRandomBetween(max(reponse - 2, 1), min(reponse + 2, 10));
+                    break;
+            }
+        }
+        while(setReponse.has(tmpReponse))
+        setReponse.add(reponse);
+    }
+
+    divisionsFaites.addFirst(enonce);
+
+    //TODO set touches blabla
 }
 
 //TODO Modifier méthode de vérification des réponses
